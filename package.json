@@ -1,0 +1,44 @@
+{
+  "name": "garage-pi",
+  "version": "0.0.1",
+  "description": "Node.JS Raspberry Pi Garage Door Management Application",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PiGarageDoor/garage-pi.git"
+  },
+  "keywords": [
+    "node",
+    "raspberrypi",
+    "garage"
+  ],
+  "author": "PiGarageDoor",
+  "contributors": [
+    {
+      "name": "Vicente Monsoníns",
+      "email": "monsonis@gmail.com"
+    },
+    {
+      "name": "David Rubert",
+      "email": "david.rubert@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PiGarageDoor/garage-pi/issues"
+  },
+  "homepage": "https://github.com/PiGarageDoor/garage-pi#readme",
+  "dependencies": {
+    "babel-eslint": "^5.0.0-beta6",
+    "eslint": "^1.10.3",
+    "eslint-plugin-react": "^3.13.1"
+  },
+  "devDependencies": {
+    "babel": "^6.3.26",
+    "babel-core": "^6.3.26",
+    "webpack": "^1.12.9"
+  }
+}
