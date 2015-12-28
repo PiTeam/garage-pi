@@ -1,11 +1,11 @@
 import express from "express";
+import door_routes from './door';
 
 let routes = express.Router(),
     doorService = require('../services/door');
+let router = express.Router();
 
-routes.get('/', (req, res) => {
-    res.send('hello world');
-});
+router.use('/door', door_routes);
 
 routes.get('/api/door/:doorId/status', (req, res) => {
     var doorId = req.params.doorId;    
