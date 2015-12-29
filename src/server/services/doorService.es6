@@ -6,8 +6,8 @@ function sendPulseToPin(gpioPin) {
   const ON = 1;
   const OFF = 0;
 
-  gpio.open(gpioPin, 'output', function () {     
-    gpio.write(gpioPin, ON, function() {
+  gpio.open(gpioPin, 'output', function () {
+    gpio.write(gpioPin, ON, function () {
       logService.log('INFO', 'Setting pin ' + gpioPin + ' ON');
       setTimeout(function () {
         gpio.write(gpioPin, OFF, function () {
@@ -19,7 +19,7 @@ function sendPulseToPin(gpioPin) {
   });
 }
 
-export function getStatus(door) {
+export function getStatus() {
   return 'Unknown';
 }
 
@@ -28,9 +28,13 @@ export function toggle(door) {
 }
 
 export function open(door) {
-  return true;
+  if (getStatus(door) === 'CLOSED') {
+    sendPulseToPin(door.actionGpioPin);
+  }
 }
 
 export function close(door) {
-  return true;
+  if (getStatus(door) === 'OPEN') {
+    sendPulseToPin(door.actionGpioPin);
+  }
 }
