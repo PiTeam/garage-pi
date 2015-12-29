@@ -1,5 +1,5 @@
 export function getStatus(doorId) {
-  return "Unknown";
+  return 'Unknown';
 }
 
 export function toggle(doorId) {
