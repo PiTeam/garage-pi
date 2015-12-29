@@ -34,7 +34,8 @@
   "homepage": "https://github.com/PiGarageDoor/garage-pi#readme",
   "dependencies": {
     "config": "^1.17.1",
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "pi-gpio": "0.0.8"
   },
   "devDependencies": {
     "babel": "^6.3.26",
