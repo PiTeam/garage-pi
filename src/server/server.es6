@@ -2,14 +2,17 @@ import express from 'express';
 import config from 'config';
 import path from 'path';
 
-const port = config.get('express.port') || 3000;
-const VIEWS_DIR = path.join(__dirname, 'views');
-const ROUTES_DIR = path.join(__dirname, 'routes');
-const STATIC_DIR = path.join(__dirname, '..', 'client', 'dist');
+const PORT = config.get('express.port') || 3000;
+const STATIC_DIR = path.join(__dirname, '..', 'static');
+const VIEWS_DIR  = path.join(__dirname, 'views');
 
 import routes from './routes';
 
 let app = express();
 app.use('/', routes);
+app.set('views', VIEWS_DIR);
 
-app.listen(port);
+app.set('view engine', 'jade');
+app.use(express.static(STATIC_DIR));
+
+app.listen(PORT);
