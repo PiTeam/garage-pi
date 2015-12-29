@@ -20,7 +20,7 @@
   "author": "PiGarageDoor",
   "contributors": [
     {
-      "name": "Vicente Monsoníns",
+      "name": "Vicente González Monsonis",
       "email": "monsonis@gmail.com"
     },
     {
@@ -37,7 +37,8 @@
     "config": "^1.17.1",
     "express": "^4.13.3",
     "pi-gpio": "0.0.8",
-    "jade": "^1.11.0"
+    "jade": "^1.11.0",
+    "es6-enum": "1.0.0"
   },
   "devDependencies": {
     "babel": "^6.3.26",
