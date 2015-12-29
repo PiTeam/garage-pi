@@ -9,7 +9,7 @@ router.get('/:doorId/status', (req, res) => {
 });
 
 router.get('/:doorId/toogle', (req, res) => {
-  const doorId = req.params.doorId;    
+  const doorId = req.params.doorId;
   res.send(doorService.toogle(doorId));
 });
 
