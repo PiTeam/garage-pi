@@ -1,4 +1,4 @@
-class Door {
+export class Door {
   constructor(id, name, actionGpioPin, statusGpioPin) {
     this.id = id;
     this.name = name;
