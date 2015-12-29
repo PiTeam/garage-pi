@@ -1,6 +1,6 @@
 // import rpio from 'rpio';
 import rpio from '../lib/rpio-mock';
-import * as logService from '../services/logService';
+import * as logService from '../services/log';
 
 function sendPulseToPin(gpioPin) {
   const PULSE_DURATION = 300;
