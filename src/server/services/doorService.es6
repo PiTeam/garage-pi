@@ -6,11 +6,11 @@ function sendPulseToPin(gpioPin) {
   const ON = 1;
   const OFF = 0;
 
-  gpio.open(gpioPin, 'output', function () {
-    gpio.write(gpioPin, ON, function () {
+  gpio.open(gpioPin, 'output', function openSuccess() {
+    gpio.write(gpioPin, ON, function writeOnSuccess() {
       logService.log('INFO', 'Setting pin ' + gpioPin + ' ON');
-      setTimeout(function () {
-        gpio.write(gpioPin, OFF, function () {
+      setTimeout(function writeGpioPinOff() {
+        gpio.write(gpioPin, OFF, function writeOffSuccess() {
           logService.log('INFO', 'Setting pin ' + gpioPin + ' OFF');
           gpio.close(gpioPin);
         });

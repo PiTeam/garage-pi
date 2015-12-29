@@ -1,5 +1,5 @@
-import Enum from 'es6-enum';
+import { Enum as enumerate } from 'es6-enum';
 
-const DOOR_STATUS = Enum('UNKNOWN', 'OPEN', 'CLOSED');
+const DOOR_STATUS = enumerate('UNKNOWN', 'OPEN', 'CLOSED');
 
 export default DOOR_STATUS;

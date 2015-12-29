@@ -1,16 +1,16 @@
-import express from 'express';
+import { Router as router } from 'express';
 import * as doorService from '../services/doorService';
 
-const router = express.Router();
+const routes = router();
 
-router.get('/:doorId/status', (req, res) => {
+routes.get('/:doorId/status', (req, res) => {
   const doorId = req.params.doorId;
   res.send(doorService.getStatus(doorId));
 });
 
-router.get('/:doorId/toogle', (req, res) => {
+routes.get('/:doorId/toogle', (req, res) => {
   const doorId = req.params.doorId;
   res.send(doorService.toogle(doorId));
 });
 
-export default router;
+export default routes;
