@@ -1,6 +1,12 @@
-export class User {
-  constructor(token, name) {
-    this.token = token;
-    this.name = name;
+import { Document } from 'camo';
+
+export class User extends Document {
+  constructor() {
+    super();
+
+    this.schema({
+      token: String,
+      name: String,
+    });
   }
 }

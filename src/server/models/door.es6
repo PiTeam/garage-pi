@@ -1,8 +1,14 @@
-export class Door {
-  constructor(id, name, actionGpioPin, statusGpioPin) {
-    this.id = id;
-    this.name = name;
-    this.actionGpioPin = actionGpioPin;
-    this.statusGpioPin = statusGpioPin;
+import { Document } from 'camo';
+
+export class Door extends Document {
+  constructor() {
+    super();
+
+    this.schema({
+      id: String,
+      name: String,
+      actionGpioPin: Number,
+      statusGpioPin: Number,
+    });
   }
 }
