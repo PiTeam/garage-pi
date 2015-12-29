@@ -4,11 +4,11 @@ import path from 'path';
 
 const PORT = config.get('express.port') || 3000;
 const STATIC_DIR = path.join(__dirname, '..', 'static');
-const VIEWS_DIR  = path.join(__dirname, 'views');
+const VIEWS_DIR = path.join(__dirname, 'views');
 
 import routes from './routes';
 
-let app = express();
+const app = express();
 app.use('/', routes);
 app.set('views', VIEWS_DIR);
 
