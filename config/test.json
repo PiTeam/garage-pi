@@ -1,0 +1,9 @@
+{
+    "express": {
+        "host": "localhost",
+        "port": 5000
+    },
+    "nedb": {
+      "nedb_dir": "/tmp/test-data"
+    }
+}
