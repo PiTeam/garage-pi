@@ -1,7 +1,7 @@
 // import rpio from 'rpio';
 import rpio from '../lib/rpio-mock';
 import * as logService from '../services/log';
-import DOOR_STATUS from '../models/enums/doorStatus.es6';
+import DOOR_STATUS from '../models/enums/doorStatus';
 
 function sendPulseToPin(gpioPin) {
   const PULSE_DURATION = 300;
