@@ -8,9 +8,9 @@ routes.get('/:doorId/status', (req, res) => {
   res.send(doorService.getStatus(doorId));
 });
 
-routes.get('/:doorId/toogle', (req, res) => {
+routes.get('/:doorId/toggle', (req, res) => {
   const doorId = req.params.doorId;
-  res.send(doorService.toogle(doorId));
+  res.send(doorService.toggle(doorId));
 });
 
 export default routes;

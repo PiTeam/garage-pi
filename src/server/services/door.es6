@@ -1,6 +1,7 @@
 // import rpio from 'rpio';
 import rpio from '../lib/rpio-mock';
 import * as logService from '../services/log';
+import DOOR_STATUS from '../models/enums/doorStatus.es6';
 
 function sendPulseToPin(gpioPin) {
   const PULSE_DURATION = 300;
@@ -13,8 +14,12 @@ function sendPulseToPin(gpioPin) {
   logService.log('INFO', 'Setting pin ' + gpioPin + ' OFF');
 }
 
-export function getStatus() {
-  return 'Unknown';
+export function getStatus(door) {
+  if (door.statusGpioPin === null) {
+    return DOOR_STATUS.Unknown;
+  }
+  rpio.setInput(door.statusGpioPin);
+  return rpio.read(door.statusGpioPin) === rpio.HIGH ? DOOR_STATUS.Closed : DOOR_STATUS.Open;
 }
 
 export function toggle(door) {
@@ -22,13 +27,13 @@ export function toggle(door) {
 }
 
 export function open(door) {
-  if (getStatus(door) === 'CLOSED') {
+  if (getStatus(door) === DOOR_STATUS.Closed) {
     sendPulseToPin(door.actionGpioPin);
   }
 }
 
 export function close(door) {
-  if (getStatus(door) === 'OPEN') {
+  if (getStatus(door) === DOOR_STATUS.Open) {
     sendPulseToPin(door.actionGpioPin);
   }
 }
