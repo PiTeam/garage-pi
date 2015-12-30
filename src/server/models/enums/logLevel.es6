@@ -1,5 +1,8 @@
-import { Enum as enumerate } from 'es6-enum';
-
-const LOG_LEVEL = enumerate('DEBUG', 'INFO', 'WARNING', 'ERROR');
+const LOG_LEVEL = {
+  Debug: 'DEBUG',
+  Info: 'INFO',
+  Warning: 'WARNING',
+  Error: 'ERROR',
+};
 
 export default LOG_LEVEL;
