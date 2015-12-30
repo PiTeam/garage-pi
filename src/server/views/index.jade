@@ -5,11 +5,15 @@ html
   body
     h1 Garage-PI
     img(src=qrcode)
-    form(action="/api/door/1/toggle", method="POST")
-      input(type="submit", value="Toggle door")
 
-    form(action="/api/authenticate", method="POST")
-      input(type="submit", value="Authenticate")
+    form(action="/api/auth", method="POST")
+      input(type="hidden", name="username", value="dave")
+      input(type="hidden", name="password", value="garagepi")
+      input(type="submit", value="1. Authenticate (get token)")
+    
+    form(action="/api/door/1/toggle", method="POST")
+      input(type="input", placeholder="Insert token here", name="token")
+      input(type="submit", value="2. Toggle door")
 
     form(action="/api/logout", method="POST")
-      input(type="submit", value="Authenticate")
+      input(type="submit", value="3. Logout")

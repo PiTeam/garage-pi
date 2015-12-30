@@ -37,6 +37,7 @@
   },
   "homepage": "https://github.com/PiGarageDoor/garage-pi#readme",
   "dependencies": {
+    "body-parser": "^1.14.2",
     "camo": "^0.11.2",
     "config": "^1.17.1",
     "express": "^4.13.3",

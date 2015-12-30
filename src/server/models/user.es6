@@ -9,4 +9,8 @@ export default class User extends Document {
       name: String,
     });
   }
+
+  validPassword(password) {
+    return this.token === password;
+  }
 }

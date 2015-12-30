@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import config from 'config';
+import bodyParser from 'body-parser';
 import path from 'path';
 
 const PORT = config.get('express.port') || 3000;
@@ -11,12 +12,14 @@ import routes from './routes';
 
 const app = express();
 app.use(morgan('dev'));
-app.use('/', routes);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true,
+}));
 app.set('views', VIEWS_DIR);
-
 app.set('view engine', 'jade');
 app.use(express.static(STATIC_DIR));
-
+app.use('/', routes);
 
 app.listen(PORT);
 console.log('Server listening on port ' + PORT);
