@@ -12,7 +12,7 @@ routes.get('/:doorId/status', (req, res) => {
   });
 });
 
-routes.get('/:doorId/toggle', (req, res) => {
+routes.post('/:doorId/toggle', (req, res) => {
   doorRepository.loadDoorById(req.params.doorId).then(door => {
     res.send(doorService.toggle(door));
   }).catch(err => {

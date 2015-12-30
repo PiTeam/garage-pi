@@ -5,3 +5,8 @@ html
   body
     h1 Garage-PI
     img(src=qrcode)
+    form(action="/api/door/1/toggle", method="POST")
+      input(type="submit", value="Toggle door without athentication")
+
+    form(action="/api/door/1/toggle", method="POST")
+      input(type="submit", value="Toggle door with athentication")

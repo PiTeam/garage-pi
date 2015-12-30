@@ -1,4 +1,5 @@
 import express from 'express';
+import morgan from 'morgan';
 import config from 'config';
 import path from 'path';
 
@@ -9,10 +10,13 @@ const VIEWS_DIR = path.join(__dirname, 'views');
 import routes from './routes';
 
 const app = express();
+app.use(morgan('dev'));
 app.use('/', routes);
 app.set('views', VIEWS_DIR);
 
 app.set('view engine', 'jade');
 app.use(express.static(STATIC_DIR));
 
+
 app.listen(PORT);
+console.log('Server listening on port ' + PORT);
