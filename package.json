@@ -37,12 +37,13 @@
   },
   "homepage": "https://github.com/PiGarageDoor/garage-pi#readme",
   "dependencies": {
+    "camo": "^0.11.2",
     "config": "^1.17.1",
     "express": "^4.13.3",
     "jade": "^1.11.0",
     "nedb": "^1.5.1",
-    "rpio": "^0.6.6",
-    "camo": "^0.11.2"
+    "qrcode": "^0.4.2",
+    "rpio": "^0.6.6"
   },
   "devDependencies": {
     "babel": "^6.3.26",
