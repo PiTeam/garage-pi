@@ -1,18 +1,14 @@
 const connect = require('camo').connect;
 
-import path from 'path';
 import config from 'config';
-
-const DATABASE_DIR = path.join(__dirname, '..', 'data');
 
 export default class DB {
   _generateDBURI(dbconfig) {
-    return 'nedb://' + path.join(DATABASE_DIR, dbconfig.filename);
+    return 'nedb://' + dbconfig.data_dir;
   }
 
-  constructor(dbname) {
-    const dbconfig = config.get('nedb.' + dbname);
-    console.log(this._generateDBURI(dbconfig));
+  constructor() {
+    const dbconfig = config.get('nedb');
     this.uri = this._generateDBURI(dbconfig);
   }
 

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npm run server",
     "eslint": "eslint --ext es6 src ",
-    "server": "npm run eslint && babel-node src/server/server.es6",
+    "compile": "babel src --out-dir dist",
+    "server": "npm run eslint && babel-node src/server/server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server:dev": "nodemon --exec babel-node -- src/server/server.es6"
   },
@@ -53,6 +54,7 @@
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^2.1.1",
     "eslint-plugin-react": "^3.13.1",
+    "mocha": "^2.3.4",
     "nodemon": "^1.8.1",
     "webpack": "^1.12.9"
   }

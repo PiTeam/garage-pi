@@ -1,6 +1,6 @@
 import { Document } from 'camo';
 
-export class User extends Document {
+export default class User extends Document {
   constructor() {
     super();
 

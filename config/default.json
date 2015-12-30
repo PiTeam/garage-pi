@@ -4,20 +4,6 @@
         "port": 5000
     },
     "nedb": {
-        "doors": {
-            "filename": "doors.db",
-            "autoload": true,
-            "timestampData": true
-        },
-        "users": {
-             "filename": "users.db",
-            "autoload": true,
-            "timestampData": true           
-        },
-        "logs": {
-            "filename": "logs.db",
-            "autoload": true,
-            "timestampData": true            
-        }
+      "data_dir": "/tmp/data"
     }
 }
