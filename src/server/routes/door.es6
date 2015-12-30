@@ -1,6 +1,7 @@
 import { Router as router } from 'express';
 import * as doorRepository from '../repositories/door';
 import * as doorService from '../services/door';
+import { ensureAuthenticated } from '../lib/auth-middleware';
 
 const routes = router();
 
@@ -12,7 +13,7 @@ routes.get('/:doorId/status', (req, res) => {
   });
 });
 
-routes.post('/:doorId/toggle', (req, res) => {
+routes.post('/:doorId/toggle', ensureAuthenticated, (req, res) => {
   doorRepository.loadDoorById(req.params.doorId).then(door => {
     res.send(doorService.toggle(door));
   }).catch(err => {

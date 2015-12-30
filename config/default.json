@@ -1,7 +1,8 @@
 {
     "express": {
         "host": "localhost",
-        "port": 5000
+        "port": 5000,
+        "tokensecret": "lalala"
     },
     "nedb": {
       "nedb_dir": "/tmp/data"
