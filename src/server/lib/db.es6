@@ -1,15 +1,12 @@
 const connect = require('camo').connect;
 
-import config from 'config';
-
 export default class DB {
-  _generateDBURI(dbconfig) {
-    return 'nedb://' + dbconfig.data_dir;
+  _generateDBURI(config) {
+    return 'nedb://' + config.nedb_dir;
   }
 
-  constructor() {
-    const dbconfig = config.get('nedb');
-    this.uri = this._generateDBURI(dbconfig);
+  constructor(config) {
+    this.uri = this._generateDBURI(config);
   }
 
   connect() {

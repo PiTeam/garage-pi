@@ -4,6 +4,6 @@
         "port": 5000
     },
     "nedb": {
-      "data_dir": "/tmp/data"
+      "nedb_dir": "/tmp/data"
     }
 }
