@@ -5,8 +5,16 @@ import config from 'config';
 const dbConfig = config.get('nedb');
 
 export function loadDoorById(doorId) {
-  const db = new DB(dbConfig);
-  db.connect().then(() => {
-    return Door.loadOne({ id: doorId });
+  return new Promise((resolve, reject) => {
+    const db = new DB(dbConfig);
+    db.connect().then(() => {
+      Door.loadOne({ id: doorId }).then(door => {
+        if (!door) {
+          reject(new Error('Door not found.'));
+          return;
+        }
+        resolve(door);
+      });
+    });
   });
 }
