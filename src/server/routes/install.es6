@@ -1,7 +1,7 @@
 import { Router as router } from 'express';
 import * as userRepository from '../repositories/user';
 import * as doorRepository from '../repositories/door';
-
+import { generateRandomPassword } from '../lib/auth';
 const routes = router();
 
 // Path to generate data
@@ -11,8 +11,8 @@ routes.post('/seed', (req, res) => {
     actionGpioPin: 1,
     statusGpioPin: 2,
   }), userRepository.addUser({
-    name: 'Monsonis',
-    token: 456,
+    name: 'Test',
+    token: generateRandomPassword(),
   })]).then(() => {
     res.send('Data seeded');
   }).catch(error => {

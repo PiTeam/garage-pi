@@ -4,16 +4,21 @@ html
     title Garage-PI
   body
     h1 Garage-PI
-    img(src=qrcode)
 
     form(action="/install/seed", method="POST")
       input(type="submit", value="1. Populate test data")
       
-    form(action="/api/auth", method="POST")
-      input(type="hidden", name="username", value="dave")
-      input(type="input", placeholder="Insert QRCode string here", name="token")
-      input(type="submit", value="2. Authenticate (get token)")
-    
-    form(action="/api/door/1/toggle", method="POST")
-      input(type="input", placeholder="Insert token here", name="token")
-      input(type="submit", value="3. Toggle door authenticated API call")
+    p 2. When the DB data has been populated, you will se a QRCode here.
+
+    if user
+      p
+        div Username: #{user.name}
+        img(src=imgdata)
+      form(action="/api/auth", method="POST")
+        input(type="hidden", name="username", value="Test")
+        input(type="input", placeholder="Insert QRCode string here", name="password")
+        input(type="submit", value="2. Authenticate (get token)")
+      
+      form(action="/api/door/1/toggle", method="POST")
+        input(type="input", placeholder="Insert token here", name="token")
+        input(type="submit", value="3. Toggle door authenticated API call")
