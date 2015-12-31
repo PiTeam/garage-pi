@@ -18,3 +18,18 @@ export function loadDoorById(doorId) {
     });
   });
 }
+
+export function addDoor(door) {
+  return new Promise((resolve, reject) => {
+    const db = new DB(dbConfig);
+    db.connect().then(() => {
+      Door.create(door).save().then(savedDoor => {
+        if (!savedDoor) {
+          reject(new Error('Cannot save Door.'));
+          return;
+        }
+        resolve(savedDoor);
+      });
+    });
+  });
+}

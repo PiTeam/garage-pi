@@ -18,3 +18,18 @@ export function loadUserByName(username) {
     });
   });
 }
+
+export function addUser(user) {
+  return new Promise((resolve, reject) => {
+    const db = new DB(dbConfig);
+    db.connect().then(() => {
+      User.create(user).save().then(savedUser => {
+        if (!savedUser) {
+          reject(new Error('Cannot save User.'));
+          return;
+        }
+        resolve(savedUser);
+      });
+    });
+  });
+}
