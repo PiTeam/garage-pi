@@ -16,22 +16,25 @@ export function loadDoorById(doorId) {
   return new Promise((resolve, reject) => {
     Door.loadOne({ _id: doorId }).then(door => {
       if (!door) {
-        reject(new Error('Door not found.'));
-        return;
+        return reject(new Error('Door not found.'));
       }
       resolve(door);
+    }).catch(err => {
+      reject(err);
     });
   });
 }
 
 export function addDoor(door) {
   return new Promise((resolve, reject) => {
+    console.log(door);
     Door.create(door).save().then(savedDoor => {
       if (!savedDoor) {
-        reject(new Error('Cannot save Door.'));
-        return;
+        return reject(new Error('Cannot save Door.'));
       }
       resolve(savedDoor);
+    }).catch(err => {
+      reject(err);
     });
   });
 }

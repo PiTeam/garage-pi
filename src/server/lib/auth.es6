@@ -6,7 +6,7 @@ import crypto from 'crypto';
 const tokenSecret = config.get('express').tokensecret;
 
 export function generateRandomPassword() {
-  crypto.randomBytes(20).toString('hex');
+  return crypto.randomBytes(20).toString('hex');
 }
 
 export function createJWT(user) {

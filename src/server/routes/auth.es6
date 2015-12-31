@@ -6,6 +6,7 @@ const routes = router();
 
 routes.post('/', (req, res) => {
   userRepository.loadUserByName(req.body.username).then(user => {
+    console.log(user, req.body.password);
     if (user && user.validPassword(req.body.password)) {
       return res.send({ token: createJWT(user) });
     }
