@@ -4,6 +4,21 @@ import config from 'config';
 
 const dbConfig = config.get('nedb');
 
+export function loadDoors(query) {
+  return new Promise((resolve, reject) => {
+    const db = new DB(dbConfig);
+    db.connect().then(() => {
+      Door.loadMany(query).then(doors => {
+        if (!doors) {
+          reject(new Error('Doors not found.'));
+          return;
+        }
+        resolve(doors);
+      });
+    });
+  });
+}
+
 export function loadDoorById(doorId) {
   return new Promise((resolve, reject) => {
     const db = new DB(dbConfig);

@@ -5,6 +5,17 @@ import { ensureAuthenticated } from '../lib/auth-middleware';
 
 const routes = router();
 
+routes.get('/', (req, res) => {
+  doorRepository.loadDoors().then(doors => {
+    doors.map(door => {
+      door.status = doorService.getStatus(door);
+    });
+    return res.send(doors);
+  }).catch(err => {
+    res.status(500).send(err.message);
+  });
+});
+
 routes.get('/:doorId/status', (req, res) => {
   doorRepository.loadDoorById(req.params.doorId).then(door => {
     return res.send(doorService.getStatus(door));
