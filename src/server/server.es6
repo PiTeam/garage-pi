@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import config from 'config';
 import bodyParser from 'body-parser';
 import path from 'path';
+import DB from './lib/db';
 
 const PORT = config.get('express.port') || 3000;
 const STATIC_DIR = path.join(__dirname, '..', 'static');
@@ -21,5 +22,8 @@ app.set('view engine', 'jade');
 app.use(express.static(STATIC_DIR));
 app.use('/', routes);
 
-app.listen(PORT);
-console.log('Server listening on port ' + PORT);
+const db = new DB(config.get('nedb'));
+db.connect().then(() => {
+  app.listen(PORT);
+  console.log('Server listening on port ' + PORT);
+});
