@@ -1,9 +1,9 @@
 import { expect } from 'chai';
-import DB from '../../src/server/lib/db';
-import Door from '../../src/server/models/door';
+import DB from '../../../src/server/lib/db';
+import User from '../../../src/server/models/user';
 import config from 'config';
 
-describe('Door model', () => {
+describe('User model', () => {
   let dbConn;
   before(done => {
     const dbconfig = config.get('nedb');
@@ -30,18 +30,16 @@ describe('Door model', () => {
     });
   });
 
-  it('should create a new door', done => {
-    const door = Door.create({
+  it('should create a new user', done => {
+    const user = User.create({
       name: 'test',
-      actionGpioPin: 11,
-      statusGpioPin: 1
+      password: 'ye',
     });
 
-    door.save().then(dbDoor => {
-      expect(dbDoor.constructor.name).to.equal('Door');
-      expect(dbDoor.name).to.equal('test');
-      expect(dbDoor.actionGpioPin).to.equal(11);
-      expect(dbDoor.statusGpioPin).to.equal(1);
+    user.save().then(dbUser => {
+      expect(dbUser.constructor.name).to.equal('User');
+      expect(dbUser.name).to.equal('test');
+      expect(dbUser.password).to.equal('ye');
       done();
     }).catch(err => {
       console.log(err.message);

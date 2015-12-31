@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import DB from '../src/server/lib/db';
+import DB from '../../src/server/lib/db';
 import config from 'config';
 
 describe('NEDB database', () => {
