@@ -15,7 +15,7 @@ function sendPulseToPin(gpioPin) {
 }
 
 export function getStatus(door) {
-  if (door.statusGpioPin === null) {
+  if (door.statusGpioPin === null || door.statusGpioPin === undefined) {
     return DOOR_STATUS.Unknown;
   }
   rpio.setInput(door.statusGpioPin);
@@ -27,13 +27,23 @@ export function toggle(door) {
 }
 
 export function open(door) {
-  if (getStatus(door) === DOOR_STATUS.Closed) {
-    sendPulseToPin(door.actionGpioPin);
+  const doorStatus = getStatus(door);
+  if (doorStatus === DOOR_STATUS.Unknown) {
+    throw new Error('You can not open a door without sensor status');
   }
+  if (doorStatus === DOOR_STATUS.Open) {
+    throw new Error('Cannot open an already open door.');
+  }
+  sendPulseToPin(door.actionGpioPin);
 }
 
 export function close(door) {
-  if (getStatus(door) === DOOR_STATUS.Open) {
-    sendPulseToPin(door.actionGpioPin);
+  const doorStatus = getStatus(door);
+  if (doorStatus === DOOR_STATUS.Unknown) {
+    throw new Error('You can not close a door without sensor status');
   }
+  if (doorStatus === DOOR_STATUS.Closed) {
+    throw new Error('Cannot close an already closed door.');
+  }
+  sendPulseToPin(door.actionGpioPin);
 }
