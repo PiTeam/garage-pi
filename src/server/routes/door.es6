@@ -1,7 +1,7 @@
 import { Router as router } from 'express';
 import * as doorRepository from '../repositories/door';
 import * as doorService from '../services/door';
-import { ensureAuthenticated } from '../lib/auth-middleware';
+import { ensureAuthenticated } from '../lib/auth';
 
 const routes = router();
 

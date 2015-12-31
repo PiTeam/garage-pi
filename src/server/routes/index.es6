@@ -1,6 +1,7 @@
 import { Router as router } from 'express';
 import doorRoutes from './door';
 import authRoutes from './auth';
+import testRoutes from './test';
 import QRCode from '../lib/qrcode';
 
 const routes = router();
@@ -8,6 +9,7 @@ const routes = router();
 // Add new REST Endpoints here
 routes.use('/api/door', doorRoutes);
 routes.use('/api/auth', authRoutes);
+routes.use('/api/test', testRoutes);
 
 // Default response, REMOVE when ready
 routes.get('/', (req, res) => {

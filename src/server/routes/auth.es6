@@ -1,6 +1,6 @@
 import { Router as router } from 'express';
 import * as userRepository from '../repositories/user';
-import { createJWT } from '../lib/auth-middleware';
+import { createJWT } from '../lib/auth';
 
 const routes = router();
 
