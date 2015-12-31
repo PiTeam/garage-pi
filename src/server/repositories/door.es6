@@ -8,7 +8,7 @@ export function loadDoorById(doorId) {
   return new Promise((resolve, reject) => {
     const db = new DB(dbConfig);
     db.connect().then(() => {
-      Door.loadOne({ id: doorId }).then(door => {
+      Door.loadOne({ _id: doorId }).then(door => {
         if (!door) {
           reject(new Error('Door not found.'));
           return;
