@@ -3,7 +3,7 @@ import config from 'config';
 import moment from 'moment';
 import crypto from 'crypto';
 
-const tokenSecret = config.get('express').tokensecret;
+const token = config.get('auth').token;
 
 export function generateRandomPassword() {
   return crypto.randomBytes(20).toString('hex');
@@ -13,22 +13,22 @@ export function createJWT(user) {
   const payload = {
     sub: user._id,
     iat: moment().unix(),
-    exp: moment().add(14, 'days').unix(),
+    exp: moment().add(token.expire.value, token.expire.unit).unix(),
   };
-  return jwt.sign(payload, tokenSecret);
+  return jwt.sign(payload, token.secret);
 }
 
 export function ensureAuthenticated(req, res, next) {
-  const token = req.body.token || req.query.token || req.headers['x-access-token'];
+  const userToken = req.body.token || req.query.token || req.headers['x-access-token'];
 
-  if (!token) {
+  if (!userToken) {
     return res.status(401).send({ message: 'Please make sure your request has an Authorization header' });
   }
 
   let payload;
 
   try {
-    payload = jwt.verify(token, tokenSecret);
+    payload = jwt.verify(userToken, token.seecret);
   } catch (err) {
     return res.status(401).send({ message: err.message });
   }

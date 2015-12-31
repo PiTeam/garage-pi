@@ -1,10 +1,18 @@
 {
     "express": {
         "host": "localhost",
-        "port": 5000,
-        "tokensecret": "lalala"
+        "port": 5000
     },
     "nedb": {
       "nedb_dir": "/tmp/data"
+    },
+    "auth": {
+      "token": {
+        "secret": "lalala",
+        "expire": {
+          "unit": "hours",
+          "value": 8
+        }
+      }
     }
 }

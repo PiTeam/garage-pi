@@ -5,9 +5,12 @@ export default class QRCode {
     this.user = user;
   }
 
-  generate(hash) {
-    return new Promise(resolve => {
-      qrcode.toDataURL(hash, (err, url) => {
+  generate(password) {
+    return new Promise((resolve, reject) => {
+      qrcode.toDataURL(password, (err, url) => {
+        if (err) {
+          return reject(err);
+        }
         resolve(url);
       });
     });
