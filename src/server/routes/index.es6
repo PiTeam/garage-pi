@@ -22,8 +22,8 @@ routes.get('/', (req, res) => {
     if (!user) {
       return res.render('index');
     }
-    const qr = new QRCode(user.name);
-    qr.generate(user.password).then(imgdata => {
+    const qr = new QRCode(user);
+    qr.generate().then(imgdata => {
       return res.render('index', { imgdata, user });
     }).catch(err => {
       res.status(500).send(err.message);

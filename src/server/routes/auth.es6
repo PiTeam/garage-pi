@@ -1,12 +1,15 @@
 import { Router as router } from 'express';
 import * as userRepository from '../repositories/user';
 import { createJWT } from '../lib/auth';
+import QRCode from '../lib/qrcode';
 
 const routes = router();
 
 routes.post('/', (req, res) => {
-  userRepository.loadUserByName(req.body.username).then(user => {
-    if (user && user.validPassword(req.body.password)) {
+  const userData = QRCode.decode(req.body.qrcode);
+
+  userRepository.loadUserByName(userData.name).then(user => {
+    if (user && user.validPassword(userData.password)) {
       return res.send({ token: createJWT(user) });
     }
     return res.status(401).send({ message: 'Invalid email and/or password' });

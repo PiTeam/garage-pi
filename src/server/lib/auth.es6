@@ -28,7 +28,7 @@ export function ensureAuthenticated(req, res, next) {
   let payload;
 
   try {
-    payload = jwt.verify(userToken, token.seecret);
+    payload = jwt.verify(userToken, token.secret);
   } catch (err) {
     return res.status(401).send({ message: err.message });
   }

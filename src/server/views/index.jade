@@ -11,12 +11,9 @@ html
     p 2. When the DB data has been populated, you will se a QRCode here.
 
     if user
-      p
-        div Username: #{user.name}
-        img(src=imgdata)
+      img(src=imgdata)
       form(action="/api/auth", method="POST")
-        input(type="hidden", name="username", value="Test")
-        input(type="input", placeholder="Insert QRCode string here", name="password")
+        input(type="input", placeholder="Insert QRCode string here", name="qrcode")
         input(type="submit", value="2. Authenticate (get token)")
       
       form(action="/api/door/1/toggle", method="POST")
