@@ -5,12 +5,12 @@ export default class User extends Document {
     super();
 
     this.schema({
-      token: String,
       name: String,
+      password: String,
     });
   }
 
   validPassword(password) {
-    return this.token === password;
+    return this.password === password;
   }
 }

@@ -12,7 +12,7 @@ routes.post('/seed', (req, res) => {
     statusGpioPin: 2,
   }), userRepository.addUser({
     name: 'Test',
-    token: generateRandomPassword(),
+    password: generateRandomPassword(),
   })]).then(() => {
     res.send('Data seeded');
   }).catch(error => {

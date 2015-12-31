@@ -23,7 +23,7 @@ routes.get('/', (req, res) => {
       return res.render('index');
     }
     const qr = new QRCode(user.name);
-    qr.generate(user.token).then(imgdata => {
+    qr.generate(user.password).then(imgdata => {
       return res.render('index', { imgdata, user });
     });
   }).catch(err => {
