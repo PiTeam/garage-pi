@@ -8,12 +8,9 @@ html
 
     form(action="/api/auth", method="POST")
       input(type="hidden", name="username", value="dave")
-      input(type="hidden", name="password", value="garagepi")
+      input(type="input", placeholder="Insert QRCode string here", name="token")
       input(type="submit", value="1. Authenticate (get token)")
     
     form(action="/api/door/1/toggle", method="POST")
       input(type="input", placeholder="Insert token here", name="token")
-      input(type="submit", value="2. Toggle door")
-
-    form(action="/api/logout", method="POST")
-      input(type="submit", value="3. Logout")
+      input(type="submit", value="2. Toggle door authenticated API call")

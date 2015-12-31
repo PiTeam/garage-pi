@@ -7,7 +7,6 @@ const routes = router();
 routes.post('/', (req, res) => {
   userRepository.loadUserByName(req.body.username).then(user => {
     if (user && user.validPassword(req.body.password)) {
-      console.log('token', createJWT(user));
       return res.send({ token: createJWT(user) });
     }
     return res.status(401).send({ message: 'Invalid email and/or password' });
