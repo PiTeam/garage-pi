@@ -27,7 +27,6 @@ export function loadDoorById(doorId) {
 
 export function addDoor(door) {
   return new Promise((resolve, reject) => {
-    console.log(door);
     Door.create(door).save().then(savedDoor => {
       if (!savedDoor) {
         return reject(new Error('Cannot save Door.'));
