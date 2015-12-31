@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    title Garage Doors
+    link(rel='stylesheet', href='/css/pure-min.css')
+  body
+    h1 Doors
+
+    each door in doors
+      div(class='pure-g')
+        div(class='pure-u-1-5')
+          a(href='')
+            img(src='img/' + door.status.toLowerCase() + '.png')
+        div(class='pure-u-4-5')
+          =door.name
+          br
+          em
+            =door.status.toLowerCase()
