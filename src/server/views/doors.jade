@@ -4,10 +4,12 @@ html
     title Garage Doors
     link(rel='stylesheet', href='/css/pure-min.css')
     link(rel='stylesheet', href='/css/frontend.css')
+    script(src='/js/zepto.min.js')
+    script(src='/js/frontend.js')
   body
     h1 Doors
     each door in doors
-      div(class='garage-door' data-door-id=door.id)
+      div(class='garage-door')
         div(class='garage-door-icon')
           img(src='img/' + door.status.toLowerCase() + '.png')
         div(class='garage-door-info')
@@ -16,9 +18,9 @@ html
         div(class='garage-door-action')
           case door.status
             when 'OPEN'
-              a(class='pure-button close-action') Close
+              a(class='pure-button close-action' data-door-id=door.id data-door-action='close') Close
             when 'CLOSED'
-              a(class='pure-button open-action') Open
+              a(class='pure-button open-action' data-door-id=door.id data-door-action='open') Open
             default
-              a(class='pure-button toggle-action') Toggle
+              a(class='pure-button toggle-action' data-door-id=door.id data-door-action='toggle') Toggle
           
