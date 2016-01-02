@@ -5,17 +5,23 @@ html
   body
     h1 Garage-PI
 
-    form(action="/install/seed", method="POST")
-      input(type="submit", value="1. Populate test data")
-      
-    p 2. When the DB data has been populated, you will se a QRCode here.
-
     if user
-      img(src=imgdata)
-      form(action="/api/auth", method="POST")
-        input(type="input", placeholder="Insert QRCode string here", name="qrcode")
-        input(type="submit", value="2. Authenticate (get token)")
+      p Once the database has been populated, you can authenticate, for example, with these credentials
+      p
+       | User: 
+       b #{ user.name }
+       |, Password: 
+       b #{ user.password }
+       |, or QRCode:
+      p
+        img(src=imgdata)
       
-      form(action="/api/door/1/toggle", method="POST")
-        input(type="input", placeholder="Insert token here", name="token")
-        input(type="submit", value="3. Toggle door authenticated API call")
+      p
+        | Now you could 
+        a(href="/auth") authenticate.
+      p 
+        | And finally, access 
+        a(href="/doors") door management
+    else
+      form(action="/install/seed", method="POST")
+        input(type="submit", value="First of all, Populate test data")
