@@ -1,0 +1,62 @@
+h1, h2, h3, h4, p {
+  margin: 0 0 1em 0;
+}
+
+h1 {
+  background-color: #0078e7;
+  color: white;
+  text-align: center;
+  padding: 5px;
+  margin-top: 0;
+  margin-bottom: 0.25em;
+}
+
+.garage-door {
+  overflow: hidden;
+  border-bottom: 1px solid #ddd;
+  padding: 5px 0;
+}
+
+.garage-door-icon {
+  width: 115px;
+  padding: 0px 15px;
+  float: left;
+}
+
+.garage-door-info {
+  float: left;
+  padding: 12px 0 0 0;
+}
+
+.garage-door-info h2 {
+  margin: 0 0 0 0;
+}
+
+.garage-door-info p {
+  color: gray;
+  font-style: italic;
+}
+
+.garage-door-action {
+  float: right;
+  padding: 12px 15px 0 15px; 
+}
+
+.garage-door-action a {
+  font-size: 140%;
+  border-radius: 4px;
+  width: 6em;
+  color: white;
+}
+
+.close-action {
+  background-color: red;  
+}
+
+.open-action {
+  background-color: limegreen;
+}
+
+.toggle-action {
+  background-color: #0078e7;
+}
