@@ -32,7 +32,7 @@ routes.post('/:doorId/toggle', ensureAuthenticated, (req, res) => {
   });
 });
 
-routes.get('/:doorId/open', (req, res) => {
+routes.post('/:doorId/open', ensureAuthenticated, (req, res) => {
   doorRepository.loadDoorById(req.params.doorId).then(door => {
     return res.send(doorService.open(door));
   }).catch(err => {
@@ -40,7 +40,7 @@ routes.get('/:doorId/open', (req, res) => {
   });
 });
 
-routes.get('/:doorId/close', (req, res) => {
+routes.post('/:doorId/close', ensureAuthenticated, (req, res) => {
   doorRepository.loadDoorById(req.params.doorId).then(door => {
     return res.send(doorService.close(door));
   }).catch(err => {
