@@ -15,7 +15,8 @@ html
        b #{ user.name }
        |, Password: 
        b #{ user.password }
-       |, or QRCode:
+      p Or QRCode:
+      div(style="width: 40%; background: #EFEFEF; padding: 4px; word-wrap: break-word;") #{ qrcode }
       p
         img(src=imgdata)
       p 

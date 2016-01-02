@@ -60,3 +60,31 @@ h1 {
 .toggle-action {
   background-color: #0078e7;
 }
+
+div.auth {
+  text-align: center;
+}
+
+div.auth h2 {
+  color: #444;
+}
+form.auth {
+
+  width: 60%;
+  min-width: 60%;
+  margin: auto;
+}
+
+form.auth input {
+  width: 100%;
+  height: 2em;
+  padding: 5px;
+  margin-bottom: 1em;
+}
+
+hr {
+  clear: both;
+  border: 1px solid #EEE;
+  width: 40%;
+  margin-top: 6em;
+}

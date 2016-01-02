@@ -6,14 +6,11 @@ const token = config.get('auth').token;
 
 export default class QRCode {
   constructor(user) {
-    this.user = user;
-  }
-  _sign() {
     const payload = {
-      name: this.user.name,
-      password: this.user.password,
+      name: user.name,
+      password: user.password,
     };
-    return jwt.sign(payload, token.secret);
+    this.qrcode = jwt.sign(payload, token.secret);
   }
 
   static decode(qrcodeString) {
@@ -28,9 +25,13 @@ export default class QRCode {
     return payload;
   }
 
-  generate() {
+  getQRCodeText() {
+    return this.qrcode;
+  }
+
+  generateImageData() {
     return new Promise((resolve, reject) => {
-      qrcode.toDataURL(this._sign(), (err, url) => {
+      qrcode.toDataURL(this.qrcode, (err, url) => {
         if (err) {
           return reject(err);
         }

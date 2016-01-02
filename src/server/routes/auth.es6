@@ -3,7 +3,7 @@ import { Router as router } from 'express';
 const routes = router();
 
 routes.get('/', (req, res) => {
-  res.send('auth page');
+  return res.render('auth');
 });
 
 export default routes;
