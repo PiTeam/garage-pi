@@ -1,15 +1,13 @@
 import { Router as router } from 'express';
-import apiRoutes from './api';
 import doorRoutes from './door';
 import authRoutes from './auth';
-import testRoutes from './test';
+import setupRoutes from './setup';
 
 const routes = router();
 
 // Add new REST Endpoints here
-routes.use('/api', apiRoutes);
 routes.use('/door', doorRoutes);
 routes.use('/auth', authRoutes);
-routes.use('/', testRoutes);
+routes.use('/setup', setupRoutes);
 
 export default routes;
