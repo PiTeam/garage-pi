@@ -13,12 +13,9 @@ html
       form.auth
         input(type="input", placeholder="Username", name="username", required="required")
         input(type="input", placeholder="Password", name="password", required="required")
-        div(class='garage-door-action')
-          a(class='pure-button toggle-action') Login
-
       <hr />
       <h2>Or authenticate with QRCode token</h2>
       form.auth
-        input(type="input", placeholder="QRCode token", name="username", required="required")
+        input(type="input", placeholder="QRCode token", name="qrcode", required="required")
         div(class='garage-door-action')
-          a(class='pure-button toggle-action') Login
+          a.login(class='pure-button toggle-action') Login

@@ -49,6 +49,18 @@ h1 {
   color: white;
 }
 
+.auth-action {
+  float: right;
+  padding: 12px 15px 0 15px; 
+}
+
+.auth-action a {
+  font-size: 140%;
+  border-radius: 4px;
+  width: 6em;
+  color: white;
+}
+
 .close-action {
   background-color: red;  
 }
@@ -59,6 +71,10 @@ h1 {
 
 .toggle-action {
   background-color: #0078e7;
+}
+
+.logout-action {
+  background: rgb(223, 117, 20);
 }
 
 div.auth {
@@ -86,5 +102,6 @@ hr {
   clear: both;
   border: 1px solid #EEE;
   width: 40%;
-  margin-top: 6em;
+  margin-top: 2em;
+  margin-bottom: 2em;
 }

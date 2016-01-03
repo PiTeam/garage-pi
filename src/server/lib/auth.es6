@@ -19,7 +19,7 @@ export function createJWT(user) {
 }
 
 export function ensureAuthenticated(req, res, next) {
-  const userToken = req.body.token || req.query.token || req.headers['x-access-token'];
+  const userToken = req.body.token || req.query.token || req.headers['x-auth-token'];
 
   if (!userToken) {
     return res.status(401).send({ message: 'Please make sure your request has an Authorization header' });

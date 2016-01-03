@@ -5,7 +5,7 @@ html
     link(rel='stylesheet', href='/css/pure-min.css')
     link(rel='stylesheet', href='/css/frontend.css')
     script(src='/js/zepto.min.js')
-    script(src='/js/frontend.js')
+    script(src='/js/door.js')
   body
     h1 Doors
     each door in doors
@@ -23,4 +23,6 @@ html
               a(class='pure-button open-action' data-door-id=door.id data-door-action='open') Open
             default
               a(class='pure-button toggle-action' data-door-id=door.id data-door-action='toggle') Toggle
-          
+
+    div(class='auth-action')
+      a(class='pure-button logout-action', href='/api/logout') Logout       
