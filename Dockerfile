@@ -6,9 +6,7 @@ RUN apk add --update make gcc g++ python pixman cairo-gobject pango libjpeg gifl
 ADD . .
 
 # If you need npm, don't use a base tag
-RUN npm install
-
-RUN npm run build
+RUN npm install && npm run build
 
 # If you had native dependencies you can now remove build tools
 RUN apk del make gcc g++ python && \
