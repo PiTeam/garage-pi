@@ -23,11 +23,11 @@ $(function() {
       }
     });
   });
-  
+
   $('.auth-action a').on('click', function(event) {
     event.preventDefault();
     event.stopPropagation();
-    
+
     window.localStorage.removeItem('auth_token');
     window.location.href = '/';
   });

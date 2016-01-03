@@ -6,10 +6,11 @@
   "scripts": {
     "start": "npm run server",
     "eslint": "eslint --ext es6 src ",
-    "compile": "babel src --out-dir dist",
+    "build": "babel src --out-dir dist; cp -va src/server/views dist/server/views; cp -va src/static dist/static",
     "server": "npm run eslint && babel-node src/server/server",
     "test": "NODE_ENV=test mocha $(find test -name '*.es6')",
-    "server:dev": "nodemon --exec babel-node -- src/server/server.es6"
+    "server:dev": "nodemon --exec babel-node -- src/server/server.es6",
+    "server:prod": "node dist/server/server.js"
   },
   "repository": {
     "type": "git",
