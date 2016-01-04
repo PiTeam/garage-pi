@@ -12,8 +12,8 @@ routes.get('/', (req, res) => {
     }
     const qr = new QRCode(user);
     const qrcode = qr.getQRCodeText();
-    qr.generateImageData().then(imgdata => {
-      return res.render('index', { imgdata, user, qrcode });
+    qr.generateImageData().then(svgdata => {
+      return res.render('index', { svgdata, user, qrcode });
     }).catch(err => {
       res.status(500).send(err.message);
     });

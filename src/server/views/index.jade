@@ -17,8 +17,7 @@ html
        b #{ user.password }
       p Or QRCode:
       div(style="width: 40%; background: #EFEFEF; padding: 4px; word-wrap: break-word;") #{ qrcode }
-      p
-        img(src=imgdata)
+      div(style="width: 400px")!=svgdata
       p 
         | And finally, access 
         a(href="/door") door management

@@ -47,7 +47,6 @@
     "moment": "^2.10.6",
     "morgan": "^1.6.1",
     "nedb": "^1.5.1",
-    "qrcode": "^0.4.2",
     "rpio": "^0.6.6"
   },
   "devDependencies": {
@@ -59,6 +58,7 @@
     "chai": "^3.4.1",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^2.1.1",
+    "eslint-plugin-react": "^3.13.1",
     "mocha": "^2.3.4",
     "nodemon": "^1.8.1",
     "webpack": "^1.12.9"

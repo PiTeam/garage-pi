@@ -1,4 +1,4 @@
-import qrcode from 'qrcode';
+import qr from 'qr-image';
 import jwt from 'jsonwebtoken';
 import config from 'config';
 
@@ -29,13 +29,25 @@ export default class QRCode {
     return this.qrcode;
   }
 
+  _streamToString(stream, cb) {
+    const chunks = [];
+    stream.on('data', (chunk) => {
+      chunks.push(chunk);
+    });
+    stream.on('end', () => {
+      cb(chunks.join(''));
+    });
+  }
+
   generateImageData() {
     return new Promise((resolve, reject) => {
-      qrcode.toDataURL(this.qrcode, (err, url) => {
-        if (err) {
-          return reject(err);
+      const stream = qr.image(this.qrcode, { type: 'svg' });
+
+      this._streamToString(stream, data => {
+        if (!data) {
+          return reject(false);
         }
-        resolve(url);
+        resolve(data);
       });
     });
   }
