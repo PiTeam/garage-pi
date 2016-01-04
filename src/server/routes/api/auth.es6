@@ -2,6 +2,7 @@ import { Router as router } from 'express';
 import * as userRepository from '../../repositories/user';
 import { createJWT } from '../../lib/auth';
 import QRCode from '../../lib/qrcode';
+import { ensureAuthenticated } from '../../lib/auth';
 
 const routes = router();
 
@@ -37,6 +38,10 @@ routes.post('/', (req, res) => {
   }).catch(err => {
     res.status(500).send(err.message);
   });
+});
+
+routes.get('/', ensureAuthenticated, (req, res) => {
+  res.status(200).send('ok');
 });
 
 export default routes;
