@@ -15,7 +15,6 @@ routes.post('/', (req, res) => {
     };
   } else if (req.body.qrcode) {
     const userData = QRCode.decode(req.body.qrcode);
-    console.log(userData);
 
     if (!userData) {
       return res.status(401).send({ message: 'Invalid authentication data' });
