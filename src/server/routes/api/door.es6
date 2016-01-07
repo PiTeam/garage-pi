@@ -7,7 +7,7 @@ const routes = router();
 
 routes.get('/', (req, res) => {
   doorRepository.loadDoors().then(doors => {
-    const responseDoors = doors.map(door => {
+    const publicInfoDoors = doors.map(door => {
       return {
         id: door.id,
         name: door.name,
@@ -16,7 +16,7 @@ routes.get('/', (req, res) => {
         status: doorService.getStatus(door),
       };
     });
-    return res.send(responseDoors);
+    return res.send(publicInfoDoors);
   }).catch(err => {
     res.status(500).send(err.message);
   });
