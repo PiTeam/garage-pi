@@ -7,10 +7,13 @@ const routes = router();
 routes.get('/', (req, res) => {
   doorRepository.loadDoors().then(doors => {
     const userDoors = doors.map(door => {
-      const status = {
+      return {
+        id: door.id,
+        name: door.name,
+        actionGpioPin: door.actionGpioPin,
+        statusGpioPin: door.statusGpioPin,
         status: doorService.getStatus(door),
       };
-      return Object.assign({}, door, status);
     });
     return res.render('door', { doors: userDoors });
   }).catch(err => {

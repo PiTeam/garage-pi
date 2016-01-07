@@ -8,12 +8,14 @@ const routes = router();
 routes.get('/', (req, res) => {
   doorRepository.loadDoors().then(doors => {
     const responseDoors = doors.map(door => {
-      const status = {
+      return {
+        id: door.id,
+        name: door.name,
+        actionGpioPin: door.actionGpioPin,
+        statusGpioPin: door.statusGpioPin,
         status: doorService.getStatus(door),
       };
-      return Object.assign({}, door, status);
     });
-    console.log(responseDoors);
     return res.send(responseDoors);
   }).catch(err => {
     res.status(500).send(err.message);
