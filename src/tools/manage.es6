@@ -54,7 +54,8 @@ function addToCollection(modelName, jsonfile) {
 function parseCommandLine() {
   manager
     .command('add [collection] [file.json]')
-    .description('add a new record to the collection, if no json file is passed a random one will be inserted')
+    .description(`add a new record to the collection,
+ if no json file is passed a random one will be inserted`)
     .action(addToCollection);
 
   manager.parse(process.argv);

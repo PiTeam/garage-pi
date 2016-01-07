@@ -22,7 +22,9 @@ export function ensureAuthenticated(req, res, next) {
   const userToken = req.body.token || req.query.token || req.headers['x-auth-token'];
 
   if (!userToken) {
-    return res.status(401).send({ message: 'Please make sure your request has an Authorization header' });
+    return res.status(401).send({
+      message: 'Please make sure your request has an Authorization header',
+    });
   }
 
   let payload;
@@ -36,6 +38,5 @@ export function ensureAuthenticated(req, res, next) {
   if (!payload.exp || payload.exp <= moment().unix()) {
     return res.status(401).send({ message: 'Token has expired' });
   }
-  req.user = payload.sub;
   next();
 }

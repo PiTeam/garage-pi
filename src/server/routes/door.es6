@@ -7,7 +7,8 @@ const routes = router();
 routes.get('/', (req, res) => {
   doorRepository.loadDoors().then(userDoors => {
     userDoors.map(door => {
-      door.status = doorService.getStatus(door);
+      const status = doorService.getStatus(door);
+      return Object.assign({}, status, door);
     });
     return res.render('door', { doors: userDoors });
   }).catch(err => {

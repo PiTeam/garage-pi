@@ -7,10 +7,12 @@ const routes = router();
 
 routes.get('/', (req, res) => {
   doorRepository.loadDoors().then(doors => {
-    doors.map(door => {
-      door.status = doorService.getStatus(door);
+    const responseDoors = doors.map(door => {
+      const status = doorService.getStatus(door);
+      return Object.assign({}, status, door);
     });
-    return res.send(doors);
+    console.log(responseDoors);
+    return res.send(responseDoors);
   }).catch(err => {
     res.status(500).send(err.message);
   });
