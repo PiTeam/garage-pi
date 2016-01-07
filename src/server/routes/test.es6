@@ -5,7 +5,7 @@ import QRCode from '../lib/qrcode';
 const routes = router();
 
 routes.get('/', (req, res) => {
-  userRepository.loadUserByName('Test').then(user => {
+  userRepository.loadUserByName('Admin User').then(user => {
     if (!user) {
       return res.render('index');
     }

@@ -7,6 +7,10 @@ export default class User extends Document {
     this.schema({
       name: String,
       password: String,
+      admin: {
+        type: Boolean,
+        default: false,
+      },
     });
   }
 

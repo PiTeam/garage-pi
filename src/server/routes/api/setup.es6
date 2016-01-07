@@ -11,8 +11,9 @@ routes.post('/seed', (req, res) => {
     actionGpioPin: 1,
     statusGpioPin: 2,
   }), userRepository.addUser({
-    name: 'Test',
+    name: 'Admin User',
     password: generateRandomPassword(),
+    admin: true,
   })]).then(() => {
     res.status(200).send({ message: 'Data seeded' });
   }).catch(error => {
