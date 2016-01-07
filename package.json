@@ -8,6 +8,7 @@
     "eslint": "eslint --ext es6 src ",
     "build": "mkdir -p dist/server; cp -va src/server/views dist/server/; cp -va src/static dist; babel src --out-dir dist",
     "server": "npm run eslint && babel-node src/server/server",
+    "manage": "babel-node src/tools/manage",
     "test": "NODE_ENV=test mocha $(find test -name '*.es6')",
     "server:dev": "nodemon --exec babel-node -- src/server/server.es6",
     "server:prod": "node dist/server/server.js"
@@ -57,9 +58,11 @@
     "babel-eslint": "^5.0.0-beta6",
     "babel-preset-es2015": "^6.3.13",
     "chai": "^3.4.1",
+    "commander": "^2.9.0",
     "eslint": "^1.10.3",
-    "eslint-config-airbnb": "^2.1.1",
+    "eslint-config-airbnb": "^3.0.2",
     "eslint-plugin-react": "^3.13.1",
+    "faker": "^3.0.1",
     "mocha": "^2.3.4",
     "nodemon": "^1.8.1",
     "webpack": "^1.12.9"

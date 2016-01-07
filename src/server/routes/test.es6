@@ -4,7 +4,6 @@ import QRCode from '../lib/qrcode';
 
 const routes = router();
 
-// Default response, REMOVE when ready
 routes.get('/', (req, res) => {
   userRepository.loadUserByName('Test').then(user => {
     if (!user) {
