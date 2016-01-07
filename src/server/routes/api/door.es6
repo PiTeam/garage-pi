@@ -8,8 +8,10 @@ const routes = router();
 routes.get('/', (req, res) => {
   doorRepository.loadDoors().then(doors => {
     const responseDoors = doors.map(door => {
-      const status = doorService.getStatus(door);
-      return Object.assign({}, status, door);
+      const status = {
+        status: doorService.getStatus(door),
+      };
+      return Object.assign({}, door, status);
     });
     console.log(responseDoors);
     return res.send(responseDoors);

@@ -5,10 +5,12 @@ import * as doorService from '../services/door';
 const routes = router();
 
 routes.get('/', (req, res) => {
-  doorRepository.loadDoors().then(userDoors => {
-    userDoors.map(door => {
-      const status = doorService.getStatus(door);
-      return Object.assign({}, status, door);
+  doorRepository.loadDoors().then(doors => {
+    const userDoors = doors.map(door => {
+      const status = {
+        status: doorService.getStatus(door),
+      };
+      return Object.assign({}, door, status);
     });
     return res.render('door', { doors: userDoors });
   }).catch(err => {
