@@ -34,3 +34,29 @@ export function addUser(user) {
     });
   });
 }
+
+export function activateUserQRCode(userId, timestamp) {
+  return new Promise((resolve, reject) => {
+    User.loadOneAndUpdate({ _id: userId }, { qrcode: timestamp }).then(savedUser => {
+      if (!savedUser) {
+        return reject(new Error('Cannot save User.'));
+      }
+      resolve(savedUser);
+    }).catch(err => {
+      reject(err);
+    });
+  });
+}
+
+export function resetQRCode(userId) {
+  return new Promise((resolve, reject) => {
+    User.loadOneAndUpdate({ _id: userId }, { qrcode: null }).then(savedUser => {
+      if (!savedUser) {
+        return reject(new Error('Cannot save User.'));
+      }
+      resolve(savedUser);
+    }).catch(err => {
+      reject(err);
+    });
+  });
+}

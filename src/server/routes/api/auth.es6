@@ -1,46 +1,27 @@
 import { Router as router } from 'express';
-import * as userRepository from '../../repositories/user';
-import { createJWT } from '../../lib/auth';
-import QRCode from '../../lib/qrcode';
-import { ensureAuthenticated } from '../../lib/auth';
+import * as auth from '../../lib/auth';
 
 const routes = router();
 
 routes.post('/', (req, res) => {
-  let data;
+  let validator;
 
   if (req.body.username && req.body.password) {
-    data = {
-      username: req.body.username,
-      password: req.body.password,
-    };
+    validator = auth.checkValidUserAndPassword(req.body.username, req.body.password);
   } else if (req.body.qrcode) {
-    const userData = QRCode.decode(req.body.qrcode);
-
-    if (!userData) {
-      return res.status(401).send({ message: 'Invalid authentication data' });
-    }
-
-    data = {
-      username: userData.name,
-      password: userData.password,
-    };
+    validator = auth.checkValidQRCode(req.body.qrcode);
   } else {
     return res.status(401).send({ message: 'Invalid authentication data' });
   }
 
-
-  userRepository.loadUserByName(data.username).then(user => {
-    if (user && user.validPassword(data.password)) {
-      return res.send({ token: createJWT(user) });
-    }
-    return res.status(401).send({ message: 'Invalid authentication data' });
+  validator.then(token => {
+    return res.send(token);
   }).catch(err => {
-    res.status(500).send(err.message);
+    return res.status(401).send({ message: err });
   });
 });
 
-routes.get('/', ensureAuthenticated, (req, res) => {
+routes.get('/', auth.ensureAuthenticated, (req, res) => {
   res.status(200).send('ok');
 });
 

@@ -1,16 +1,24 @@
 import qr from 'qr-image';
 import jwt from 'jsonwebtoken';
 import config from 'config';
+import moment from 'moment';
 
 const token = config.get('auth').token;
 
 export default class QRCode {
   constructor(user) {
+    this.iat = moment().valueOf();
     const payload = {
       name: user.name,
       password: user.password,
+      iat: this.iat,
     };
     this.qrcode = jwt.sign(payload, token.secret);
+  }
+
+  get timestamp() {
+    console.log('hola', this.iat);
+    return this.iat;
   }
 
   static decode(qrcodeString) {
@@ -25,7 +33,7 @@ export default class QRCode {
     return payload;
   }
 
-  getQRCodeText() {
+  get qrcodeText() {
     return this.qrcode;
   }
 

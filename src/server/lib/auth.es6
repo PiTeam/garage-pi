@@ -2,6 +2,8 @@ import jwt from 'jsonwebtoken';
 import config from 'config';
 import moment from 'moment';
 import crypto from 'crypto';
+import * as userRepository from '../repositories/user';
+import QRCode from './qrcode';
 
 const token = config.get('auth').token;
 
@@ -68,4 +70,31 @@ export function ensureAdmin(req, res, next) {
   }
 
   next();
+}
+
+export function checkValidUserAndPassword(username, password) {
+  return new Promise((resolve, reject) => {
+    userRepository.loadUserByName(username).then(user => {
+      if (user && user.validPassword(password)) {
+        resolve({ token: createJWT(user) });
+      }
+    }).catch(err => {
+      reject(err);
+    });
+  });
+}
+
+export function checkValidQRCode(qrcode) {
+  const qrdata = QRCode.decode(qrcode);
+  return new Promise((resolve, reject) => {
+    userRepository.loadUserByName(qrdata.name).then(user => {
+      if (user && user.qrcode === qrdata.iat && user.validPassword(qrdata.password)) {
+        userRepository.resetQRCode(user._id).then(() => {
+          resolve({ token: createJWT(user) });
+        });
+      }
+    }).catch(err => {
+      reject(err);
+    });
+  });
 }

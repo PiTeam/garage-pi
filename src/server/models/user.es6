@@ -5,11 +5,18 @@ export default class User extends Document {
     super();
 
     this.schema({
-      name: String,
+      name: {
+        type: String,
+        unique: true,
+      },
       password: String,
       admin: {
         type: Boolean,
         default: false,
+      },
+      qrcode: {
+        type: Number,
+        default: null,
       },
     });
   }
