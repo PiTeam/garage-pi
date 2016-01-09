@@ -8,14 +8,11 @@ html
     script(src='/js/auth.js')
   body
     div.auth
-      h1 Authentication
-      <h2>Authenticate with username and password</h2>
+      h1 QRCode authentication
+      <h2>Authenticate with a QRCode example. This QRCode corresponds to the test database user:</h2>
       form.auth
-        input(type="input", placeholder="Username", name="username", required="required")
-        input(type="input", placeholder="Password", name="password", required="required")
-      <hr />
-      <h2>Or authenticate with QRCode token</h2>
-      form.auth
+        div(style="background: #EFEFEF; padding: 4px; margin: 1em 0; word-wrap: break-word;") #{ qrcode }
+        div(style="width: 320px; margin: auto;")!=svgdata
         input(type="input", placeholder="QRCode token", name="qrcode", required="required")
         div(class='garage-door-action')
           a.login(class='pure-button toggle-action') Login

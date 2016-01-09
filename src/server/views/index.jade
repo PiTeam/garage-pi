@@ -8,16 +8,18 @@ html
     if user
       p
       | Once the database has been populated, you can 
-      a(href="/auth") authenticate
-      |, for example, with these credentials
+      a(href="/auth/login") authenticate
+      |, for example, with these credentials:
       p
        | User: 
        b #{ user.name }
        |, Password: 
        b #{ user.password }
-      p Or QRCode (one-time-use only):
-      div(style="width: 40%; background: #EFEFEF; padding: 4px; word-wrap: break-word;") #{ qrcode }
-      div(style="width: 400px")!=svgdata
+      p
+      | Or authentiacte easily with a
+      a(href="/auth/qrcode") QRCode 
+      | (one-time-use only)
+
       p 
         | And finally, access 
         a(href="/door") door management

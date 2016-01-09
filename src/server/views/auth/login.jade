@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    title Garage Doors
+    link(rel='stylesheet', href='/css/pure-min.css')
+    link(rel='stylesheet', href='/css/frontend.css')
+    script(src='/js/zepto.min.js')
+    script(src='/js/auth.js')
+  body
+    div.auth
+      h1 Login Authentication
+      <h2>Authenticate with username and password</h2>
+      form.auth
+        input(type="input", placeholder="Username", name="username", required="required")
+        input(type="input", placeholder="Password", name="password", required="required")
+        div(class='garage-door-action')
+          a.login(class='pure-button toggle-action') Login
