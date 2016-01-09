@@ -11,7 +11,7 @@ html
       h1 QRCode authentication
       <h2>Authenticate with a QRCode example. This QRCode corresponds to the test database user:</h2>
       form.auth
-        div(style="background: #EFEFEF; padding: 4px; margin: 1em 0; word-wrap: break-word;") #{ qrcode }
+        div(style="background: #EFEFEF; padding: 4px; font-size: 12px; margin: 1em 0; word-wrap: break-word;") #{ qrcode }
         div(style="width: 320px; margin: auto;")!=svgdata
         input(type="input", placeholder="QRCode token", name="qrcode", required="required")
         div(class='garage-door-action')
