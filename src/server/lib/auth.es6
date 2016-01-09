@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import config from 'config';
 import moment from 'moment';
 import crypto from 'crypto';
+import * as userRepository from '../repositories/user';
 
 const token = config.get('auth').token;
 
@@ -11,7 +12,7 @@ export function generateRandomPassword() {
 
 export function createJWT(user) {
   const payload = {
-    sub: user._id,
+    userId: user._id,
     admin: user.admin,
     iat: moment().unix(),
     exp: moment().add(token.expire.value, token.expire.unit).unix(),
@@ -19,7 +20,7 @@ export function createJWT(user) {
   return jwt.sign(payload, token.secret);
 }
 
-export function ensureAuthenticated(req, res, next) {
+function ensureAuthenticated(req, res, next) {
   const userToken = req.body.token || req.query.token || req.headers['x-auth-token'];
 
   if (!userToken) {
@@ -42,7 +43,7 @@ export function ensureAuthenticated(req, res, next) {
   next();
 }
 
-export function ensureAdmin(req, res, next) {
+function ensureAdmin(req, res, next) {
   const userToken = req.body.token || req.query.token || req.headers['x-auth-token'];
 
   if (!userToken) {
@@ -70,4 +71,17 @@ export function ensureAdmin(req, res, next) {
   next();
 }
 
+function ensureDoorAuthorized(req, res, next) {
+  const userToken = req.body.token || req.query.token || req.headers['x-auth-token'];
+  const payload = jwt.verify(userToken, token.secret);
+  userRepository.loadUserById(payload.userId).then(user => {
+    const doorId = req.params.doorId;
+    if (!payload.admin && user.doors.indexOf(doorId) === -1) {
+      return res.status(401).send({ message: 'You are not authorized to open this door' });
+    }
+    next();
+  });
+}
+
 export const adminonly = [ensureAdmin];
+export const doorAuthorizationNeeded = [ensureAuthenticated, ensureDoorAuthorized];

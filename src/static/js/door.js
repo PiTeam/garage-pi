@@ -14,7 +14,7 @@ $(function() {
       },
       error: function(xhr, errorType, error) {
         window.localStorage.removeItem('auth_token');
-        window.location.href = '/auth?next=' + window.location.pathname;
+        window.location.href = '/auth/login/?next=' + window.location.pathname;
       },
     });
   }

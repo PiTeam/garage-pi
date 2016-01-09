@@ -1,7 +1,7 @@
 import { Router as router } from 'express';
 import * as doorRepository from '../../repositories/door';
 import * as doorService from '../../services/door';
-import { ensureAuthenticated } from '../../lib/auth';
+import { doorAuthorizationNeeded } from '../../lib/auth';
 
 const routes = router();
 
@@ -30,7 +30,7 @@ routes.get('/:doorId/status', (req, res) => {
   });
 });
 
-routes.post('/:doorId/toggle', ensureAuthenticated, (req, res) => {
+routes.post('/:doorId/toggle', doorAuthorizationNeeded, (req, res) => {
   doorRepository.loadDoorById(req.params.doorId).then(door => {
     return res.send(doorService.toggle(door));
   }).catch(err => {
@@ -38,7 +38,7 @@ routes.post('/:doorId/toggle', ensureAuthenticated, (req, res) => {
   });
 });
 
-routes.post('/:doorId/open', ensureAuthenticated, (req, res) => {
+routes.post('/:doorId/open', doorAuthorizationNeeded, (req, res) => {
   doorRepository.loadDoorById(req.params.doorId).then(door => {
     return res.send(doorService.open(door));
   }).catch(err => {
@@ -46,7 +46,7 @@ routes.post('/:doorId/open', ensureAuthenticated, (req, res) => {
   });
 });
 
-routes.post('/:doorId/close', ensureAuthenticated, (req, res) => {
+routes.post('/:doorId/close', doorAuthorizationNeeded, (req, res) => {
   doorRepository.loadDoorById(req.params.doorId).then(door => {
     return res.send(doorService.close(door));
   }).catch(err => {

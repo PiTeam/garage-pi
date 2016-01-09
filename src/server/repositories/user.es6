@@ -12,6 +12,17 @@ export function loadUserByName(username) {
   });
 }
 
+export function loadUserById(userId) {
+  return new Promise((resolve, reject) => {
+    User.loadOne({ _id: userId }).then(user => {
+      resolve(user);
+    }).catch(err => {
+      reject(err);
+    });
+  });
+}
+
+
 export function loadUsers(query) {
   return new Promise((resolve, reject) => {
     User.loadMany(query).then(users => {

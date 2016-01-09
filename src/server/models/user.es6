@@ -18,6 +18,7 @@ export default class User extends Document {
         type: Number,
         default: null,
       },
+      doors: [Number],
     });
   }
 

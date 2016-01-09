@@ -4,7 +4,7 @@ import QRCode from '../lib/qrcode';
 
 const routes = router();
 
-routes.get('/', (req, res) => {
+routes.get('/login', (req, res) => {
   return res.render('auth/login');
 });
 

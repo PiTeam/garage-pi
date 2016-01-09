@@ -1,6 +1,6 @@
 import { Router as router } from 'express';
-import * as auth from '../../lib/auth';
 import * as userRepository from '../../repositories/user';
+import { doorAuthorizationNeeded } from '../../lib/auth';
 
 const routes = router();
 
@@ -16,13 +16,14 @@ routes.post('/', (req, res) => {
   }
 
   validator.then(token => {
+    console.log(token);
     return res.send(token);
   }).catch(err => {
     return res.status(401).send({ message: err });
   });
 });
 
-routes.get('/', auth.ensureAuthenticated, (req, res) => {
+routes.get('/', doorAuthorizationNeeded, (req, res) => {
   res.status(200).send('ok');
 });
 

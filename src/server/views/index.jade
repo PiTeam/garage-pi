@@ -8,7 +8,7 @@ html
     if user
       p
       | Once the database has been populated, you can 
-      a(href="/auth/login?next=/door") authenticate
+      a(href="/auth/login/?next=/door") authenticate
       |, for example, with these credentials:
       p
        | User: 
@@ -16,8 +16,8 @@ html
        |, Password: 
        b #{ user.password }
       p
-      | Or authenticate with a
-      a(href="/auth/qrcode?next=/door") QRCode 
+      | Or authenticate with a 
+      a(href="/auth/qrcode/?next=/door") QRCode 
       | (one-time-use only)
     else
       form(action="/api/setup/seed", method="POST")
