@@ -71,6 +71,20 @@ function ensureAdmin(req, res, next) {
   next();
 }
 
+export function getAuthQuery(req) {
+  const userToken = req.body.token || req.query.token || req.headers['x-auth-token'];
+  const payload = jwt.verify(userToken, token.secret);
+
+  if (payload.admin) {
+    return '';
+  }
+
+  return {
+    userId: payload.userId,
+    admin: payload.admin,
+  };
+}
+
 function ensureDoorAuthorized(req, res, next) {
   const userToken = req.body.token || req.query.token || req.headers['x-auth-token'];
   const payload = jwt.verify(userToken, token.secret);
