@@ -25,5 +25,5 @@ app.use('/', routes);
 const db = new DB(config.get('nedb'));
 db.connect().then(() => {
   app.listen(PORT);
-  console.log('Server listening on port ' + PORT);
+  console.log(`Server listening on port ${PORT}`);
 });

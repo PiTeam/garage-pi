@@ -19,10 +19,10 @@ export default class GPIO {
   sendPulseToPin() {
     const PULSE_DURATION = 300;
     this.gpio.writeSync(1);
-    logService.log('INFO', 'Setting pin ' + this.pin + ' ON');
+    logService.log('INFO', `Setting pin  ${this.pin} ON`);
     setTimeout(() => {
       this.gpio.writeSync(0);
-      logService.log('INFO', 'Setting pin ' + this.pin + ' OFF');
+      logService.log('INFO', `Setting pin ${this.pin} OFF`);
     }, PULSE_DURATION);
   }
 }

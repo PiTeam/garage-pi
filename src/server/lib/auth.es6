@@ -76,7 +76,7 @@ export function getAuthQuery(req) {
   const payload = jwt.verify(userToken, token.secret);
 
   if (payload.admin) {
-    return '';
+    return {};
   }
 
   return {
