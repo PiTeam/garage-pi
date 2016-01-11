@@ -1,22 +1,22 @@
 doctype html
 html
   head
-    title Garage Doors
+    title Administration
     link(rel='stylesheet', href='/css/pure-min.css')
     link(rel='stylesheet', href='/css/frontend.css')
     script(src='/js/zepto.min.js')
-    script(src='/js/door.js')
+    script(src='/js/admin.js')
   body
-    h1 Doors
-    div(class='doors')
-
+    h1 Administration
     div(class="no-auth message")
       | You're not authenticated, so no doors to open. Maybe you need to 
       a(href="/auth/login/?next=/door") login
       |  first?
     
-    
+    div(class="auth auth-done")
+      a(class="button-xlarge pure-button", href="/admin/users") Manage Users
+      a(class="button-xlarge pure-button", href="/admin/doors") Manage Doors
+
     div(class='auth-action')
-      a(class='pure-button admin-action auth-done', href='/admin') Admin       
       a(class='pure-button logout-action no-auth', href='/auth/login/?next=/door') Login       
       a(class='pure-button login-action auth-done', href='/api/logout') Logout       

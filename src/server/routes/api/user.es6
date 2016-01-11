@@ -1,10 +1,10 @@
 import { Router as router } from 'express';
 import * as userRepository from '../../repositories/user';
-import { adminonly } from '../../lib/auth';
+import { adminOnly } from '../../lib/auth';
 
 const routes = router();
 
-routes.get('/', adminonly, (req, res) => {
+routes.get('/', adminOnly, (req, res) => {
   userRepository.loadUsers().then(users => {
     const publicInfoUsers = users.map(user => {
       return {

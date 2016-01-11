@@ -97,5 +97,5 @@ function ensureDoorAuthorized(req, res, next) {
   });
 }
 
-export const adminonly = [ensureAdmin];
+export const adminOnly = [ensureAdmin];
 export const doorAuthorizationNeeded = [ensureAuthenticated, ensureDoorAuthorized];

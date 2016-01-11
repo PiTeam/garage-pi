@@ -79,6 +79,7 @@ h1 {
 
 div.auth {
   text-align: center;
+  margin-bottom: 1em;
 }
 
 div.auth h2 {
@@ -104,4 +105,35 @@ hr {
   width: 40%;
   margin-top: 2em;
   margin-bottom: 2em;
+}
+
+.no-auth.message {
+  background: #EFEFEF;
+  padding: 1em;
+  margin: 1em 3em;
+  text-align: center;
+}
+
+.no-auth, .auth-done {
+  display: none;
+}
+
+.login-action {
+  background-color: #0078e7;
+}
+
+.admin-action {
+  background-color: limegreen;  
+}
+
+.pure-button {
+  margin-right: 1em;
+}
+
+.button-xlarge {
+    font-size: 110%;
+}
+
+.auth select {
+  margin-bottom: 1em;
 }

@@ -10,11 +10,15 @@ $(function() {
       },
       url: '/api/auth',
       success: function() {
+        $('.auth-done').show();
+        $('.no-auth').hide();
         cb();
       },
       error: function(xhr, errorType, error) {
+        $('.auth-done').hide();
+        $('.no-auth').show();
         window.localStorage.removeItem('auth_token');
-        window.location.href = '/auth/login/?next=' + window.location.pathname;
+        //window.location.href = '/auth/login/?next=' + window.location.pathname;
       },
     });
   }
@@ -28,7 +32,7 @@ $(function() {
       default:
         return 'Toggle';
     }
-  }
+  };
 
   var addDoorEvents = function() {
     $('.garage-door-action a').on('click', function() {
@@ -45,18 +49,18 @@ $(function() {
         },
         error: function(xhr, errorType, error) {
           console.log(error);
-        }
+        },
       });
     });
 
-    $('.auth-action a').on('click', function(event) {
+    $('.logout-action a').on('click', function(event) {
       event.preventDefault();
       event.stopPropagation();
 
       window.localStorage.removeItem('auth_token');
       window.location.href = '/';
     });
-  }
+  };
 
   var fetchUserDoors = function() {
     $.ajax({
@@ -85,10 +89,10 @@ $(function() {
       },
       error: function(xhr, errorType, error) {
         console.log(error);
-      }
+      },
     });
   };
-  
+
   check_token(token, function() {
     fetchUserDoors();
     addDoorEvents();

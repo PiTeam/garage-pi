@@ -1,6 +1,6 @@
 import { Router as router } from 'express';
 import * as userRepository from '../../repositories/user';
-import { doorAuthorizationNeeded } from '../../lib/auth';
+import { doorAuthorizationNeeded, adminOnly } from '../../lib/auth';
 
 const routes = router();
 
@@ -24,6 +24,10 @@ routes.post('/', (req, res) => {
 });
 
 routes.get('/', doorAuthorizationNeeded, (req, res) => {
+  res.status(200).send('ok');
+});
+
+routes.get('/admin', adminOnly, (req, res) => {
   res.status(200).send('ok');
 });
 
