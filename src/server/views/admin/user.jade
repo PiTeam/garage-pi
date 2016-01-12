@@ -14,7 +14,7 @@ html
       |  first?
     
     div(class="auth auth-done")
-      a(class="button-xlarge pure-button", href="/admin/user") Manage User
+      a(class="button-xlarge pure-button", href="/admin/user") Manage Users
       a(class="button-xlarge pure-button", href="/admin/door") Manage Doors
 
     div.auth-done
@@ -26,8 +26,9 @@ html
 
         a(class="button-xlarge pure-button delete-user", href="/admin/user") Delete user
       hr
-      div(class="auth auth-done")
-        a(class="button-xlarge pure-button add-user", href="/admin/door") Add new user
+      div(class="auth auth-done add-user")
+        input(type="input", placeholder="Username", name="username", required="required")
+        a(class="button-xlarge pure-button add-user", href="/admin/door") Add new garage user
       hr
 
     div(class='auth-action')

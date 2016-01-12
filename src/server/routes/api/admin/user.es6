@@ -20,6 +20,16 @@ routes.get('/', adminOnly, (req, res) => {
   });
 });
 
+routes.post('/', adminOnly, (req, res) => {
+  userRepository.addUser({
+    name: req.body.username,
+  }).then(user => {
+    res.status(200).send(user);
+  }).catch(err => {
+    res.status(500).send(err.message);
+  });
+});
+
 routes.delete('/', adminOnly, (req, res) => {
   userRepository.deleteUser(req.body.userId).then(() => {
     res.status(200).send('ok');

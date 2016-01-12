@@ -70,6 +70,31 @@ $(function() {
         },
       });
     });
+    
+    $('a.add-user').on('click', function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      var username = $('input[name=username]').val();
+      if (!username) return;
+
+      $.ajax({
+        type: 'POST',
+        headers: {
+          'x-auth-token': token,
+        },
+        data: {
+          username: username,
+        },
+        url: '/api/admin/user',
+        success: function(data) {
+          window.location.href = '/admin/user/' + data.name + '/qrcode';
+        },
+        error: function(xhr, errorType, error) {
+          console.log(error);
+        },
+      });
+    });
   };
 
   check_admin_token(token, function() {

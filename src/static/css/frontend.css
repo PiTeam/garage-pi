@@ -86,7 +86,6 @@ div.auth h2 {
   color: #444;
 }
 form.auth {
-
   width: 60%;
   min-width: 60%;
   margin: auto;
@@ -97,6 +96,13 @@ form.auth input {
   height: 2em;
   padding: 5px;
   margin-bottom: 1em;
+}
+
+div.auth input {
+  height: 1.5em;
+  padding: 5px;
+  margin-bottom: 1em;
+  margin-right: 1em;
 }
 
 hr {
