@@ -9,7 +9,7 @@ routes.get('/', doorAuthorizationNeeded, (req, res) => {
   doorRepository.loadDoors(getAuthQuery(req)).then(doors => {
     const publicInfoDoors = doors.map(door => {
       return {
-        id: door.id,
+        id: door._id,
         name: door.name,
         actionGpioPin: door.actionGpioPin,
         statusGpioPin: door.statusGpioPin,

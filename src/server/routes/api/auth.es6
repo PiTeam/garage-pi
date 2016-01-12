@@ -16,7 +16,6 @@ routes.post('/', (req, res) => {
   }
 
   validator.then(token => {
-    console.log(token);
     return res.send(token);
   }).catch(err => {
     return res.status(401).send({ message: err });

@@ -17,7 +17,6 @@ export default class QRCode {
   }
 
   get timestamp() {
-    console.log('hola', this.iat);
     return this.iat;
   }
 
