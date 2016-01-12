@@ -6,12 +6,12 @@ routes.get('/', (req, res) => {
   return res.render('admin/index');
 });
 
-routes.get('/users', (req, res) => {
-  return res.render('admin/users');
+routes.get('/user', (req, res) => {
+  return res.render('admin/user');
 });
 
-routes.get('/doors', (req, res) => {
-  return res.render('admin/doors');
+routes.get('/door', (req, res) => {
+  return res.render('admin/door');
 });
 
 export default routes;
