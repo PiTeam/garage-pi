@@ -24,32 +24,57 @@ $(function() {
     });
   }
 
-  function loadUsers(token, cb) {
+  function loadUsers(token) {
     $.ajax({
       type: 'GET',
       headers: {
         'x-auth-token': token,
       },
-      url: '/api/user',
-      success: function(data) {
-        cb(data);
+      url: '/api/admin/user',
+      success: function(users) {
+        var usersSelect = $('select.users');
+        if (usersSelect.length === 0) return;
+
+        usersSelect.empty();
+        usersSelect.append('<option>Select the user to remove</option>');
+        for (var i in users) {
+          usersSelect.append('<option data-id="' + users[i].id + '">' + users[i].name + '</option>');
+        }
       },
     });
   }
 
-  var usersSelect = $('select.users');
+  var addAdminEvents = function() {
+    $('a.delete-user').on('click', function(event) {
+      event.preventDefault();
+      event.stopPropagation();
 
-  if (usersSelect.length > 0) {
-    loadUsers(token, function(users) {
-      usersSelect.empty();
-      usersSelect.append('<option>Select the user to remove</option>');
-      for (var i in users) {
-        usersSelect.append('<option value="' + users[i].id + '">' + users[i].name + '</option');
-      }
+      var userId = $('select.users option').not(function() { return !this.selected }).data('id');
+
+      if (!userId) return;
+
+      $.ajax({
+        type: 'DELETE',
+        headers: {
+          'x-auth-token': token,
+        },
+        data: {
+          userId: userId,
+        },
+        url: '/api/admin/user',
+        success: function(data) {
+          loadUsers(token);
+        },
+        error: function(xhr, errorType, error) {
+          console.log(error);
+        },
+      });
     });
-  }
+  };
 
   check_admin_token(token, function() {
     console.log('admin logged in');
+    loadUsers(token);
+    addAdminEvents();
   });
 });

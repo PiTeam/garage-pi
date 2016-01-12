@@ -61,6 +61,16 @@ export function activateUserQRCode(userId, timestamp) {
   });
 }
 
+export function deleteUser(userId) {
+  return new Promise((resolve, reject) => {
+    User.deleteOne({ _id: userId }).then(numDeleted => {
+      resolve(numDeleted);
+    }).catch(err => {
+      reject(err);
+    });
+  });
+}
+
 export function resetQRCode(userId) {
   return new Promise((resolve, reject) => {
     User.loadOneAndUpdate({ _id: userId }, { qrcode: null }).then(savedUser => {

@@ -9,7 +9,7 @@ html
   body
     h1 Administration
     div(class="no-auth message")
-      | You're not authenticated, so no doors to open. Maybe you need to 
+      | You're not authenticated, so you can't admin this app. Maybe you need to 
       a(href="/auth/login/?next=/door") login
       |  first?
     
@@ -17,17 +17,18 @@ html
       a(class="button-xlarge pure-button", href="/admin/users") Manage Users
       a(class="button-xlarge pure-button", href="/admin/doors") Manage Doors
 
-    hr
-    div(class="auth auth-done")
-      div
-        select(class="users")
-          option Select the user to remove
+    div.auth-done
+      hr
+      div(class="auth auth-done")
+        div
+          select(class="users")
+            option Select the user to remove
 
-      a(class="button-xlarge pure-button", href="/admin/users") Delete user
-    hr
-    div(class="auth auth-done")
-      a(class="button-xlarge pure-button", href="/admin/doors") Add new user
-    hr
+        a(class="button-xlarge pure-button delete-user", href="/admin/users") Delete user
+      hr
+      div(class="auth auth-done")
+        a(class="button-xlarge pure-button add-user", href="/admin/doors") Add new user
+      hr
 
     div(class='auth-action')
       a(class='pure-button logout-action no-auth', href='/auth/login/?next=/door') Login       

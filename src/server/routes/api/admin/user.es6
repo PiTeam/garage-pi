@@ -1,6 +1,6 @@
 import { Router as router } from 'express';
-import * as userRepository from '../../repositories/user';
-import { adminOnly } from '../../lib/auth';
+import * as userRepository from '../../../repositories/user';
+import { adminOnly } from '../../../lib/auth';
 
 const routes = router();
 
@@ -15,6 +15,14 @@ routes.get('/', adminOnly, (req, res) => {
       };
     });
     return res.send(publicInfoUsers);
+  }).catch(err => {
+    res.status(500).send(err.message);
+  });
+});
+
+routes.delete('/', adminOnly, (req, res) => {
+  userRepository.deleteUser(req.body.userId).then(() => {
+    res.status(200).send('ok');
   }).catch(err => {
     res.status(500).send(err.message);
   });
