@@ -6,7 +6,7 @@ $(function() {
     $.ajax({
       type: 'GET',
       headers: {
-        'x-auth-token': token,
+        'authorization': 'Bearer ' + token,
       },
       url: '/api/auth',
       success: function() {
@@ -17,7 +17,7 @@ $(function() {
       error: function(xhr, errorType, error) {
         $('.auth-done').hide();
         $('.no-auth').show();
-        window.localStorage.removeItem('auth_token');
+        //window.localStorage.removeItem('auth_token');
         //window.location.href = '/auth/login/?next=' + window.location.pathname;
       },
     });
@@ -41,7 +41,7 @@ $(function() {
       $.ajax({
         type: 'POST',
         headers: {
-          'x-auth-token': token,
+          'authorization': 'Bearer ' + token,
         },
         url: '/api/door/' + doorId + '/' + doorAction,
         success: function(data) {
@@ -53,12 +53,12 @@ $(function() {
       });
     });
 
-    $('.logout-action a').on('click', function(event) {
+    $('a.logout-action').on('click', function(event) {
       event.preventDefault();
       event.stopPropagation();
 
       window.localStorage.removeItem('auth_token');
-      window.location.href = '/';
+      window.location.reload();
     });
   };
 
@@ -66,7 +66,7 @@ $(function() {
     $.ajax({
       type: 'GET',
       headers: {
-        'x-auth-token': token,
+        'authorization': 'Bearer ' + token,
       },
       url: '/api/door/',
       success: function(data) {

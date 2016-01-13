@@ -1,12 +1,15 @@
 import { Router as router } from 'express';
 import * as doorRepository from '../../repositories/door';
 import * as doorService from '../../services/door';
-import { doorAuthorizationNeeded, getAuthQuery } from '../../lib/auth';
+import { doorAuthorizationNeeded } from '../../lib/auth';
 
 const routes = router();
 
 routes.get('/', doorAuthorizationNeeded, (req, res) => {
-  doorRepository.loadDoors(getAuthQuery(req)).then(doors => {
+  const query = req.user.admin ? {} : {
+    userId: req.user.userId,
+  };
+  doorRepository.loadDoors(query).then(doors => {
     const publicInfoDoors = doors.map(door => {
       return {
         id: door._id,

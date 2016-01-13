@@ -7,7 +7,7 @@ $(function() {
     $.ajax({
       type: 'GET',
       headers: {
-        'x-auth-token': token,
+        'authorization': 'Bearer ' + token,
       },
       url: '/api/auth/admin',
       success: function() {
@@ -28,7 +28,7 @@ $(function() {
     $.ajax({
       type: 'GET',
       headers: {
-        'x-auth-token': token,
+        'authorization': 'Bearer ' + token,
       },
       url: '/api/admin/user',
       success: function(users) {
@@ -56,7 +56,7 @@ $(function() {
       $.ajax({
         type: 'DELETE',
         headers: {
-          'x-auth-token': token,
+          'authorization': 'Bearer ' + token,
         },
         data: {
           userId: userId,
@@ -81,7 +81,7 @@ $(function() {
       $.ajax({
         type: 'POST',
         headers: {
-          'x-auth-token': token,
+          'authorization': 'Bearer ' + token,
         },
         data: {
           username: username,
