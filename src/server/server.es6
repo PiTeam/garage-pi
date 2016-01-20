@@ -4,6 +4,7 @@ import config from 'config';
 import bodyParser from 'body-parser';
 import path from 'path';
 import DB from './lib/db';
+import cors from 'cors';
 
 const PORT = config.get('express.port') || 3000;
 const STATIC_DIR = path.join(__dirname, '..', 'static');
@@ -12,6 +13,7 @@ const VIEWS_DIR = path.join(__dirname, 'views');
 import routes from './routes';
 
 const app = express();
+app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
