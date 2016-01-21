@@ -13,7 +13,10 @@ const VIEWS_DIR = path.join(__dirname, 'views');
 import routes from './routes';
 
 const app = express();
-app.use(cors());
+
+if (config.get('express.cors')) {
+  app.use(cors());
+}
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

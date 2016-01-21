@@ -1,6 +1,7 @@
 {
     "express": {
         "host": "localhost",
+        "cors": true,
         "port": 5000
     },
     "nedb": {

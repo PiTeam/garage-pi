@@ -88,8 +88,10 @@ export function checkValidUserAndPassword(username, password) {
   return new Promise((resolve, reject) => {
     loadUserByName(username).then(user => {
       if (user && user.validPassword(password)) {
-        resolve({ token: createJWT(user) });
+        resolve({ error: false, token: createJWT(user) });
+        return;
       }
+      resolve({ error: true, message: 'Invalid username or password' });
     }).catch(err => {
       reject(err);
     });

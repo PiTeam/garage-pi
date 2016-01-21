@@ -11,7 +11,7 @@ routes.post('/seed', (req, res) => {
     actionGpioPin: 1,
     statusGpioPin: 2,
   }), userRepository.addUser({
-    name: 'Admin User',
+    name: 'admin',
     password: generateRandomPassword(),
     admin: true,
   })]).then(() => {
