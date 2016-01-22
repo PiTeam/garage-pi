@@ -14,6 +14,7 @@ routes.get('/', doorAuthorizationNeeded, (req, res) => {
       return {
         id: door._id,
         name: door.name,
+        image: door.image,
         actionGpioPin: door.actionGpioPin,
         statusGpioPin: door.statusGpioPin,
         status: doorService.getStatus(door),
