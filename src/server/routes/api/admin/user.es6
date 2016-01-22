@@ -11,6 +11,7 @@ routes.get('/', adminOnly, (req, res) => {
         id: user._id,
         name: user.name,
         admin: user.admin,
+        image: user.image,
         password: user.password,
       };
     });

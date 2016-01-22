@@ -14,6 +14,10 @@ export default class User extends Document {
         type: Boolean,
         default: false,
       },
+      image: {
+        type: String,
+        default: '/assets/img/profile.jpg',
+      },
       qrcode: {
         type: Number,
         default: null,

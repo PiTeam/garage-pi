@@ -1,20 +1,19 @@
 import { Router as router } from 'express';
-import * as userRepository from '../../../repositories/user';
+import * as doorRepository from '../../../repositories/door';
 import { adminOnly } from '../../../lib/auth';
 
 const routes = router();
 
 routes.get('/', adminOnly, (req, res) => {
-  userRepository.loadUsers().then(users => {
-    const publicInfoUsers = users.map(user => {
+  doorRepository.loadDoors().then(doors => {
+    const publicInfoDoors = doors.map(door => {
       return {
-        id: user._id,
-        name: user.name,
-        admin: user.admin,
-        password: user.password,
+        id: door._id,
+        name: door.name,
+        image: door.image,
       };
     });
-    return res.send(publicInfoUsers);
+    return res.send(publicInfoDoors);
   }).catch(err => {
     res.status(500).send(err.message);
   });
