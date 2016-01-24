@@ -19,8 +19,12 @@ routes.get('/', adminOnly, (req, res) => {
   });
 });
 
-routes.delete('/', adminOnly, (req, res) => {
-  res.status(200);
+routes.delete('/:id', adminOnly, (req, res) => {
+  doorRepository.deleteDoor(req.params.id).then(() => {
+    res.status(200).send('ok');
+  }).catch(err => {
+    res.status(500).send(err.message);
+  });
 });
 
 export default routes;

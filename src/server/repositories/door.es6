@@ -37,3 +37,14 @@ export function addDoor(door) {
     });
   });
 }
+
+export function deleteDoor(id) {
+  return new Promise((resolve, reject) => {
+    // Door.deleteOne({ _id: id }).then(numDeleted => {
+    Door.loadOne({ _id: id }).then(numDeleted => {
+      resolve(numDeleted);
+    }).catch(err => {
+      reject(err);
+    });
+  });
+}

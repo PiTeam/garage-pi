@@ -31,8 +31,8 @@ routes.post('/', adminOnly, (req, res) => {
   });
 });
 
-routes.delete('/', adminOnly, (req, res) => {
-  userRepository.deleteUser(req.body.userId).then(() => {
+routes.delete('/:id', adminOnly, (req, res) => {
+  userRepository.deleteUser(req.params.id).then(() => {
     res.status(200).send('ok');
   }).catch(err => {
     res.status(500).send(err.message);
