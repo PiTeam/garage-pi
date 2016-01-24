@@ -33,7 +33,15 @@ routes.post('/', adminOnly, (req, res) => {
 
 routes.delete('/:id', adminOnly, (req, res) => {
   userRepository.deleteUser(req.params.id).then(() => {
-    res.status(200).send('ok');
+    res.status(200).send({ status: 'ok' });
+  }).catch(err => {
+    res.status(500).send(err.message);
+  });
+});
+
+routes.put('/:id', adminOnly, (req, res) => {
+  userRepository.updateUser(req.body).then(() => {
+    res.status(200).send({ status: 'ok' });
   }).catch(err => {
     res.status(500).send(err.message);
   });

@@ -27,4 +27,12 @@ routes.delete('/:id', adminOnly, (req, res) => {
   });
 });
 
+routes.put('/:id', adminOnly, (req, res) => {
+  doorRepository.updateDoor(req.body).then(() => {
+    res.status(200).send({ status: 'ok' });
+  }).catch(err => {
+    res.status(500).send(err.message);
+  });
+});
+
 export default routes;

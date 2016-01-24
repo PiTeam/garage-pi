@@ -48,3 +48,14 @@ export function deleteDoor(id) {
     });
   });
 }
+
+export function updateDoor(door) {
+  return new Promise((resolve, reject) => {
+    // Door.deleteOne({ _id: userId }).then(numDeleted => {
+    Door.loadOne({ _id: door.id }).then(numDeleted => {
+      resolve(numDeleted);
+    }).catch(err => {
+      reject(err);
+    });
+  });
+}
