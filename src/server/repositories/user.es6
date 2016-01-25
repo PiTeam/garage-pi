@@ -100,7 +100,7 @@ export function checkValidUserAndPassword(username, password) {
   return new Promise((resolve, reject) => {
     loadUserByName(username).then(user => {
       if (user && user.validPassword(password)) {
-        resolve({ error: false, token: createJWT(user) });
+        resolve({ error: false, token: createJWT(user), username: user.name, admin: user.admin });
         return;
       }
       resolve({ error: true, message: 'Invalid username or password' });
