@@ -62,7 +62,7 @@
     "chai": "^3.4.1",
     "commander": "^2.9.0",
     "eslint": "^1.10.3",
-    "eslint-config-airbnb": "^3.0.2",
+    "eslint-config-airbnb": "^4.0.0",
     "eslint-plugin-react": "^3.16.1",
     "faker": "^3.0.1",
     "mocha": "^2.3.4",

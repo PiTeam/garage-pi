@@ -5,11 +5,8 @@ import { doorAuthorizationNeeded, adminOnly } from '../../lib/auth';
 const routes = router();
 
 routes.post('/', (req, res) => {
-  userRepository.checkValidUserAndPassword(req.body.username, req.body.password).then(result => {
-    return res.send(result);
-  }).catch(err => {
-    return res.status(401).send({ message: err });
-  });
+  userRepository.checkValidUserAndPassword(req.body.username, req.body.password)
+    .then(result => res.send(result)).catch(err => res.status(401).send({ message: err }));
 });
 
 routes.get('/', doorAuthorizationNeeded, (req, res) => {

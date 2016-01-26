@@ -6,13 +6,11 @@ const routes = router();
 
 routes.get('/', adminOnly, (req, res) => {
   doorRepository.loadDoors().then(doors => {
-    const publicInfoDoors = doors.map(door => {
-      return {
-        id: door._id,
-        name: door.name,
-        image: door.image,
-      };
-    });
+    const publicInfoDoors = doors.map(door => ({
+      id: door._id,
+      name: door.name,
+      image: door.image,
+    }));
     return res.send(publicInfoDoors);
   }).catch(err => {
     res.status(500).send(err.message);

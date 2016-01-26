@@ -2,7 +2,7 @@ const connect = require('camo').connect;
 
 export default class DB {
   _generateDBURI(config) {
-    return 'nedb://' + config.nedb_dir;
+    return `nedb://${config.nedb_dir}`;
   }
 
   constructor(config) {
