@@ -25,7 +25,7 @@ routes.get('/qrcode/:userId', adminOnly, (req, res) =>
   userRepository.loadUserById(req.params.userId).then(user => {
     const qr = new QRCode(user);
     qr.generateImageData().then(qrcode => {
-      res.send({ qrcode });
+      res.send({ qrcode: new Buffer(qrcode).toString('base64') });
     });
   }).catch(err => res.status(500).send(err.message))
 );

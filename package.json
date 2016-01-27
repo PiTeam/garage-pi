@@ -65,7 +65,7 @@
     "eslint-config-airbnb": "^4.0.0",
     "eslint-plugin-react": "^3.16.1",
     "faker": "^3.0.1",
-    "mocha": "^2.3.4",
+    "mocha": "^2.4.3",
     "nodemon": "^1.8.1"
   }
 }
