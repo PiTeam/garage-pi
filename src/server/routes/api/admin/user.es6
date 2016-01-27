@@ -1,6 +1,7 @@
 import { Router as router } from 'express';
 import * as userRepository from '../../../repositories/user';
 import { adminOnly } from '../../../lib/auth';
+import QRCode from '../../../lib/qrcode';
 
 const routes = router();
 
@@ -19,6 +20,15 @@ routes.get('/', adminOnly, (req, res) => {
     res.status(500).send(err.message);
   });
 });
+
+routes.get('/qrcode/:userId', adminOnly, (req, res) =>
+  userRepository.loadUserById(req.params.userId).then(user => {
+    const qr = new QRCode(user);
+    qr.generateImageData().then(qrcode => {
+      res.send({ qrcode });
+    });
+  }).catch(err => res.status(500).send(err.message))
+);
 
 routes.post('/', adminOnly, (req, res) => {
   userRepository.addUser(req.body.user).then(user => {

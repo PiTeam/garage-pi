@@ -48,6 +48,16 @@ export function addUser(user) {
   });
 }
 
+export function getQRCode(userId) {
+  return new Promise((resolve, reject) => {
+    User.loadOne({ _id: userId }).then(user => {
+      resolve(user);
+    }).catch(err => {
+      reject(err);
+    });
+  });
+}
+
 export function activateUserQRCode(userId, timestamp) {
   return new Promise((resolve, reject) => {
     User.loadOneAndUpdate({ _id: userId }, { qrcode: timestamp }).then(savedUser => {
