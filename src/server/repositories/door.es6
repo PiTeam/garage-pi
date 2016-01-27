@@ -40,8 +40,7 @@ export function addDoor(door) {
 
 export function deleteDoor(id) {
   return new Promise((resolve, reject) => {
-    // Door.deleteOne({ _id: id }).then(numDeleted => {
-    Door.loadOne({ _id: id }).then(numDeleted => {
+    Door.deleteOne({ _id: id }).then(numDeleted => {
       resolve(numDeleted);
     }).catch(err => {
       reject(err);
@@ -51,11 +50,11 @@ export function deleteDoor(id) {
 
 export function updateDoor(door) {
   return new Promise((resolve, reject) => {
-    // Door.deleteOne({ _id: userId }).then(numDeleted => {
-    Door.loadOne({ _id: door.id }).then(numDeleted => {
-      resolve(numDeleted);
-    }).catch(err => {
-      reject(err);
-    });
+    Door.loadOneAndUpdate({ _id: door.id }, { name: door.name, users: door.users })
+      .then(numUpdated => {
+        resolve(numUpdated);
+      }).catch(err => {
+        reject(err);
+      });
   });
 }

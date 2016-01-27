@@ -12,6 +12,7 @@ routes.get('/', adminOnly, (req, res) => {
       admin: user.admin,
       image: user.image,
       password: user.password,
+      doors: user.doors,
     }));
     return res.send(publicInfoUsers);
   }).catch(err => {
@@ -20,9 +21,7 @@ routes.get('/', adminOnly, (req, res) => {
 });
 
 routes.post('/', adminOnly, (req, res) => {
-  userRepository.addUser({
-    name: req.body.username,
-  }).then(user => {
+  userRepository.addUser(req.body.user).then(user => {
     res.status(200).send(user);
   }).catch(err => {
     res.status(500).send(err.message);
@@ -38,7 +37,7 @@ routes.delete('/:id', adminOnly, (req, res) => {
 });
 
 routes.put('/:id', adminOnly, (req, res) => {
-  userRepository.updateUser(req.body).then(() => {
+  userRepository.updateUser(req.body.user).then(() => {
     res.status(200).send({ status: 'ok' });
   }).catch(err => {
     res.status(500).send(err.message);

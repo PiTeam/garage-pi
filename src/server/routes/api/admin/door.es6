@@ -10,6 +10,7 @@ routes.get('/', adminOnly, (req, res) => {
       id: door._id,
       name: door.name,
       image: door.image,
+      users: door.users,
     }));
     return res.send(publicInfoDoors);
   }).catch(err => {
@@ -26,7 +27,7 @@ routes.delete('/:id', adminOnly, (req, res) => {
 });
 
 routes.put('/:id', adminOnly, (req, res) => {
-  doorRepository.updateDoor(req.body).then(() => {
+  doorRepository.updateDoor(req.body.door).then(() => {
     res.status(200).send({ status: 'ok' });
   }).catch(err => {
     res.status(500).send(err.message);

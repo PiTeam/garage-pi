@@ -63,8 +63,7 @@ export function activateUserQRCode(userId, timestamp) {
 
 export function deleteUser(id) {
   return new Promise((resolve, reject) => {
-    // User.deleteOne({ _id: userId }).then(numDeleted => {
-    User.loadOne({ _id: id }).then(numDeleted => {
+    User.deleteOne({ _id: id }).then(numDeleted => {
       resolve(numDeleted);
     }).catch(err => {
       reject(err);
@@ -74,12 +73,12 @@ export function deleteUser(id) {
 
 export function updateUser(user) {
   return new Promise((resolve, reject) => {
-    // User.deleteOne({ _id: userId }).then(numDeleted => {
-    User.loadOne({ _id: user.id }).then(numDeleted => {
-      resolve(numDeleted);
-    }).catch(err => {
-      reject(err);
-    });
+    User.loadOneAndUpdate({ _id: user.id }, { name: user.name, doors: user.doors })
+      .then(numUpdated => {
+        resolve(numUpdated);
+      }).catch(err => {
+        reject(err);
+      });
   });
 }
 
