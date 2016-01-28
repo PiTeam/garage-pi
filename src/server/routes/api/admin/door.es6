@@ -4,8 +4,8 @@ import { adminOnly } from '../../../lib/auth';
 
 const routes = router();
 
-routes.get('/', adminOnly, (req, res) => {
-  doorRepository.loadDoors().then(doors => {
+routes.get('/', (req, res) => {
+  doorRepository.loadDoorsWithUsers().then(doors => {
     const publicInfoDoors = doors.map(door => ({
       id: door._id,
       name: door.name,

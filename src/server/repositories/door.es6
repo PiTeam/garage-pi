@@ -12,6 +12,18 @@ export function loadDoors(query) {
   });
 }
 
+export function loadDoors(query) {
+  return new Promise((resolve, reject) => {
+    Door.loadMany(query).then(doors => {
+      if (!doors) {
+        reject(new Error('Doors not found.'));
+        return;
+      }
+      resolve(doors);
+    });
+  });
+}
+
 export function loadDoorById(doorId) {
   return new Promise((resolve, reject) => {
     Door.loadOne({ _id: doorId }).then(door => {
