@@ -1,4 +1,5 @@
 import Door from '../models/door';
+import * as userRepository from './user';
 
 export function loadDoors(query) {
   return new Promise((resolve, reject) => {
@@ -12,14 +13,31 @@ export function loadDoors(query) {
   });
 }
 
-export function loadDoors(query) {
+function loadDoorWithUsers(door) {
+  return new Promise((resolve) => {
+    userRepository.loadUsersWithDoor(door._id).then(users => {
+      const doorWithUsers = Object.assign({}, door);
+      doorWithUsers.users = users.map(user => user._id);
+      resolve(doorWithUsers);
+    });
+  });
+}
+
+export function loadDoorsWithUsers(query) {
   return new Promise((resolve, reject) => {
     Door.loadMany(query).then(doors => {
       if (!doors) {
         reject(new Error('Doors not found.'));
         return;
       }
-      resolve(doors);
+      const doorsWithUsers = [];
+      doors.map(door => {
+        doorsWithUsers.push(loadDoorWithUsers(door));
+      });
+
+      Promise.all(doorsWithUsers).then(result => {
+        resolve(result);
+      });
     });
   });
 }
@@ -62,9 +80,9 @@ export function deleteDoor(id) {
 
 export function updateDoor(door) {
   return new Promise((resolve, reject) => {
-    Door.loadOneAndUpdate({ _id: door.id }, { name: door.name, users: door.users })
-      .then(numUpdated => {
-        resolve(numUpdated);
+    Door.loadOneAndUpdate({ _id: door._id }, { name: door.name, users: door.users })
+      .then(() => {
+        resolve(door);
       }).catch(err => {
         reject(err);
       });

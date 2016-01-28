@@ -22,7 +22,6 @@ export function loadUserById(userId) {
   });
 }
 
-
 export function loadUsers(query) {
   return new Promise((resolve, reject) => {
     User.loadMany(query).then(users => {
@@ -33,6 +32,11 @@ export function loadUsers(query) {
       resolve(users);
     });
   });
+}
+
+export function loadUsersWithDoor(doorId) {
+  const query = { doors: { $in: [doorId] } };
+  return loadUsers(query);
 }
 
 export function addUser(user) {
@@ -83,12 +87,9 @@ export function deleteUser(id) {
 
 export function updateUser(user) {
   return new Promise((resolve, reject) => {
-    User.loadOneAndUpdate({ _id: user.id }, { name: user.name, doors: user.doors })
-      .then(numUpdated => {
-        resolve(numUpdated);
-      }).catch(err => {
-        reject(err);
-      });
+    User.loadOneAndUpdate({ _id: user._id }, { name: user.name, doors: user.doors })
+      .then(() => resolve(user))
+      .catch(err => reject(err));
   });
 }
 
@@ -137,5 +138,21 @@ export function checkValidQRCode(qrcode) {
     }).catch(err => {
       reject(err);
     });
+  });
+}
+
+export function removeDoorFromUser(userId, doorId) {
+  return loadUserById(userId).then(user => {
+    const newUser = Object.assign({}, user);
+    newUser.doors = newUser.doors.filter(id => id !== doorId);
+    return updateUser(newUser);
+  });
+}
+
+export function addDoorToUser(userId, doorId) {
+  return loadUserById(userId).then(user => {
+    const newUser = Object.assign({}, user);
+    newUser.doors.push(doorId);
+    return updateUser(newUser);
   });
 }
