@@ -12,7 +12,6 @@ export default class Door extends Document {
         type: String,
         default: '/assets/img/garage.jpg',
       },
-      doors: [String],
     });
   }
 }
