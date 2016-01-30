@@ -1,1 +1,0 @@
-# GaragePi React Frontend
