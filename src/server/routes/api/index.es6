@@ -1,8 +1,7 @@
 import { Router as router } from 'express';
 import doorRoutes from './door';
 import authRoutes from './auth';
-import adminRoutes from './admin/index';
-import setupRoutes from './setup';
+import adminRoutes from './admin';
 
 const routes = router();
 
@@ -10,6 +9,5 @@ const routes = router();
 routes.use('/door', doorRoutes);
 routes.use('/auth', authRoutes);
 routes.use('/admin', adminRoutes);
-routes.use('/setup', setupRoutes);
 
 export default routes;

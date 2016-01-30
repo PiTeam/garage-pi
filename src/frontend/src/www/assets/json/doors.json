@@ -1,0 +1,4 @@
+[
+  {"name":"Garage Door", "image": "door1.jpg", "actionGpioPin":1,"statusGpioPin":2,"key":"sUGiTdIzdVFEJ3xV"},
+  {"name":"Dicki Radial","image": "door2.jpg", "actionGpioPin":77331,"statusGpioPin":5754,"key":"yohtOXiVz4C9GL5N"}
+]

@@ -1,0 +1,7 @@
+{
+  "base": "/",
+  "get": {
+    "doors": "assets/json/doors.json",
+    "users": "assets/json/users.json"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "base": "http://localhost:5001/api/",
+  "get": {
+    "doors": "door",
+    "adminUsers": "admin/user",
+    "adminDoors": "admin/door",
+    "adminQRCode": "admin/user/qrcode",
+    "auth": "auth"
+  },
+  "delete": {
+    "user": "admin/user",
+    "door": "admin/door"
+  },
+  "update": {
+    "user": "admin/user",
+    "door": "admin/door"
+  },
+  "post": {
+    "user": "admin/user",
+    "auth": "auth"
+  }
+}
