@@ -1,8 +1,8 @@
 {
     "express": {
-        "host": "localhost",
-        "cors": true,
-        "port": 5001
+        "host": "0.0.0.0",
+        "cors": false,
+        "port": 8080
     },
     "nedb": {
       "nedb_dir": "/tmp/data"
