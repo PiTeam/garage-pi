@@ -66,6 +66,12 @@ export default class ActivateUser extends React.Component {
         textAlign: 'left',
         marginBottom: '.2em',
       },
+      bottomButtons: {
+        bottom: '1em',
+        left: '1em',
+        right: '1em',
+        position: 'absolute',
+      },
     };
   }
 
@@ -97,27 +103,28 @@ export default class ActivateUser extends React.Component {
             </div>
           }
         </Paper>
-        <br style={styles.br} />
-        <Link
-          style={styles.link}
-          to="/manage/user"
-        >
-          <RaisedButton
-            label="Back"
-            style={styles.backButton}
-          />
-        </Link>
-        <Link
-          style={styles.link}
-          to="/"
-        >
-          <RaisedButton
-            label="Done"
-            primary
-            style={styles.confirmButton}
-          />
-        </Link>
-        <br style={styles.br} />
+
+        <div style={styles.bottomButtons}>
+          <Link
+            style={styles.link}
+            to="/manage/user"
+          >
+            <RaisedButton
+              label="Back"
+              style={styles.backButton}
+            />
+          </Link>
+          <Link
+            style={styles.link}
+            to="/"
+          >
+            <RaisedButton
+              label="Done"
+              primary
+              style={styles.confirmButton}
+            />
+          </Link>
+        </div>
       </div>
     );
   }

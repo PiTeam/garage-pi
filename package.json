@@ -4,13 +4,13 @@
   "description": "Node.JS Raspberry Pi Garage Door Management Application",
   "main": "server.js",
   "scripts": {
-    "start": "npm run build; npm run server",
-    "server": "npm run eslint && babel-node src/server",
+    "start": "npm run server:prod",
+    "server": "npm run eslint && babel-node src/backend",
     "manage": "babel-node src/tools/manage",
     "test": "NODE_ENV=test mocha $(find test -name '*.es6')",
     "server:dev": "nodemon --exec babel-node -- src/dev-server.es6",
-    "server:prod": "node dist/server/server.js",
-    "build": "mkdir -p dist/server; cp -va src/server/views dist/server/; cp -va src/static dist; babel src --out-dir dist; webpack --config src/frontend/config/webpack.production.js --progress --colors",
+    "server:prod": "NODE_ENV=production node dist/server.js",
+    "build": "mkdir -p dist/backend; babel src/server.es6 -o dist/server.js; babel src/backend --out-dir dist/backend; webpack --config config/webpack.production.js --progress --colors",
     "eslint": "eslint --ext es6 --ext jsx src"
 
   },

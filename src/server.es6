@@ -10,7 +10,8 @@ const PORT = config.get('express.port') || 3000;
 import apiRoutes from './backend/routes/api';
 
 const app = express();
-app.use('/assets', express.static(`${__dirname}/frontend/www/assets`));
+app.use('/assets', express.static(`${__dirname}/frontend/assets`));
+app.use('/app.js', express.static(`${__dirname}/frontend/app.js`));
 
 if (config.get('express.cors')) {
   app.use(cors());
@@ -21,6 +22,7 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }));
 app.use('/api', apiRoutes);
+app.get('/*', (req, res) => res.sendFile(`${__dirname}/frontend/index.html`));
 
 const db = new DB(config.get('nedb'));
 db.connect().then(() => {
