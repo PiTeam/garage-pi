@@ -38,14 +38,14 @@ export default {
         test: /\.(js|jsx|es6)$/,
         loader: 'eslint-loader',
         include: [path.resolve(__dirname, "../app")],
-        exclude: [path.resolve(__dirname, '../../node_modules')],
+        exclude: [path.resolve(__dirname, '../../../node_modules')],
       },
     ],
     loaders: [
       {
         test: /\.(js|jsx|es6)$/,
         loaders: ['react-hot', 'babel'],
-        exclude: [path.resolve(__dirname, '../../node_modules')],
+        exclude: [path.resolve(__dirname, '../../../node_modules')],
       },
     ],
   },

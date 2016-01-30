@@ -31,15 +31,21 @@ class UserDetail extends Component {
   };
 
   componentWillMount() {
-    if (!this.state.user && this.props.users.status === 'done') {
-      const user = this._getUser(this.props.params.userId, this.props.users.data);
+    if (!this.state.user &&
+         this.props.users.status === 'done' &&
+         this.props.doors.status === 'done') {
+      const user = this._getUser(this.props.params.userId,
+                                 this.props.users.data, this.props.doors.data);
       this.setState({ user });
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.state.user && nextProps.users.status === 'done') {
-      const user = this._getUser(nextProps.params.userId, nextProps.users.data);
+    if (!this.state.user &&
+         nextProps.users.status === 'done' &&
+         nextProps.doors.status === 'done') {
+      const user = this._getUser(nextProps.params.userId,
+                                 nextProps.users.data, nextProps.doors.data);
       this.setState({ user });
     }
   }
@@ -106,19 +112,19 @@ class UserDetail extends Component {
     browserHistory.push('/manage/user');
   }
 
-  _getUser(id, users) {
+  _getUser(id, users, doors) {
     const selected = users.filter(user => {
       if (user.id === id) {
         return user;
       }
     });
-    const doors = {};
-    this.props.doors.data.map(door => {
-      doors[door.id] = selected[0].doors instanceof Array &&
+    const userDoors = {};
+    doors.map(door => {
+      userDoors[door.id] = selected[0].doors instanceof Array &&
                        selected[0].doors.indexOf(door.id) !== -1 ? true: false;
     });
 
-    return Object.assign({}, selected[0], { doors });
+    return Object.assign({}, selected[0], { doors: userDoors });
   }
 
   _handleCheck(id, e, value) {
