@@ -35,7 +35,7 @@ export default class Home extends React.Component {
 
     return (
       <div>
-        <h1 style={styles.logo}>{'We need a logo here!'}</h1>
+        <h1 style={styles.logo}>{'Logo needed here!'}</h1>
         <div style={styles.bottomButtons}>
           <Link to="/door">
             <RaisedButton

@@ -8,11 +8,11 @@ import webpack from 'webpack';
 import proxy from 'proxy-middleware';
 import url from 'url';
 import WebpackDevServer from 'webpack-dev-server';
-import configWebpackDevServer from './frontend/config/webpack-dev-server';
+import configWebpackDevServer from '../config/webpack-dev-server';
 
 const PORT = config.get('express.port') || 3000;
 
-import routes from './backend/routes';
+import apiRoutes from './backend/routes/api';
 
 const app = express();
 app.use('/assets', express.static(`${__dirname}/frontend/www/assets`));
@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true,
 }));
-app.use('/', routes);
+app.use('/api', apiRoutes);
 
 const server = new WebpackDevServer(webpack(configWebpackDevServer), {
   contentBase: `${__dirname}/www`,
