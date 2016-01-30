@@ -18,7 +18,7 @@ export default {
   },
   output: {
     path: path.resolve(__dirname, '../src/frontend/www/assets'),
-    publicPath: 'http://localhost:8081/assets',
+    publicPath: 'http://localhost:8081',
     filename: 'app.js',
   },
   plugins: [

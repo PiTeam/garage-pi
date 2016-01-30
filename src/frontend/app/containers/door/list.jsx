@@ -6,6 +6,8 @@ import Paper from 'material-ui/lib/paper';
 import { Link } from 'react-router';
 import RaisedButton from 'material-ui/lib/raised-button';
 import { connect } from 'react-redux';
+import Tabs from 'material-ui/lib/tabs/tabs';
+import Tab from 'material-ui/lib/tabs/tab';
 
 export default class UserDoorList extends React.Component {
   displayName: 'UserDoorList';
@@ -19,9 +21,6 @@ export default class UserDoorList extends React.Component {
       },
       doors: {
         marginBottom: '4em',
-      },
-      button: {
-        width: '100%',
       },
       backButton: {
         float: 'left',
@@ -50,8 +49,12 @@ export default class UserDoorList extends React.Component {
     const styles = this.getStyles();
     return (
       <div>
-        <div style={styles.doors}>
-          {this.props.doors.data.map((door, i) => (
+        <Tabs>
+        {this.props.doors.data.map((door, i) => (
+          <Tab
+            key={i}
+            label={door.name}
+          >
             <Paper
               key={i}
               style={styles.paper}
@@ -69,8 +72,9 @@ export default class UserDoorList extends React.Component {
                 </Card>
               </a>
             </Paper>
-          ))}
-        </div>
+          </Tab>
+        ))}
+        </Tabs>
 
         <div style={styles.bottomButtons}>
           <Link to="/">

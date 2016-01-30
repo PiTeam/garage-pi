@@ -40,6 +40,7 @@ const server = new WebpackDevServer(webpack(configWebpackDevServer), {
 });
 
 app.use('/assets', proxy(url.parse('http://localhost:8081/assets')));
+app.use('/app.js', proxy(url.parse('http://localhost:8081/assets/app.js')));
 app.get('/*', (req, res) => res.sendFile(`${__dirname}/frontend/www/index.html`));
 server.listen(8081, 'localhost');
 
