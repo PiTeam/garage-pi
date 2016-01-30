@@ -1,0 +1,5 @@
+{
+  "name": "Garage Door",
+  "actionGpioPin": 11,
+  "statusGpioPin": 12
+}

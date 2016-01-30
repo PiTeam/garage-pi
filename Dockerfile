@@ -15,4 +15,4 @@ RUN apk del python sqlite-libs readline ncurses-libs ncurses-terminfo-base \
     rm -rf /tmp/* /var/cache/apk/* /root/.npm /root/.node-gyp
 
 EXPOSE 5000
-CMD ["node", "dist/server/server.js"]
+CMD ["node", "dist/server.js"]

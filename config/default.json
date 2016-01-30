@@ -5,7 +5,7 @@
       "port": 8080
   },
   "nedb": {
-    "nedb_dir": "/tmp/data"
+    "nedb_dir": "data"
   },
   "auth": {
     "token": {

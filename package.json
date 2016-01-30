@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "npm run server:prod",
+    "init-db": "npm run manage add user data/initial-admin-user.json; npm run manage add door data/initial-door.json",
     "server": "npm run eslint && babel-node src/backend",
     "manage": "babel-node src/tools/manage",
     "test": "NODE_ENV=test mocha $(find test -name '*.es6')",

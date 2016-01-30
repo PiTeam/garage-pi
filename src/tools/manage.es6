@@ -1,9 +1,9 @@
 import manager from 'commander';
-import DB from '../server/lib/db';
+import DB from '../backend/lib/db';
 import config from 'config';
 import faker from 'faker';
-import * as userRepository from '../server/repositories/user';
-import * as doorRepository from '../server/repositories/door';
+import * as userRepository from '../backend/repositories/user';
+import * as doorRepository from '../backend/repositories/door';
 
 function generateRandomModel(modelName) {
   let data;
@@ -42,11 +42,16 @@ function addToCollection(modelName, jsonfile) {
   let data;
   if (!jsonfile) {
     data = generateRandomModel(modelName);
+  } else {
+    const filename = jsonfile.search('/') === 0 ? jsonfile : `${process.cwd()}/${jsonfile}`;
+    data = require(filename);
   }
 
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     saveModelInstance(modelName, data).then(() => {
       resolve();
+    }).catch(err => {
+      reject(err);
     });
   });
 }
@@ -61,8 +66,9 @@ function parseCommandLine() {
   manager.parse(process.argv);
 }
 
-
 const db = new DB(config.get('nedb'));
 db.connect().then(() => {
   parseCommandLine();
+}).catch(err => {
+  console.log(err.message);
 });
