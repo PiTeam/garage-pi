@@ -10,16 +10,31 @@ const endpoints = require('endpoints');
 export const FETCH_USERS = 'FETCH_USERS';
 export const DELETE_USER = 'DELETE_USER';
 export const UPDATE_USER = 'UPDATE_USER';
+export const RESET_USERS = 'RESET_USERS';
 export const ADD_USER = 'ADD_USER';
 export const FETCH_DOORS = 'FETCH_DOORS';
+export const FETCH_USER_DOORS = 'FETCH_USER_DOORS';
 export const DELETE_DOOR = 'DELETE_DOOR';
 export const UPDATE_DOOR = 'UPDATE_DOOR';
+export const RESET_DOORS = 'RESET_DOORS';
 export const FETCH_QRCODE = 'FETCH_QRCODE';
 
 export function fetchUsers(token) {
   return dispatch => {
     const action = createAction('FETCH_USERS');
     const url = `${endpoints.base}${endpoints.get.adminUsers}`;
+    rest.get(url, token).then(data => {
+      dispatch(action({ status: 'done', data }));
+    }).catch(err => {
+      dispatch(resetAuth(err));
+    });
+  };
+}
+
+export function fetchUserDoors(token) {
+  return dispatch => {
+    const action = createAction('FETCH_USER_DOORS');
+    const url = `${endpoints.base}${endpoints.get.doors}`;
     rest.get(url, token).then(data => {
       dispatch(action({ status: 'done', data }));
     }).catch(err => {

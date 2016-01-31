@@ -25,6 +25,9 @@ export default class UserDoorList extends React.Component {
       backButton: {
         float: 'left',
       },
+      logo: {
+        marginTop: '50%',
+      },
       bottomButtons: {
         bottom: '1em',
         left: '1em',
@@ -52,33 +55,37 @@ export default class UserDoorList extends React.Component {
     const styles = this.getStyles();
     return (
       <div>
-        <Tabs style={styles.tabs}>
-        {this.props.doors.data.map((door, i) => (
-          <Tab
-            key={i}
-            label={door.name}
-          >
-            <Paper
+        {this.props.doors.data.length === 0 &&
+          <h1 style={styles.logo}>{'No authorized doors'}</h1>
+        }
+        {this.props.doors.data.length > 0 &&
+          <Tabs style={styles.tabs}>
+          {this.props.doors.data.map((door, i) => (
+            <Tab
               key={i}
-              style={styles.paper}
+              label={door.name}
             >
-              <a
-                href="#"
-                onClick={this.handleClick}
+              <Paper
+                key={i}
+                style={styles.paper}
               >
-                <Card>
-                  <CardMedia
-                    overlay={this.getCardTitle(door.name)}
-                  >
-                    <img src={door.image}/>
-                  </CardMedia>
-                </Card>
-              </a>
-            </Paper>
-          </Tab>
-        ))}
-        </Tabs>
-
+                <a
+                  href="#"
+                  onClick={this.handleClick}
+                >
+                  <Card>
+                    <CardMedia
+                      overlay={this.getCardTitle(door.name)}
+                    >
+                      <img src={door.image}/>
+                    </CardMedia>
+                  </Card>
+                </a>
+              </Paper>
+            </Tab>
+          ))}
+          </Tabs>
+        }
         <div style={styles.bottomButtons}>
           <Link to="/">
             <RaisedButton

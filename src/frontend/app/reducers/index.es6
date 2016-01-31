@@ -4,12 +4,17 @@ import _ from 'lodash';
 
 const rootReducer = combineReducers({
   doors: handleActions({
-    FETCH_DOORS: (state=[], action) => action.payload,
-    DELETE_DOOR: (state=[], action) => {
+    RESET_DOORS: () => {
+      const reset = { status: 'init', data: [] };
+      return reset;
+    },
+    FETCH_DOORS: (state={}, action) => action.payload,
+    DELETE_DOOR: (state={}, action) => {
       const index = _.findIndex(state.data, { id: action.payload });
       const arr = state.data.slice(0, index).concat(state.data.slice(index + 1));
       return { status: 'done', data: arr };
     },
+    FETCH_USER_DOORS: (state=[], action) => action.payload,
     UPDATE_DOOR: (state=[], action) => {
       const index = _.findIndex(state.data, { id: action.payload.id });
       const arr = state.data;
@@ -66,6 +71,10 @@ const rootReducer = combineReducers({
     FETCH_QRCODE: (state={}, action) => action.payload,
   }, ''),
   users: handleActions({
+    RESET_USERS: () => {
+      const reset = { status: 'init', data: [] };
+      return reset;
+    },
     ADD_USER: (state=[], action) => action.payload,
     FETCH_USERS: (state=[], action) => action.payload,
     DELETE_USER: (state=[], action) => {

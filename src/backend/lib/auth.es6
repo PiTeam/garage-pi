@@ -41,3 +41,4 @@ function ensureDoorAuthorized(req, res, next) {
 
 export const adminOnly = [expressjwt({ secret: token.secret }), ensureAdmin];
 export const doorAuthorizationNeeded = [expressjwt({ secret: token.secret }), ensureDoorAuthorized];
+export const authNeeded = [expressjwt({ secret: token.secret })];

@@ -29,7 +29,8 @@ export function authenticate(authdata) {
 
       res.json().then(data => {
         if (data.token) {
-          localStorage.setItem('token', data.token.value);
+          localStorage.setItem('token',
+            JSON.stringify({ admin: data.admin, value: data.token.value }));
         }
         dispatch(loginAction(data));
       });
@@ -42,18 +43,21 @@ export function checkToken() {
     const tokenActive = createAction('CHECK_TOKEN');
     let auth = {};
 
-    if (localStorage.token) {
+    const token = localStorage.token ? JSON.parse(localStorage.token) : {};
+    if (token.value) {
       auth = {
         token: {
           status: 'valid',
-          value: localStorage.token,
+          value: token.value,
         },
+        admin: token.admin,
       };
     } else {
       auth = {
         token: {
           status: 'invalid',
         },
+        admin: false,
       };
     }
 
@@ -64,14 +68,16 @@ export function checkToken() {
 export function resetAuth() {
   return dispatch => {
     const resetAuthAction = createAction('RESET_AUTH');
-    if (localStorage.token) {
-      localStorage.removeItem('token');
-      dispatch(resetAuthAction({
-        token: {
-          status: 'init',
-          value: undefined,
-        },
-      }));
-    }
+    const resetDoors = createAction('RESET_DOORS');
+    const resetUsers = createAction('RESET_USERS');
+    localStorage.removeItem('token');
+    dispatch(resetAuthAction({
+      token: {
+        status: 'init',
+        value: undefined,
+      },
+    }));
+    dispatch(resetUsers());
+    dispatch(resetDoors());
   };
 }

@@ -32,7 +32,7 @@ export function requireAdminAuth(Component) {
         return browserHistory.push(`/login?next=${location.pathname}`);
       }
 
-      if (!this.state.fetch && props.users.status === 'init' && props.doors.status === 'init') {
+      if (!this.state.ready && props.users.status === 'init' && props.doors.status === 'init') {
         props.fetchUsers(props.auth.token.value);
         props.fetchDoors(props.auth.token.value);
       }

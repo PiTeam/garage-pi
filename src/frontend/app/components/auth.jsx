@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 
-import { fetchUsers, fetchDoors } from 'actions';
+import { fetchUserDoors } from 'actions';
 
 export function requireAuth(Component) {
   class Authenticated extends React.Component {
@@ -32,9 +32,8 @@ export function requireAuth(Component) {
         return browserHistory.push(`/login?next=${location.pathname}`);
       }
 
-      if (!this.state.fetch && props.users.status === 'init' && props.doors.status === 'init') {
-        props.fetchUsers(props.auth.token.value);
-        props.fetchDoors(props.auth.token.value);
+      if (!this.state.ready && props.users.status === 'init' && props.doors.status === 'init') {
+        props.fetchUserDoors(props.auth.token.value);
       }
 
       this.setState({ ready: true });
@@ -57,7 +56,7 @@ export function requireAuth(Component) {
   }
 
   function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ fetchUsers, fetchDoors }, dispatch);
+    return bindActionCreators({ fetchUserDoors }, dispatch);
   }
 
   Authenticated.propTypes = {
@@ -68,21 +67,11 @@ export function requireAuth(Component) {
       }),
       status: React.PropTypes.string,
     }),
-    fetchDoors: React.PropTypes.func.isRequired,
-    fetchUsers: React.PropTypes.func.isRequired,
+    fetchUserDoors: React.PropTypes.func.isRequired,
     location: React.PropTypes.shape({
       state: React.PropTypes.shape({
         nextPathname: React.PropTypes.string,
       }),
-    }),
-    users: React.PropTypes.shape({
-      status: React.PropTypes.string.isRequired,
-      data: React.PropTypes.arrayOf(
-        React.PropTypes.shape({
-          id: React.PropTypes.string.isRequired,
-          name: React.PropTypes.string.isRequired,
-        }),
-      ),
     }),
   };
 

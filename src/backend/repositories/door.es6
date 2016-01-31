@@ -4,11 +4,22 @@ import * as userRepository from './user';
 export function loadDoors(query) {
   return new Promise((resolve, reject) => {
     Door.loadMany(query).then(doors => {
-      if (!doors) {
-        reject(new Error('Doors not found.'));
-        return;
-      }
+      console.log('loadMany', doors, query);
       resolve(doors);
+    }).catch(err => {
+      reject(err);
+    });
+  });
+}
+
+export function loadDoorsByUser(userId) {
+  return new Promise((resolve, reject) => {
+    userRepository.loadUserById(userId).then(user => {
+      Door.loadMany({ _id: { $in: user.doors } }).then(doors => {
+        resolve(doors);
+      });
+    }).catch(err => {
+      reject(err);
     });
   });
 }
@@ -26,10 +37,6 @@ function loadDoorWithUsers(door) {
 export function loadDoorsWithUsers(query) {
   return new Promise((resolve, reject) => {
     Door.loadMany(query).then(doors => {
-      if (!doors) {
-        reject(new Error('Doors not found.'));
-        return;
-      }
       const doorsWithUsers = [];
       doors.map(door => {
         doorsWithUsers.push(loadDoorWithUsers(door));
@@ -38,6 +45,8 @@ export function loadDoorsWithUsers(query) {
       Promise.all(doorsWithUsers).then(result => {
         resolve(result);
       });
+    }).catch(err => {
+      reject(err);
     });
   });
 }

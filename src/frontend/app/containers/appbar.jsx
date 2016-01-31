@@ -44,7 +44,7 @@ export default class MainAppBar extends React.Component {
       <AppBar
         iconElementRight={this.handleLeftIcon()}
         onLeftIconButtonTouchTap={this.props.handleOpenLeftNav}
-        showMenuIconButton={this.props.auth.token && this.props.auth.token.status === 'valid'}
+        showMenuIconButton={this.props.auth.admin && this.props.auth.token.status === 'valid'}
         style={styles.appbar}
         title={
           <Link style={styles.link}
@@ -67,6 +67,7 @@ MainAppBar.propTypes = {
       status: React.PropTypes.string,
       value: React.PropTypes.string,
     }),
+    admin: React.PropTypes.bool,
   }),
   handleOpenLeftNav: React.PropTypes.func.isRequired,
 };
