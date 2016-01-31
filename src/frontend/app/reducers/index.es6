@@ -19,6 +19,48 @@ const rootReducer = combineReducers({
         ...arr.slice(index + 1),
       ] };
     },
+    ADD_USER: (state=[], action) => {
+      const user = action.payload;
+      const newstate = Object.assign({}, state);
+      newstate.data = state.data.map(door => {
+        const position = user.doors.indexOf(door.id);
+        if (position >= 0) {
+          door.users.indexOf(user.id) === -1 && door.users.push(user.id);
+        } else if (position < 0) {
+          door.users.indexOf(user.id) !== -1 && door.users.splice(position, 1);
+        }
+        return door;
+      });
+      return newstate;
+    },
+    UPDATE_USER: (state=[], action) => {
+      const user = action.payload;
+      const newstate = Object.assign({}, state);
+      newstate.data = state.data.map(door => {
+        const position = user.doors.indexOf(door.id);
+        if (position >= 0) {
+          door.users.indexOf(user.id) === -1 && door.users.push(user.id);
+        } else if (position < 0) {
+          door.users.indexOf(user.id) !== -1 && door.users.splice(position, 1);
+        }
+        return door;
+      });
+      return newstate;
+    },
+    DELETE_USER: (state=[], action) => {
+      const user = action.payload;
+      const newstate = Object.assign({}, state);
+      newstate.data = state.data.map(door => {
+        const position = user.doors.indexOf(door.id);
+        if (position >= 0) {
+          door.users.indexOf(user.id) === -1 && door.users.push(user.id);
+        } else if (position < 0) {
+          door.users.indexOf(user.id) !== -1 && door.users.splice(position, 1);
+        }
+        return door;
+      });
+      return newstate;
+    },
   }, { status: 'init', data: [] }),
   qrcode: handleActions({
     FETCH_QRCODE: (state={}, action) => action.payload,
@@ -40,6 +82,48 @@ const rootReducer = combineReducers({
         ...arr.slice(index + 1),
       ] };
     },
+    ADD_DOOR: (state=[], action) => {
+      const door = action.payload;
+      const newstate = Object.assign({}, state);
+      newstate.data = state.data.map(user => {
+        const position = door.users.indexOf(user.id);
+        if (position >= 0) {
+          user.doors.indexOf(door.id) === -1 && user.doors.push(door.id);
+        } else if (position < 0) {
+          user.doors.indexOf(door.id) !== -1 && user.doors.splice(position, 1);
+        }
+        return user;
+      });
+      return newstate;
+    },
+    UPDATE_DOOR: (state=[], action) => {
+      const door = action.payload;
+      const newstate = Object.assign({}, state);
+      newstate.data = state.data.map(user => {
+        const position = door.users.indexOf(user.id);
+        if (position >= 0) {
+          user.doors.indexOf(door.id) === -1 && user.doors.push(door.id);
+        } else if (position < 0) {
+          user.doors.indexOf(door.id) !== -1 && user.doors.splice(position, 1);
+        }
+        return user;
+      });
+      return newstate;
+    },
+    DELETE_DOOR: (state=[], action) => {
+      const door = action.payload;
+      const newstate = Object.assign({}, state);
+      newstate.data = state.data.map(user => {
+        const position = door.users.indexOf(user.id);
+        if (position >= 0) {
+          user.doors.indexOf(door.id) === -1 && user.doors.push(door.id);
+        } else if (position < 0) {
+          user.doors.indexOf(door.id) !== -1 && user.doors.splice(position, 1);
+        }
+        return user;
+      });
+      return newstate;
+    },
   }, { status: 'init', data: [] }),
   auth: handleActions({
     LOGIN_ACTION: (state={}, action) => {
@@ -54,7 +138,7 @@ const rootReducer = combineReducers({
       }
       return action.payload;
     },
-    REMOVE_TOKEN: (state={}, action) => {
+    RESET_AUTH: (state={}, action) => {
       if (!action.payload) {
         return state;
       }

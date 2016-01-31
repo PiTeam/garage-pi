@@ -44,13 +44,15 @@ export default class Home extends React.Component {
               style={styles.left}
             />
           </Link>
-          <Link to="/manage">
-            <RaisedButton
-              label="Admin zone"
-              secondary
-              style={styles.right}
-            />
-          </Link>
+          {this.props.auth.admin &&
+            <Link to="/manage">
+              <RaisedButton
+                label="Admin zone"
+                secondary
+                style={styles.right}
+              />
+            </Link>
+          }
         </div>
       </div>
     );
@@ -65,6 +67,6 @@ export default connect(mapStateToProps)(Home);
 
 Home.propTypes = {
   auth: React.PropTypes.shape({
-    isAuthenticated: React.PropTypes.bool,
+    admin: React.PropTypes.bool,
   }),
 };

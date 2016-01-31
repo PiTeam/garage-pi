@@ -31,6 +31,9 @@ export default class UserDoorList extends React.Component {
         right: '1em',
         position: 'absolute',
       },
+      tabs: {
+        marginBottom: '4em',
+      },
     };
 
     return styles;
@@ -49,7 +52,7 @@ export default class UserDoorList extends React.Component {
     const styles = this.getStyles();
     return (
       <div>
-        <Tabs>
+        <Tabs style={styles.tabs}>
         {this.props.doors.data.map((door, i) => (
           <Tab
             key={i}

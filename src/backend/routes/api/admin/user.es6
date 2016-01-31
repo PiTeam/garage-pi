@@ -47,7 +47,13 @@ routes.delete('/:id', adminOnly, (req, res) => {
 });
 
 routes.put('/:id', adminOnly, (req, res) => {
-  userRepository.updateUser(req.body.user).then(() => {
+  const user = {
+    _id: req.body.user.id,
+    name: req.body.user.name,
+    doors: req.body.user.doors,
+  };
+
+  userRepository.updateUser(user).then(() => {
     res.status(200).send({ status: 'ok' });
   }).catch(err => {
     res.status(500).send(err.message);
