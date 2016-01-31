@@ -23,6 +23,7 @@
       "adminUsers": "admin/user",
       "adminDoors": "admin/door",
       "adminQRCode": "admin/user/qrcode",
+      "adminActivateUser": "admin/user/activate/",
       "auth": "auth"
     },
     "delete": {

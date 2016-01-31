@@ -1,7 +1,7 @@
 import qr from 'qr-image';
-import jwt from 'jsonwebtoken';
 import config from 'config';
 import moment from 'moment';
+import jwt from 'jsonwebtoken';
 
 const token = config.get('auth').token;
 
@@ -10,7 +10,6 @@ export default class QRCode {
     this.iat = moment().valueOf();
     const payload = {
       name: user.name,
-      password: user.password,
       iat: this.iat,
     };
     this.qrcode = jwt.sign(payload, token.secret);
@@ -34,6 +33,11 @@ export default class QRCode {
 
   get qrcodeText() {
     return this.qrcode;
+  }
+  
+  get qrcodeURL() {
+    const url = `${config.get('api').base}${config.get('api').get.adminActivateUser}`;
+    return `${url}${this.qrcode}`;
   }
 
   _streamToString(stream, cb) {

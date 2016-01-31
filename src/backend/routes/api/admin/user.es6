@@ -24,9 +24,16 @@ routes.get('/', adminOnly, (req, res) => {
 routes.get('/qrcode/:userId', adminOnly, (req, res) =>
   userRepository.loadUserById(req.params.userId).then(user => {
     const qr = new QRCode(user);
-    qr.generateImageData().then(qrcode => {
-      res.send({ qrcode: new Buffer(qrcode).toString('base64') });
-    });
+    userRepository.setQRCode(user._id, qr.qrcodeText).then(() => {
+      qr.generateImageData().then(qrcode => {
+        res.send({
+          qrcode: {
+            svg: new Buffer(qrcode).toString('base64'),
+            text: qr.qrcodeURL,
+          },
+        });
+      });
+    }).catch(err => res.status(500).send(err.message));
   }).catch(err => res.status(500).send(err.message))
 );
 

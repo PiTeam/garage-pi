@@ -69,7 +69,7 @@ const rootReducer = combineReducers({
   }, { status: 'init', data: [] }),
   qrcode: handleActions({
     FETCH_QRCODE: (state={}, action) => action.payload,
-  }, ''),
+  }, {}),
   users: handleActions({
     RESET_USERS: () => {
       const reset = { status: 'init', data: [] };

@@ -85,6 +85,16 @@ export function deleteUser(id) {
   });
 }
 
+export function setQRCode(userId, qrcode) {
+  return new Promise((resolve, reject) => {
+    User.loadOneAndUpdate({ _id: userId }, { qrcode }).then(user => {
+      resolve(user);
+    }).catch(err => {
+      reject(err);
+    });
+  });
+}
+
 export function updateUser(user) {
   return new Promise((resolve, reject) => {
     User.loadOneAndUpdate({ _id: user._id }, { name: user.name, doors: user.doors })

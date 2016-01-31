@@ -95,10 +95,10 @@ export default class ActivateUser extends React.Component {
       <div>
         <h1 style={styles.h1}>{`Activate user ${this.state.user.name}`}</h1>
         <Paper style={styles.paper}>
-          {this.props.qrcode &&
+          {this.props.qrcode.text &&
             <div>
               <img
-                src={`data:image/svg+xml;base64,${this.props.qrcode}`}
+                src={`data:image/svg+xml;base64,${this.props.qrcode.svg}`}
               />
             </div>
           }
@@ -157,7 +157,10 @@ ActivateUser.propTypes = {
   params: React.PropTypes.shape({
     userName: React.PropTypes.string.isRequired,
   }),
-  qrcode: React.PropTypes.string,
+  qrcode: React.PropTypes.shape({
+    svg: React.PropTypes.string,
+    text: React.PropTypes.string,
+  }),
   users: React.PropTypes.shape({
     status: React.PropTypes.string,
     data: React.PropTypes.arrayOf(
