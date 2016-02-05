@@ -67,9 +67,6 @@ const rootReducer = combineReducers({
       return newstate;
     },
   }, { status: 'init', data: [] }),
-  qrcode: handleActions({
-    FETCH_QRCODE: (state={}, action) => action.payload,
-  }, {}),
   users: handleActions({
     RESET_USERS: () => {
       const reset = { status: 'init', data: [] };
@@ -83,6 +80,15 @@ const rootReducer = combineReducers({
       return { status: 'done', data: arr };
     },
     UPDATE_USER: (state=[], action) => {
+      const index = _.findIndex(state.data, { id: action.payload.id });
+      const arr = state.data;
+      return { status: 'done', data: [
+        ...arr.slice(0, index),
+        action.payload,
+        ...arr.slice(index + 1),
+      ] };
+    },
+    ACTIVATE_USER: (state=[], action) => {
       const index = _.findIndex(state.data, { id: action.payload.id });
       const arr = state.data;
       return { status: 'done', data: [

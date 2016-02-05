@@ -4,7 +4,6 @@ import * as userRepository from './user';
 export function loadDoors(query) {
   return new Promise((resolve, reject) => {
     Door.loadMany(query).then(doors => {
-      console.log('loadMany', doors, query);
       resolve(doors);
     }).catch(err => {
       reject(err);

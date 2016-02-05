@@ -3,7 +3,7 @@ import { createAction } from 'redux-actions';
 import * as rest from 'lib/rest';
 
 import { resetAuth } from 'actions/auth';
-export { authenticate, checkToken, resetAuth } from 'actions/auth';
+export { authenticate, checkToken, resetAuth, processActivateUser } from 'actions/auth';
 
 const endpoints = require('endpoints');
 
@@ -17,7 +17,7 @@ export const FETCH_USER_DOORS = 'FETCH_USER_DOORS';
 export const DELETE_DOOR = 'DELETE_DOOR';
 export const UPDATE_DOOR = 'UPDATE_DOOR';
 export const RESET_DOORS = 'RESET_DOORS';
-export const FETCH_QRCODE = 'FETCH_QRCODE';
+export const ACTIVATE_USER = 'ACTIVATE_USER';
 
 export function fetchUsers(token) {
   return dispatch => {
@@ -43,12 +43,12 @@ export function fetchUserDoors(token) {
   };
 }
 
-export function fetchQRCode(id, token) {
+export function activateUser(id) {
   return dispatch => {
-    const action = createAction('FETCH_QRCODE');
-    const url = `${endpoints.base}${endpoints.get.adminQRCode}/${id}`;
-    rest.get(url, token).then(data => {
-      dispatch(action(data.qrcode));
+    const action = createAction('ACTIVATE_USER');
+    const url = `${endpoints.base}${endpoints.update.activateUser}/${id}`;
+    rest.update(url).then(data => {
+      dispatch(action(data));
     });
   };
 }

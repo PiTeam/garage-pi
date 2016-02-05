@@ -121,7 +121,7 @@ class UserDetail extends Component {
     const userDoors = {};
     doors.map(door => {
       userDoors[door.id] = selected[0].doors instanceof Array &&
-                       selected[0].doors.indexOf(door.id) !== -1 ? true: false;
+                           selected[0].doors.indexOf(door.id) !== -1;
     });
 
     return Object.assign({}, selected[0], { doors: userDoors });

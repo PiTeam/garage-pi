@@ -19,6 +19,7 @@ import ManageDoorDetail from 'containers/door/admin/detail';
 import ManageUserDetail from 'containers/user/admin/detail';
 import PageNotFound from 'components/notfound';
 import ManageMenu from 'components/manage';
+import TokenAuth from 'containers/user/token-auth';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -45,6 +46,10 @@ export default class Routes extends React.Component {
           path="/"
         >
           <IndexRoute component={Home}/>
+          <Route
+            component={TokenAuth}
+            path="activate/user/:token"
+          />
           <Route
             component={Login}
             path="login"

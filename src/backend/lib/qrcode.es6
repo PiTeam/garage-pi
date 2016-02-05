@@ -34,7 +34,7 @@ export default class QRCode {
   get qrcodeText() {
     return this.qrcode;
   }
-  
+
   get qrcodeURL() {
     const url = `${config.get('api').base}${config.get('api').get.adminActivateUser}`;
     return `${url}${this.qrcode}`;

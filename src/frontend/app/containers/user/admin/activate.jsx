@@ -4,8 +4,10 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import qr from 'qr-image';
+import base64 from 'base-64';
 
-import { fetchUsers, fetchQRCode } from 'actions';
+import { fetchUsers, activateUser } from 'actions';
 
 export default class ActivateUser extends React.Component {
   displayName: 'ActivateUser';
@@ -17,24 +19,38 @@ export default class ActivateUser extends React.Component {
 
   state = {
     user: undefined,
+    trying: false,
+    svg: undefined,
   };
 
   componentWillMount() {
-    if (!this.state.user && this.props.users.status === 'done') {
+    if (this.props.users.status === 'done') {
       const user = this._getUser(this.props.params.userName, this.props.users.data);
       if (user) {
-        this.setState({ user });
-        this.props.fetchQRCode(user.id, this.props.auth.token.value);
+        this.props.activateUser(user.id, this.props.auth.token.value);
+        this.setState({ trying: true });
       }
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (!this.state.user && nextProps.users.status === 'done') {
-      const user = this._getUser(this.props.params.userName, nextProps.users.data);
+      const user = this._getUser(nextProps.params.userName, nextProps.users.data);
       if (user) {
-        this.setState({ user });
-        this.props.fetchQRCode(user.id, nextProps.auth.token.value);
+        if (user.activateToken) {
+          const url = this._getFullActivationURL(user.activateToken);
+          const qrcode = qr.imageSync(url, { type: 'svg' });
+          console.log(url);
+          this.setState({
+            user,
+            svg: base64.encode(qrcode),
+          });
+        }
+
+        if (!this.state.trying) {
+          this.props.activateUser(user.id);
+          this.setState({ trying: true });
+        }
       }
     }
   }
@@ -75,6 +91,13 @@ export default class ActivateUser extends React.Component {
     };
   }
 
+  _getFullActivationURL(token) {
+    const parser = document.createElement('a');
+    parser.href = window.location.href;
+    parser.pathname = `/activate/user/${token}`;
+    return parser.href;
+  }
+
   _getUser(name, users) {
     const selected = users.filter(user => {
       if (user.name === name) {
@@ -95,10 +118,10 @@ export default class ActivateUser extends React.Component {
       <div>
         <h1 style={styles.h1}>{`Activate user ${this.state.user.name}`}</h1>
         <Paper style={styles.paper}>
-          {this.props.qrcode.text &&
+          {this.state.user.activateToken &&
             <div>
               <img
-                src={`data:image/svg+xml;base64,${this.props.qrcode.svg}`}
+                src={`data:image/svg+xml;base64,${this.state.svg}`}
               />
             </div>
           }
@@ -139,12 +162,13 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchUsers, fetchQRCode }, dispatch);
+  return bindActionCreators({ fetchUsers, activateUser }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActivateUser);
 
 ActivateUser.propTypes = {
+  activateUser: React.PropTypes.func.isRequired,
   auth: React.PropTypes.shape({
     token: React.PropTypes.shape({
       status: React.PropTypes.string,
@@ -152,7 +176,6 @@ ActivateUser.propTypes = {
     }),
     status: React.PropTypes.string,
   }),
-  fetchQRCode: React.PropTypes.func.isRequired,
   fetchUsers: React.PropTypes.func.isRequired,
   params: React.PropTypes.shape({
     userName: React.PropTypes.string.isRequired,
@@ -167,6 +190,7 @@ ActivateUser.propTypes = {
       React.PropTypes.shape({
         id: React.PropTypes.string.isRequired,
         name: React.PropTypes.string.isRequired,
+        activateToken: React.PropTypes.string,
         doors: React.PropTypes.arrayOf(React.PropTypes.string),
       }),
     ),

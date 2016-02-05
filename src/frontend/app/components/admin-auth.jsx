@@ -16,6 +16,7 @@ export function requireAdminAuth(Component) {
 
     state = {
       ready: false,
+      trying: false,
     };
 
     componentWillMount() {
@@ -27,17 +28,21 @@ export function requireAdminAuth(Component) {
     }
 
     checkAuth(props) {
+      console.log(props);
       if (!props.auth.token || props.auth.token.status !== 'valid') {
         const { location } = props;
         return browserHistory.push(`/login?next=${location.pathname}`);
       }
 
-      if (!this.state.ready && props.users.status === 'init' && props.doors.status === 'init') {
-        props.fetchUsers(props.auth.token.value);
-        props.fetchDoors(props.auth.token.value);
+      if (props.doors.status === 'done' && props.users.status === 'done') {
+        return this.setState({ ready: true });
       }
 
-      this.setState({ ready: true });
+      if (!this.state.ready && !this.state.trying) {
+        props.fetchUsers(props.auth.token.value);
+        props.fetchDoors(props.auth.token.value);
+        this.setState({ trying: true });
+      }
     }
 
     render() {

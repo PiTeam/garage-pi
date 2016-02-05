@@ -17,13 +17,11 @@
     }
   },
   "api": {
-    "base": "http://localhost:8080/api/",
+    "base": "/api/",
     "get": {
       "doors": "door",
       "adminUsers": "admin/user",
       "adminDoors": "admin/door",
-      "adminQRCode": "admin/user/qrcode",
-      "adminActivateUser": "admin/user/activate/",
       "auth": "auth"
     },
     "delete": {
@@ -32,10 +30,12 @@
     },
     "update": {
       "user": "admin/user",
+      "activateUser": "admin/user/activate",
       "door": "admin/door"
     },
     "post": {
       "user": "admin/user",
+      "activateTokenAuth": "user/activate",
       "auth": "auth"
     }
   }

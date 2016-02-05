@@ -85,10 +85,15 @@ export function deleteUser(id) {
   });
 }
 
-export function setQRCode(userId, qrcode) {
+export function activateUser(userId) {
   return new Promise((resolve, reject) => {
-    User.loadOneAndUpdate({ _id: userId }, { qrcode }).then(user => {
-      resolve(user);
+    User.loadOne({ _id: userId }).then(user => {
+      const activateToken = user.generateActivateToken();
+      User.loadOneAndUpdate({ _id: userId }, { activateToken }).then(user => {
+        resolve(user);
+      }).catch(err => {
+        reject(err);
+      });
     }).catch(err => {
       reject(err);
     });
@@ -120,6 +125,26 @@ export function checkValidUserAndPassword(username, password) {
   return new Promise((resolve, reject) => {
     loadUserByName(username).then(user => {
       if (user && user.validPassword(password)) {
+        resolve({
+          error: false,
+          token: {
+            status: 'valid',
+            value: createJWT(user),
+          },
+          username: user.name, admin: user.admin });
+        return;
+      }
+      resolve({ error: true, message: 'Invalid username or password' });
+    }).catch(err => {
+      reject(err);
+    });
+  });
+}
+
+export function authUserByActivateToken(activateToken) {
+  return new Promise((resolve, reject) => {
+    User.loadOne({ activateToken }).then(user => {
+      if (user) {
         resolve({
           error: false,
           token: {

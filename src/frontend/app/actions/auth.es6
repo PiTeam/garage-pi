@@ -38,6 +38,35 @@ export function authenticate(authdata) {
   };
 }
 
+export function processActivateUser(activateToken) {
+  return dispatch => {
+    const url = `${endpoints.base}${endpoints.post.activateTokenAuth}`;
+    const loginAction = createAction('LOGIN_ACTION');
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ activateToken }),
+    }).then(res => {
+      if (res.status !== 200) {
+        dispatch(loginAction({ error: true, message: 'Can\'t contact auth server' }));
+        return;
+      }
+
+      res.json().then(data => {
+        if (data.token) {
+          localStorage.setItem('token',
+            JSON.stringify({ admin: false, value: data.token.value }));
+        }
+        dispatch(loginAction(data));
+      });
+    });
+  };
+}
+
 export function checkToken() {
   return dispatch => {
     const tokenActive = createAction('CHECK_TOKEN');
