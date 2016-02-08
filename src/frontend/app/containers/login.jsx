@@ -61,9 +61,14 @@ export default class LoginDialog extends React.Component {
 
   getStyles() {
     const styles = {
-      textAlign: 'center',
-      paddingTop: '1em',
-      height: '2em',
+      message: {
+        textAlign: 'center',
+        paddingTop: '1em',
+        height: '2em',
+      },
+      dialog: {
+        minHeight: '140px',
+      },
     };
     return styles;
   }
@@ -113,6 +118,7 @@ export default class LoginDialog extends React.Component {
         <Home />
         <Dialog
           actions={standardActions}
+          bodyStyle={styles.dialog}
           modal={false}
           onRequestClose={this._handleClose}
           open={this.state.open}
@@ -135,7 +141,7 @@ export default class LoginDialog extends React.Component {
             type="password"
           />
           <div
-            style={styles}
+            style={styles.message}
           >
             {this.props.auth.error && this.state.showErrors &&
               <RaisedButton

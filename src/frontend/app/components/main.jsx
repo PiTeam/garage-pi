@@ -1,5 +1,4 @@
 import React from 'react';
-import Paper from 'material-ui/lib/paper';
 
 import MainAppBar from 'containers/appbar';
 import MainLeftBar from 'containers/leftnav';
@@ -19,12 +18,9 @@ export default class Main extends React.Component {
 
   getStyles() {
     return {
-      paper: {
+      main: {
         textAlign: 'center',
-        padding: 10,
         minHeight: '100%',
-        margin: '1em',
-        backgroundColor: '#F0FFFF',
         position: 'relative',
       },
     };
@@ -37,7 +33,7 @@ export default class Main extends React.Component {
   render() {
     const styles = this.getStyles();
     return (
-      <Paper style={styles.paper}>
+      <div style={styles.main}>
         <MainAppBar
           handleOpenLeftNav={this.onHandleOpenLeftNav}
         />
@@ -45,7 +41,7 @@ export default class Main extends React.Component {
           ref={this._handleSetRefLeftBar}
         />
         {this.props.children}
-      </Paper>
+      </div>
     );
   }
 }
