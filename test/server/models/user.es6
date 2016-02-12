@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import DB from '../../../src/server/lib/db';
-import User from '../../../src/server/models/user';
+import DB from '../../../src/backend/lib/db';
+import User from '../../../src/backend/models/user';
 import config from 'config';
 
 describe('User model', () => {

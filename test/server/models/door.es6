@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import DB from '../../../src/server/lib/db';
-import Door from '../../../src/server/models/door';
+import DB from '../../../src/backend/lib/db';
+import Door from '../../../src/backend/models/door';
 import config from 'config';
 
 describe('Door model', () => {
