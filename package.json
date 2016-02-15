@@ -4,7 +4,7 @@
   "description": "Node.JS Raspberry Pi Garage Door Management Application",
   "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV=production node dist/server.js",
+    "start": "sh entrypoint.sh",
     "init-db": "npm run manage add user data/initial-admin-user.json; npm run manage add door data/initial-door.json",
     "server": "npm run eslint && babel-node src/backend",
     "manage": "babel-node src/tools/manage",
