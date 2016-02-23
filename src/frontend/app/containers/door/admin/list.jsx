@@ -63,7 +63,7 @@ class DoorList extends Component {
                     rightIcon={<ActionSettings />}
                   />
                 </Link>
-                {i < this.props.doors.data.length-1 && <Divider />}
+                {i < this.props.doors.data.length - 1 && <Divider />}
               </div>
               ))
             }

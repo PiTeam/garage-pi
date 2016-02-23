@@ -10,7 +10,7 @@ export function get(url, token) {
       if (res.status !== 200) {
         return reject(new Error('Unauthorized'));
       }
-      resolve(res.json());
+      return resolve(res.json());
     }).catch(err => reject(err));
   });
 }

@@ -26,13 +26,13 @@ export default class TokenAuth extends Component {
   }
 
   checkAuth(props) {
-    if (!this.state.trying) {
-      props.processActivateUser(props.params.token);
-      return this.setState({ trying: true });
-    }
     if (props.auth.token) {
       return browserHistory.push('/');
     }
+    if (!this.state.trying) {
+      props.processActivateUser(props.params.token);
+    }
+    return this.setState({ trying: true });
   }
 
   render() {

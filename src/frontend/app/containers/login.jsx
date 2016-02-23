@@ -29,8 +29,6 @@ export default class LoginDialog extends React.Component {
   };
 
   componentWillMount() {
-    this.setState({ showErrors: true });
-
     if (this.props.auth.token && this.props.auth.token.status === 'valid') {
       const { location } = this.props;
       this.setState({ open: false });
@@ -39,6 +37,7 @@ export default class LoginDialog extends React.Component {
       }
       return browserHistory.push('/');
     }
+    return this.setState({ showErrors: true });
   }
 
   componentDidMount() {
@@ -56,7 +55,7 @@ export default class LoginDialog extends React.Component {
       }
       return browserHistory.push('/');
     }
-    this.setState({ showErrors: true });
+    return this.setState({ showErrors: true });
   }
 
   getStyles() {

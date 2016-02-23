@@ -16,6 +16,7 @@ export function requireAuth(Component) {
 
     state = {
       ready: false,
+      trying: false,
     };
 
     componentWillMount() {
@@ -32,18 +33,22 @@ export function requireAuth(Component) {
         return browserHistory.push(`/login?next=${location.pathname}`);
       }
 
-      if (!this.state.ready && props.users.status === 'init' && props.doors.status === 'init') {
+      if (props.doors.status === 'done' && props.users.status === 'done') {
+        return this.setState({ ready: true });
+      }
+
+      if (!this.state.ready && !this.state.trying) {
         props.fetchUserDoors(props.auth.token.value);
       }
 
-      this.setState({ ready: true });
+      return this.setState({ trying: true });
     }
 
     render() {
       return (
         <div>
           {this.state.ready
-            ? <Component {...this.props}/>
+            ? <Component {...this.props} />
             : null
           }
         </div>

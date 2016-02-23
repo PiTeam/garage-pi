@@ -3,15 +3,15 @@ import TextField from 'material-ui/lib/text-field';
 import { Link } from 'react-router';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
-import Checkbox from 'material-ui/lib/checkbox';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 
+import CustomCheckbox from 'components/custom-checkbox';
 import { addUser } from 'actions';
 
 export default class AddUser extends React.Component {
-   displayName: 'AddUser';
+  displayName: 'AddUser';
 
   constructor(props) {
     super(props);
@@ -28,7 +28,7 @@ export default class AddUser extends React.Component {
   componentWillReceiveProps() {
     const doors = {};
     if (this.props.doors.data.length > 0) {
-      this.props.doors.data.map(door => {
+      this.props.doors.data.forEach(door => {
         doors[door.id] = false;
       });
 
@@ -101,7 +101,7 @@ export default class AddUser extends React.Component {
     this.setState({ user, invalid: false });
   }
 
-  _handleCheck(id, e, value) {
+  _handleCheck(id, value) {
     const doors = Object.assign({}, this.state.user.doors);
     doors[id] = value;
 
@@ -124,12 +124,13 @@ export default class AddUser extends React.Component {
           <h3 style={styles.h3}>{'Allowed doors'}</h3>
           <Paper style={styles.paper}>
           {this.props.doors.data.map((door, i) => (
-            <Checkbox
+            <CustomCheckbox
               checked={this.state.user.doors[door.id]}
               key={i}
               label={door.name}
               name={door._id}
-              onCheck={this._handleCheck.bind(this, door.id)}
+              item={door}
+              onCheck={this._handleCheck}
               style={styles.checkbox}
             />
           ))}

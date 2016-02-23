@@ -45,7 +45,7 @@ export default class Routes extends React.Component {
           component={Main}
           path="/"
         >
-          <IndexRoute component={Home}/>
+          <IndexRoute component={Home} />
           <Route
             component={TokenAuth}
             path="activate/user/:token"

@@ -77,7 +77,7 @@ export default class UserDoorList extends React.Component {
                     <CardMedia
                       overlay={this.getCardTitle(door.name)}
                     >
-                      <img src={door.image}/>
+                      <img src={door.image} />
                     </CardMedia>
                   </Card>
                 </a>

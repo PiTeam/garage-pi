@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import TextField from 'material-ui/lib/text-field';
 import Paper from 'material-ui/lib/paper';
-import Checkbox from 'material-ui/lib/checkbox';
 import Dialog from 'material-ui/lib/dialog';
 import { browserHistory } from 'react-router';
 import FlatButton from 'material-ui/lib/flat-button';
 import { Link } from 'react-router';
 import RaisedButton from 'material-ui/lib/raised-button';
 
+import CustomCheckbox from 'components/custom-checkbox';
 import { deleteDoor, updateDoor } from 'actions';
 
 class DoorDetail extends Component {
@@ -109,7 +109,7 @@ class DoorDetail extends Component {
     this.setState({ door });
   }
 
-  _handleCheck(id, e, value) {
+  _handleCheck(id, value) {
     const users = Object.assign({}, this.state.door.users);
     users[id] = value;
 
@@ -122,13 +122,9 @@ class DoorDetail extends Component {
   }
 
   _getDoor(id, doors, users) {
-    const selected = doors.filter(door => {
-      if (door.id === id) {
-        return door;
-      }
-    });
+    const selected = doors.filter(door => door.id === id);
     const doorUsers = {};
-    users.map(user => {
+    users.forEach(user => {
       doorUsers[user.id] = selected[0].users instanceof Array &&
                            selected[0].users.indexOf(user.id) !== -1;
     });
@@ -183,12 +179,13 @@ class DoorDetail extends Component {
           <h3 style={styles.h3}>{'Allowed users'}</h3>
           <Paper style={styles.paper}>
           {this.props.users.data.map(user => (
-            <Checkbox
+            <CustomCheckbox
               checked={this.state.door.users[user.id]}
               key={user.id}
               label={user.name}
               name={user.key}
-              onCheck={this._handleCheck.bind(this, user.id)}
+              item={user}
+              onCheck={this._handleCheck}
               style={styles.checkbox}
             />
           ))}

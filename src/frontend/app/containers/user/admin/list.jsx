@@ -70,7 +70,7 @@ class UserList extends Component {
                     rightIcon={<ActionSettings />}
                   />
                 </Link>
-                {i < this.props.users.data.length-1 && <Divider />}
+                {i < this.props.users.data.length - 1 && <Divider />}
               </div>
               ))
             }

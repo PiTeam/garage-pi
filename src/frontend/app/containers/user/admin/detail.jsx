@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import TextField from 'material-ui/lib/text-field';
 import Paper from 'material-ui/lib/paper';
-import Checkbox from 'material-ui/lib/checkbox';
 import Dialog from 'material-ui/lib/dialog';
 import { browserHistory } from 'react-router';
 import FlatButton from 'material-ui/lib/flat-button';
 import { Link } from 'react-router';
 import RaisedButton from 'material-ui/lib/raised-button';
 
+import CustomCheckbox from 'components/custom-checkbox';
 import { deleteUser, updateUser } from 'actions';
 
 class UserDetail extends Component {
@@ -22,6 +22,7 @@ class UserDetail extends Component {
     this.handleOpenDeletionConfirmation = this.handleOpenDeletionConfirmation.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this._handleUpdate = this._handleUpdate.bind(this);
+    this._handleCheck = this._handleCheck.bind(this);
     this._handleTextFieldChange = this._handleTextFieldChange.bind(this);
   }
 
@@ -113,13 +114,9 @@ class UserDetail extends Component {
   }
 
   _getUser(id, users, doors) {
-    const selected = users.filter(user => {
-      if (user.id === id) {
-        return user;
-      }
-    });
+    const selected = users.filter(user => user.id === id);
     const userDoors = {};
-    doors.map(door => {
+    doors.forEach(door => {
       userDoors[door.id] = selected[0].doors instanceof Array &&
                            selected[0].doors.indexOf(door.id) !== -1;
     });
@@ -127,7 +124,7 @@ class UserDetail extends Component {
     return Object.assign({}, selected[0], { doors: userDoors });
   }
 
-  _handleCheck(id, e, value) {
+  _handleCheck(id, value) {
     const doors = Object.assign({}, this.state.user.doors);
     doors[id] = value;
 
@@ -181,12 +178,13 @@ class UserDetail extends Component {
           <h3 style={styles.h3}>{'Allowed doors'}</h3>
           <Paper style={styles.paper}>
           {this.props.doors.data.map((door, i) => (
-            <Checkbox
+            <CustomCheckbox
               checked={this.state.user.doors[door.id]}
               key={i}
               label={door.name}
               name={door.key}
-              onCheck={this._handleCheck.bind(this, door.id)}
+              item={door}
+              onCheckFn={this._handleCheck}
               style={styles.checkbox}
             />
           ))}

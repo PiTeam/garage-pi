@@ -40,7 +40,6 @@ export default class ActivateUser extends React.Component {
         if (user.activateToken) {
           const url = this._getFullActivationURL(user.activateToken);
           const qrcode = qr.imageSync(url, { type: 'svg' });
-          console.log(url);
           this.setState({
             user,
             svg: base64.encode(qrcode),
@@ -99,11 +98,7 @@ export default class ActivateUser extends React.Component {
   }
 
   _getUser(name, users) {
-    const selected = users.filter(user => {
-      if (user.name === name) {
-        return user;
-      }
-    });
+    const selected = users.filter(user => user.name === name);
     return selected[0];
   }
 
