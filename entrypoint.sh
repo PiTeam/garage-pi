@@ -5,5 +5,4 @@
 [ -f data/doors.db ] || npm run manage add door data/initial-door.json
 [ -f dist/server.js ] || npm run build
 
-npm run camo-fix
 NODE_ENV=production node dist/server.js

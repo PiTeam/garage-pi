@@ -3,7 +3,7 @@ import * as userRepository from './user';
 
 export function loadDoors(query) {
   return new Promise((resolve, reject) => {
-    Door.loadMany(query).then(doors => {
+    Door.find(query).then(doors => {
       resolve(doors);
     }).catch(err => {
       reject(err);
@@ -14,7 +14,7 @@ export function loadDoors(query) {
 export function loadDoorsByUser(userId) {
   return new Promise((resolve, reject) => {
     userRepository.loadUserById(userId).then(user => {
-      Door.loadMany({ _id: { $in: user.doors } }).then(doors => {
+      Door.find({ _id: { $in: user.doors } }).then(doors => {
         resolve(doors);
       });
     }).catch(err => {
@@ -35,7 +35,7 @@ function loadDoorWithUsers(door) {
 
 export function loadDoorsWithUsers(query) {
   return new Promise((resolve, reject) => {
-    Door.loadMany(query).then(doors => {
+    Door.find(query).then(doors => {
       const doorsWithUsers = [];
       doors.map(door => {
         doorsWithUsers.push(loadDoorWithUsers(door));
@@ -52,7 +52,7 @@ export function loadDoorsWithUsers(query) {
 
 export function loadDoorById(doorId) {
   return new Promise((resolve, reject) => {
-    Door.loadOne({ _id: doorId }).then(door => {
+    Door.findOne({ _id: doorId }).then(door => {
       if (!door) {
         return reject(new Error('Door not found.'));
       }
@@ -88,7 +88,7 @@ export function deleteDoor(id) {
 
 export function updateDoor(door) {
   return new Promise((resolve, reject) => {
-    Door.loadOneAndUpdate({ _id: door._id }, { name: door.name, users: door.users })
+    Door.findOneAndUpdate({ _id: door._id }, { name: door.name, users: door.users })
       .then(() => {
         resolve(door);
       }).catch(err => {

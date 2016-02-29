@@ -4,7 +4,7 @@ import QRCode from '../lib/qrcode';
 
 export function loadUserByName(username) {
   return new Promise((resolve, reject) => {
-    User.loadOne({ name: username }).then(user => {
+    User.findOne({ name: username }).then(user => {
       resolve(user);
     }).catch(err => {
       reject(err);
@@ -14,7 +14,7 @@ export function loadUserByName(username) {
 
 export function loadUserById(userId) {
   return new Promise((resolve, reject) => {
-    User.loadOne({ _id: userId }).then(user => {
+    User.findOne({ _id: userId }).then(user => {
       resolve(user);
     }).catch(err => {
       reject(err);
@@ -24,7 +24,7 @@ export function loadUserById(userId) {
 
 export function loadUsers(query) {
   return new Promise((resolve, reject) => {
-    User.loadMany(query).then(users => {
+    User.find(query).then(users => {
       if (!users) {
         reject(new Error('Users not found.'));
         return;
@@ -54,7 +54,7 @@ export function addUser(user) {
 
 export function getQRCode(userId) {
   return new Promise((resolve, reject) => {
-    User.loadOne({ _id: userId }).then(user => {
+    User.findOne({ _id: userId }).then(user => {
       resolve(user);
     }).catch(err => {
       reject(err);
@@ -64,7 +64,7 @@ export function getQRCode(userId) {
 
 export function activateUserQRCode(userId, timestamp) {
   return new Promise((resolve, reject) => {
-    User.loadOneAndUpdate({ _id: userId }, { qrcode: timestamp }).then(savedUser => {
+    User.findOneAndUpdate({ _id: userId }, { qrcode: timestamp }).then(savedUser => {
       if (!savedUser) {
         return reject(new Error('Cannot save User.'));
       }
@@ -87,9 +87,9 @@ export function deleteUser(id) {
 
 export function activateUser(userId) {
   return new Promise((resolve, reject) => {
-    User.loadOne({ _id: userId }).then(user => {
+    User.findOne({ _id: userId }).then(user => {
       const activateToken = user.generateActivateToken();
-      User.loadOneAndUpdate({ _id: userId }, { activateToken }).then(user => {
+      User.findOneAndUpdate({ _id: userId }, { activateToken }).then(user => {
         resolve(user);
       }).catch(err => {
         reject(err);
@@ -102,7 +102,7 @@ export function activateUser(userId) {
 
 export function updateUser(user) {
   return new Promise((resolve, reject) => {
-    User.loadOneAndUpdate({ _id: user._id }, { name: user.name, doors: user.doors })
+    User.findOneAndUpdate({ _id: user._id }, { name: user.name, doors: user.doors })
       .then(() => resolve(user))
       .catch(err => reject(err));
   });
@@ -110,7 +110,7 @@ export function updateUser(user) {
 
 export function resetQRCode(userId) {
   return new Promise((resolve, reject) => {
-    User.loadOneAndUpdate({ _id: userId }, { qrcode: null }).then(savedUser => {
+    User.findOneAndUpdate({ _id: userId }, { qrcode: null }).then(savedUser => {
       if (!savedUser) {
         return reject(new Error('Cannot save User.'));
       }
@@ -143,7 +143,7 @@ export function checkValidUserAndPassword(username, password) {
 
 export function authUserByActivateToken(activateToken) {
   return new Promise((resolve, reject) => {
-    User.loadOne({ activateToken }).then(user => {
+    User.findOne({ activateToken }).then(user => {
       if (user) {
         resolve({
           error: false,
