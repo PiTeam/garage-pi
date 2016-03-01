@@ -4,9 +4,11 @@ import QRCode from '../lib/qrcode';
 
 export function loadUserByName(username) {
   return new Promise((resolve, reject) => {
+    console.log(username, User);
     User.findOne({ name: username }).then(user => {
       resolve(user);
     }).catch(err => {
+      console.log(err);
       reject(err);
     });
   });
