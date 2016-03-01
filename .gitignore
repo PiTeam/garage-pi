@@ -1,5 +1,4 @@
 node_modules
 npm-debug.log
 dist/
-data/users.db
-data/doors.db
+data/*.db
