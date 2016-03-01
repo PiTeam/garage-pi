@@ -98,7 +98,7 @@ DoorList.propTypes = {
         id: React.PropTypes.string.isRequired,
         name: React.PropTypes.string.isRequired,
         users: React.PropTypes.arrayOf(React.PropTypes.string),
-      }),
+      })
     ),
   }),
 };

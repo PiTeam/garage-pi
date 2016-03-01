@@ -189,7 +189,7 @@ AddUser.propTypes = {
         id: React.PropTypes.string,
         name: React.PropTypes.string,
         users: React.PropTypes.arrayOf(React.PropTypes.string),
-      }),
+      })
     ),
   }),
   users: React.PropTypes.shape({
@@ -199,7 +199,7 @@ AddUser.propTypes = {
         id: React.PropTypes.string,
         name: React.PropTypes.string,
         doors: React.PropTypes.arrayOf(React.PropTypes.string),
-      }),
+      })
     ),
   }),
 };

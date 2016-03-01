@@ -114,7 +114,7 @@ UserList.propTypes = {
         id: React.PropTypes.string.isRequired,
         name: React.PropTypes.string.isRequired,
         doors: React.PropTypes.arrayOf(React.PropTypes.string),
-      }),
+      })
     ),
     doors: React.PropTypes.arrayOf(React.PropTypes.number),
   }),

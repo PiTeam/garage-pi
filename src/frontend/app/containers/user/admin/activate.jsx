@@ -187,7 +187,7 @@ ActivateUser.propTypes = {
         name: React.PropTypes.string.isRequired,
         activateToken: React.PropTypes.string,
         doors: React.PropTypes.arrayOf(React.PropTypes.string),
-      }),
+      })
     ),
   }),
 };

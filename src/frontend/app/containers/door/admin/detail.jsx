@@ -255,7 +255,7 @@ DoorDetail.propTypes = {
         id: React.PropTypes.string.isRequired,
         name: React.PropTypes.string.isRequired,
         users: React.PropTypes.arrayOf(React.PropTypes.string),
-      }),
+      })
     ),
   }),
   params: React.PropTypes.shape({
@@ -269,7 +269,7 @@ DoorDetail.propTypes = {
         id: React.PropTypes.string.isRequired,
         name: React.PropTypes.string.isRequired,
         doors: React.PropTypes.arrayOf(React.PropTypes.string),
-      }),
+      })
     ),
   }),
 };

@@ -112,7 +112,7 @@ UserDoorList.propTypes = {
       React.PropTypes.shape({
         id: React.PropTypes.string.isRequired,
         name: React.PropTypes.string.isRequired,
-      }),
+      })
     ),
   }),
 };

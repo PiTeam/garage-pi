@@ -86,7 +86,7 @@ export function requireAdminAuth(Component) {
         React.PropTypes.shape({
           id: React.PropTypes.string.isRequired,
           name: React.PropTypes.string.isRequired,
-        }),
+        })
       ),
     }),
   };
