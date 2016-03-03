@@ -1,11 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
+import { checkAuthToken } from 'actions';
 import { bindActionCreators } from 'redux';
 
-import { fetchUserDoors } from 'actions';
-
-export function requireAuth(Component) {
+export function checkAuth(Component) {
   class Authenticated extends React.Component {
     displayName: 'Authenticated';
 
@@ -16,7 +14,7 @@ export function requireAuth(Component) {
 
     state = {
       ready: false,
-      trying: false,
+      isFetching: false,
     };
 
     componentWillMount() {
@@ -27,26 +25,32 @@ export function requireAuth(Component) {
       this.checkAuth(nextProps);
     }
 
-    checkAuth(props) {
-      if (!props.auth.token || props.auth.token.status !== 'valid') {
-        const { location } = props;
-        return browserHistory.push(`/login?next=${location.pathname}`);
-      }
+    getStyles() {
+      return {
+        main: {
+          textAlign: 'center',
+          minHeight: '100%',
+          position: 'relative',
+        },
+      };
+    }
 
-      if (props.doors.status === 'done' && props.users.status === 'done') {
+    checkAuth(props) {
+      if (props.auth.status === 'success' || props.auth.status === 'error') {
         return this.setState({ ready: true });
       }
 
-      if (!this.state.ready && !this.state.trying) {
-        props.fetchUserDoors(props.auth.token.value);
+      if (!this.state.isFetching) {
+        this.props.checkAuthToken();
       }
 
-      return this.setState({ trying: true });
+      return this.setState({ isFetching: true });
     }
 
     render() {
+      const styles = this.getStyles();
       return (
-        <div>
+        <div style={styles.main}>
           {this.state.ready
             ? <Component {...this.props} />
             : null
@@ -61,18 +65,18 @@ export function requireAuth(Component) {
   }
 
   function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ fetchUserDoors }, dispatch);
+    return bindActionCreators({ checkAuthToken }, dispatch);
   }
 
   Authenticated.propTypes = {
     auth: React.PropTypes.shape({
-      token: React.PropTypes.shape({
-        status: React.PropTypes.string,
-        value: React.PropTypes.string,
-      }),
+      token: React.PropTypes.string,
       status: React.PropTypes.string,
+      username: React.PropTypes.string,
+      message: React.PropTypes.string,
+      admin: React.PropTypes.bool,
     }),
-    fetchUserDoors: React.PropTypes.func.isRequired,
+    checkAuthToken: React.PropTypes.func,
     location: React.PropTypes.shape({
       state: React.PropTypes.shape({
         nextPathname: React.PropTypes.string,

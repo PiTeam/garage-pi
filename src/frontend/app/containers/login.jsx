@@ -25,37 +25,15 @@ export default class LoginDialog extends React.Component {
 
   state = {
     open: true,
-    showErrors: true,
+    showErrors: false,
   };
 
   componentWillMount() {
-    if (this.props.auth.token && this.props.auth.token.status === 'valid') {
-      const { location } = this.props;
-      this.setState({ open: false });
-      if (location && location.query && location.query.next) {
-        return browserHistory.push(location.query.next);
-      }
-      return browserHistory.push('/');
-    }
-    return this.setState({ showErrors: true });
-  }
-
-  componentDidMount() {
-    if (this.username) {
-      this.username.focus();
-    }
+    this.checkProps(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.token && nextProps.auth.token.status === 'valid') {
-      const { location } = nextProps;
-      this.setState({ open: false });
-      if (location && location.query && location.query.next) {
-        return browserHistory.push(location.query.next);
-      }
-      return browserHistory.push('/');
-    }
-    return this.setState({ showErrors: true });
+    this.checkProps(nextProps);
   }
 
   getStyles() {
@@ -72,6 +50,18 @@ export default class LoginDialog extends React.Component {
     return styles;
   }
 
+  checkProps(props) {
+    if (props.auth.status === 'success') {
+      const { location } = props;
+      this.setState({ open: false });
+      if (location && location.query && location.query.next) {
+        return browserHistory.push(location.query.next);
+      }
+      return browserHistory.push('/');
+    }
+    return this.setState({ showErrors: true });
+  }
+
   _handleClose() {
     this.setState({ open: false });
     browserHistory.push('/');
@@ -83,6 +73,7 @@ export default class LoginDialog extends React.Component {
     const username = this.username.getValue();
     const password = this.password.getValue();
 
+    this.setState({ showErrors: true });
     this.props.authenticate({ username, password });
   }
 
@@ -128,21 +119,20 @@ export default class LoginDialog extends React.Component {
             focus
             fullWidth
             hintText="Username"
-            onEnterKeyDown={this._handleSubmit}
             ref={this._handleSetRefUsername}
           />
           <TextField
             floatingLabelText="Password"
             fullWidth
             hintText="Password"
-            onEnterKeyDown={this._handleSubmit}
             ref={this._handleSetRefPassword}
             type="password"
           />
           <div
             style={styles.message}
           >
-            {this.props.auth.error && this.state.showErrors &&
+            {this.props.auth.status === 'error' &&
+             this.props.auth.message && this.state.showErrors &&
               <RaisedButton
                 label={this.props.auth.message}
                 onTouchTap={this._handleCloseErrorMessage}
@@ -168,14 +158,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(LoginDialog);
 
 LoginDialog.propTypes = {
   auth: React.PropTypes.shape({
-    error: React.PropTypes.bool,
     message: React.PropTypes.string,
     username: React.PropTypes.string,
     admin: React.PropTypes.bool,
-    token: React.PropTypes.shape({
-      status: React.PropTypes.string,
-      value: React.PropTypes.string,
-    }),
+    token: React.PropTypes.string,
+    status: React.PropTypes.string,
   }),
   authenticate: React.PropTypes.func.isRequired,
   location: React.PropTypes.shape({

@@ -35,8 +35,8 @@ class DoorDetail extends Component {
 
   componentWillMount() {
     if (!this.state.door &&
-         this.props.doors.status === 'done' &&
-         this.props.users.status === 'done') {
+         this.props.doors.status === 'success' &&
+         this.props.users.status === 'success') {
       const door = this._getDoor(this.props.params.doorId,
                                  this.props.doors.data, this.props.users.data);
       this.setState({ door });
@@ -45,8 +45,8 @@ class DoorDetail extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!this.state.door &&
-         nextProps.doors.status === 'done' &&
-         nextProps.users.status === 'done') {
+         nextProps.doors.status === 'success' &&
+         nextProps.users.status === 'success') {
       const door = this._getDoor(nextProps.params.doorId,
                                  nextProps.doors.data, nextProps.users.data);
       this.setState({ door });
@@ -95,12 +95,12 @@ class DoorDetail extends Component {
                     .filter(userId => this.state.door.users[userId]);
 
     const door = Object.assign({}, this.state.door, { users });
-    this.props.updateDoor(door, this.props.auth.token.value);
+    this.props.updateDoor(door, this.props.auth.token);
     browserHistory.push('/manage/door');
   }
 
   _handleDelete() {
-    this.props.deleteDoor(this.state.door.id, this.props.auth.token.value);
+    this.props.deleteDoor(this.state.door.id, this.props.auth.token);
     browserHistory.push('/manage/door');
   }
 
@@ -241,11 +241,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(DoorDetail);
 
 DoorDetail.propTypes = {
   auth: React.PropTypes.shape({
-    token: React.PropTypes.shape({
-      status: React.PropTypes.string,
-      value: React.PropTypes.string,
-    }),
+    token: React.PropTypes.string,
     status: React.PropTypes.string,
+    username: React.PropTypes.string,
+    admin: React.PropTypes.bool,
   }),
   deleteDoor: React.PropTypes.func.isRequired,
   doors: React.PropTypes.shape({

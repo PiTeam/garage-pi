@@ -33,8 +33,8 @@ class UserDetail extends Component {
 
   componentWillMount() {
     if (!this.state.user &&
-         this.props.users.status === 'done' &&
-         this.props.doors.status === 'done') {
+         this.props.users.status === 'success' &&
+         this.props.doors.status === 'success') {
       const user = this._getUser(this.props.params.userId,
                                  this.props.users.data, this.props.doors.data);
       this.setState({ user });
@@ -43,8 +43,8 @@ class UserDetail extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!this.state.user &&
-         nextProps.users.status === 'done' &&
-         nextProps.doors.status === 'done') {
+         nextProps.users.status === 'success' &&
+         nextProps.doors.status === 'success') {
       const user = this._getUser(nextProps.params.userId,
                                  nextProps.users.data, nextProps.doors.data);
       this.setState({ user });
@@ -99,7 +99,7 @@ class UserDetail extends Component {
                                 doorId => this.state.user.doors[doorId]);
 
     const user = Object.assign({}, this.state.user, { doors });
-    this.props.updateUser(user, this.props.auth.token.value);
+    this.props.updateUser(user, this.props.auth.token);
     browserHistory.push('/manage/user');
   }
 
@@ -109,7 +109,7 @@ class UserDetail extends Component {
   }
 
   handleDelete() {
-    this.props.deleteUser(this.state.user.id, this.props.auth.token.value);
+    this.props.deleteUser(this.state.user.id, this.props.auth.token);
     browserHistory.push('/manage/user');
   }
 
@@ -249,11 +249,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(UserDetail);
 
 UserDetail.propTypes = {
   auth: React.PropTypes.shape({
-    token: React.PropTypes.shape({
-      status: React.PropTypes.string,
-      value: React.PropTypes.string,
-    }),
+    token: React.PropTypes.string,
     status: React.PropTypes.string,
+    username: React.PropTypes.string,
+    admin: React.PropTypes.bool,
   }),
   deleteUser: React.PropTypes.func.isRequired,
   doors: React.PropTypes.shape({

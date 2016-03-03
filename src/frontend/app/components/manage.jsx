@@ -8,7 +8,7 @@ import ListItem from 'material-ui/lib/lists/list-item';
 import Avatar from 'material-ui/lib/avatar';
 import AccountBalance from 'material-ui/lib/svg-icons/action/account-balance';
 import ActionFace from 'material-ui/lib/svg-icons/action/face';
-import Colors from 'material-ui/lib/styles/colors';
+import * as Colors from 'material-ui/lib/styles/colors';
 
 export default class Manage extends React.Component {
   displayName: 'Manage';

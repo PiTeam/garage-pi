@@ -16,7 +16,7 @@ export function requireAdminAuth(Component) {
 
     state = {
       ready: false,
-      trying: false,
+      isFetching: false,
     };
 
     componentWillMount() {
@@ -28,21 +28,21 @@ export function requireAdminAuth(Component) {
     }
 
     checkAuth(props) {
-      if (!props.auth.token || props.auth.token.status !== 'valid') {
+      if (props.auth.status !== 'success') {
         const { location } = props;
         return browserHistory.push(`/login?next=${location.pathname}`);
       }
 
-      if (props.doors.status === 'done' && props.users.status === 'done') {
+      if (props.doors.status === 'success' && props.users.status === 'success') {
         return this.setState({ ready: true });
       }
 
-      if (!this.state.ready && !this.state.trying) {
-        props.fetchUsers(props.auth.token.value);
-        props.fetchDoors(props.auth.token.value);
+      if (!this.state.ready && !this.state.isFetching) {
+        props.fetchUsers(props.auth.token);
+        props.fetchDoors(props.auth.token);
       }
 
-      return this.setState({ trying: true });
+      return this.setState({ isFetching: true });
     }
 
     render() {
@@ -67,11 +67,10 @@ export function requireAdminAuth(Component) {
 
   AdminAuthenticated.propTypes = {
     auth: React.PropTypes.shape({
-      token: React.PropTypes.shape({
-        status: React.PropTypes.string,
-        value: React.PropTypes.string,
-      }),
+      token: React.PropTypes.string,
       status: React.PropTypes.string,
+      username: React.PropTypes.string,
+      admin: React.PropTypes.bool,
     }),
     fetchDoors: React.PropTypes.func.isRequired,
     fetchUsers: React.PropTypes.func.isRequired,
@@ -81,7 +80,7 @@ export function requireAdminAuth(Component) {
       }),
     }),
     users: React.PropTypes.shape({
-      status: React.PropTypes.string.isRequired,
+      status: React.PropTypes.string,
       data: React.PropTypes.arrayOf(
         React.PropTypes.shape({
           id: React.PropTypes.string.isRequired,

@@ -1,20 +1,24 @@
 import { createAction } from 'redux-actions';
+import * as rest from 'lib/rest';
 
 const endpoints = require('endpoints');
-export const LOGIN_ACTION = 'LOGIN_ACTION';
+export const SET_AUTH = 'SET_AUTH';
 export const RESET_AUTH = 'RESET_AUTH';
-export const CHECK_TOKEN = 'CHECK_TOKEN';
+export const CHECK_AUTH_TOKEN = 'CHECK_AUTH_TOKEN';
 
 export function authenticate(authdata) {
   return dispatch => {
     const url = `${endpoints.base}${endpoints.post.auth}`;
-    const loginAction = createAction('LOGIN_ACTION');
+    const setAuthentication = createAction('SET_AUTH');
 
     if (!authdata) {
-      return;
+      return dispatch(setAuthentication({
+        status: 'error',
+        message: 'Empty credentials',
+      }));
     }
 
-    fetch(url, {
+    return fetch(url, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -22,17 +26,21 @@ export function authenticate(authdata) {
       },
       body: JSON.stringify(authdata),
     }).then(res => {
-      if (res.status !== 200) {
-        dispatch(loginAction({ error: true, message: 'Can\'t contact auth server' }));
-        return;
+      if (res.status === 401) {
+        return dispatch(setAuthentication({
+          status: 'error',
+          message: 'Invalid credentials',
+        }));
+      } else if (res.status !== 200) {
+        return dispatch(setAuthentication({
+          status: 'error',
+          message: 'Can\'t contact auth server',
+        }));
       }
 
-      res.json().then(data => {
-        if (data.token) {
-          localStorage.setItem('token',
-            JSON.stringify({ admin: data.admin, value: data.token.value }));
-        }
-        dispatch(loginAction(data));
+      return res.json().then(data => {
+        localStorage.setItem('token', data.token);
+        return dispatch(setAuthentication(data));
       });
     });
   };
@@ -41,72 +49,51 @@ export function authenticate(authdata) {
 export function processActivateUser(activateToken) {
   return dispatch => {
     const url = `${endpoints.base}${endpoints.post.activateTokenAuth}`;
-    const loginAction = createAction('LOGIN_ACTION');
+    const setAuthentication = createAction('SET_AUTH');
 
-    fetch(url, {
+    return fetch(url, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ activateToken }),
+      body: activateToken,
     }).then(res => {
       if (res.status !== 200) {
-        dispatch(loginAction({ error: true, message: 'Can\'t contact auth server' }));
-        return;
+        return dispatch(setAuthentication({
+          status: 'error',
+          message: 'Can\'t contact auth server',
+        }));
       }
 
-      res.json().then(data => {
-        if (data.token) {
-          localStorage.setItem('token',
-            JSON.stringify({ admin: false, value: data.token.value }));
-        }
-        dispatch(loginAction(data));
+      return res.json().then(data => {
+        localStorage.setItem('token', data.token);
+        return dispatch(setAuthentication(data));
       });
     });
   };
 }
 
-export function checkToken() {
+export function checkAuthToken() {
   return dispatch => {
-    const tokenActive = createAction('CHECK_TOKEN');
-    let auth = {};
+    const setAuthentication = createAction('SET_AUTH');
+    const url = `${endpoints.base}${endpoints.get.auth}`;
+    const token = localStorage.getItem('token');
 
-    const token = localStorage.token ? JSON.parse(localStorage.token) : {};
-    if (token.value) {
-      auth = {
-        token: {
-          status: 'valid',
-          value: token.value,
-        },
-        admin: token.admin,
-      };
-    } else {
-      auth = {
-        token: {
-          status: 'invalid',
-        },
-        admin: false,
-      };
+    if (!token) {
+      return dispatch(setAuthentication({ status: 'error' }));
     }
 
-    return dispatch(tokenActive(auth));
+    return rest.get(url, token)
+              .then(data => dispatch(setAuthentication(data)))
+              .catch(() => dispatch(setAuthentication({ status: 'error' })));
   };
 }
 
 export function resetAuth() {
   return dispatch => {
     const resetAuthAction = createAction('RESET_AUTH');
-    const resetDoors = createAction('RESET_DOORS');
-    const resetUsers = createAction('RESET_USERS');
     localStorage.removeItem('token');
-    dispatch(resetAuthAction({
-      token: {
-        status: 'init',
-        value: undefined,
-      },
-    }));
-    dispatch(resetUsers());
-    dispatch(resetDoors());
+    dispatch(resetAuthAction());
   };
 }

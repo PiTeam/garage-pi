@@ -13,7 +13,7 @@ export default class MainAppBar extends React.Component {
       marginTop: '5px',
     };
 
-    return this.props.auth.token && this.props.auth.token.status === 'valid' ?
+    return this.props.auth.status === 'success' ?
       <Link to="/logout">
         <FlatButton
           label="Logout"
@@ -44,7 +44,7 @@ export default class MainAppBar extends React.Component {
       <AppBar
         iconElementRight={this.handleLeftIcon()}
         onLeftIconButtonTouchTap={this.props.handleOpenLeftNav}
-        showMenuIconButton={this.props.auth.admin && this.props.auth.token.status === 'valid'}
+        showMenuIconButton={this.props.auth.status === 'success' && this.props.auth.admin}
         style={styles.appbar}
         title={
           <Link style={styles.link}
@@ -63,10 +63,9 @@ export default connect(mapStateToProps)(MainAppBar);
 
 MainAppBar.propTypes = {
   auth: React.PropTypes.shape({
-    token: React.PropTypes.shape({
-      status: React.PropTypes.string,
-      value: React.PropTypes.string,
-    }),
+    token: React.PropTypes.string,
+    status: React.PropTypes.string,
+    username: React.PropTypes.string,
     admin: React.PropTypes.bool,
   }),
   handleOpenLeftNav: React.PropTypes.func.isRequired,

@@ -1,21 +1,22 @@
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
 import _ from 'lodash';
+import immutable from 'immutable';
+
+const initialDoorState = immutable.fromJS({});
+const initialUserState = immutable.fromJS({});
+const initialAuthState = immutable.fromJS({});
 
 const rootReducer = combineReducers({
   doors: handleActions({
-    RESET_DOORS: () => {
-      const reset = { status: 'init', data: [] };
-      return reset;
-    },
-    FETCH_DOORS: (state = {}, action) => action.payload,
-    DELETE_DOOR: (state = {}, action) => {
-      const index = _.findIndex(state.data, { id: action.payload });
-      const arr = state.data.slice(0, index).concat(state.data.slice(index + 1));
-      return { status: 'done', data: arr };
-    },
-    FETCH_USER_DOORS: (state = [], action) => action.payload,
-    UPDATE_DOOR: (state = [], action) => {
+    RESET_AUTH: () => initialDoorState,
+    FETCH_DOORS: (state, action) => action.payload,
+    DELETE_DOOR: (state, action) => ({
+      status: 'done',
+      data: state.data.filter(door => door.id !== action.payload),
+    }),
+    FETCH_USER_DOORS: (state, action) => action.payload,
+    UPDATE_DOOR: (state, action) => {
       const index = _.findIndex(state.data, { id: action.payload.id });
       const arr = state.data;
       return { status: 'done', data: [
@@ -24,7 +25,7 @@ const rootReducer = combineReducers({
         ...arr.slice(index + 1),
       ] };
     },
-    ADD_USER: (state = [], action) => {
+    ADD_USER: (state, action) => {
       const user = action.payload;
       const newstate = Object.assign({}, state);
       newstate.data = state.data.map(door => {
@@ -38,7 +39,7 @@ const rootReducer = combineReducers({
       });
       return newstate;
     },
-    UPDATE_USER: (state = [], action) => {
+    UPDATE_USER: (state, action) => {
       const user = action.payload;
       const newstate = Object.assign({}, state);
       newstate.data = state.data.map(door => {
@@ -52,7 +53,7 @@ const rootReducer = combineReducers({
       });
       return newstate;
     },
-    DELETE_USER: (state = [], action) => {
+    DELETE_USER: (state, action) => {
       const user = action.payload;
       const newstate = Object.assign({}, state);
       newstate.data = state.data.map(door => {
@@ -66,20 +67,17 @@ const rootReducer = combineReducers({
       });
       return newstate;
     },
-  }, { status: 'init', data: [] }),
+  }, initialDoorState),
   users: handleActions({
-    RESET_USERS: () => {
-      const reset = { status: 'init', data: [] };
-      return reset;
-    },
-    ADD_USER: (state = [], action) => action.payload,
-    FETCH_USERS: (state = [], action) => action.payload,
-    DELETE_USER: (state = [], action) => {
+    RESET_AUTH: () => initialUserState,
+    ADD_USER: (state, action) => action.payload,
+    FETCH_USERS: (state, action) => action.payload,
+    DELETE_USER: (state, action) => {
       const index = _.findIndex(state.data, { id: action.payload });
       const arr = state.data.slice(0, index).concat(state.data.slice(index + 1));
       return { status: 'done', data: arr };
     },
-    UPDATE_USER: (state = [], action) => {
+    UPDATE_USER: (state, action) => {
       const index = _.findIndex(state.data, { id: action.payload.id });
       const arr = state.data;
       return { status: 'done', data: [
@@ -88,7 +86,7 @@ const rootReducer = combineReducers({
         ...arr.slice(index + 1),
       ] };
     },
-    ACTIVATE_USER: (state = [], action) => {
+    ACTIVATE_USER: (state, action) => {
       const index = _.findIndex(state.data, { id: action.payload.id });
       const arr = state.data;
       return { status: 'done', data: [
@@ -97,7 +95,7 @@ const rootReducer = combineReducers({
         ...arr.slice(index + 1),
       ] };
     },
-    ADD_DOOR: (state = [], action) => {
+    ADD_DOOR: (state, action) => {
       const door = action.payload;
       const newstate = Object.assign({}, state);
       newstate.data = state.data.map(user => {
@@ -111,7 +109,7 @@ const rootReducer = combineReducers({
       });
       return newstate;
     },
-    UPDATE_DOOR: (state = [], action) => {
+    UPDATE_DOOR: (state, action) => {
       const door = action.payload;
       const newstate = Object.assign({}, state);
       newstate.data = state.data.map(user => {
@@ -125,7 +123,7 @@ const rootReducer = combineReducers({
       });
       return newstate;
     },
-    DELETE_DOOR: (state = [], action) => {
+    DELETE_DOOR: (state, action) => {
       const door = action.payload;
       const newstate = Object.assign({}, state);
       newstate.data = state.data.map(user => {
@@ -139,27 +137,11 @@ const rootReducer = combineReducers({
       });
       return newstate;
     },
-  }, { status: 'init', data: [] }),
+  }, initialUserState),
   auth: handleActions({
-    LOGIN_ACTION: (state = {}, action) => {
-      if (!action.payload) {
-        return state;
-      }
-      return action.payload;
-    },
-    CHECK_TOKEN: (state = {}, action) => {
-      if (!action.payload) {
-        return state;
-      }
-      return action.payload;
-    },
-    RESET_AUTH: (state = {}, action) => {
-      if (!action.payload) {
-        return state;
-      }
-      return action.payload;
-    },
-  }, { token: { status: 'init' } }),
+    SET_AUTH: (state, action) => action.payload,
+    RESET_AUTH: () => initialAuthState,
+  }, initialAuthState),
 });
 
 export default rootReducer;

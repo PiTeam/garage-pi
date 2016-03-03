@@ -92,7 +92,7 @@ export default class AddUser extends React.Component {
                     .filter(doorId => this.state.user.doors[doorId]);
 
     const user = Object.assign({}, this.state.user, { doors });
-    this.props.addUser(user, this.props.auth.token.value);
+    this.props.addUser(user, this.props.auth.token);
     browserHistory.push(`/manage/user/${this.state.user.name}/activate`);
   }
 

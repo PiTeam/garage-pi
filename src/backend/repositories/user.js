@@ -4,11 +4,9 @@ import QRCode from '../lib/qrcode';
 
 export function loadUserByName(username) {
   return new Promise((resolve, reject) => {
-    console.log(username, User);
     User.findOne({ name: username }).then(user => {
       resolve(user);
     }).catch(err => {
-      console.log(err);
       reject(err);
     });
   });
@@ -47,7 +45,7 @@ export function addUser(user) {
       if (!savedUser) {
         return reject(new Error('Cannot save User.'));
       }
-      resolve(savedUser);
+      return resolve(savedUser);
     }).catch(err => {
       reject(err);
     });
@@ -127,16 +125,14 @@ export function checkValidUserAndPassword(username, password) {
   return new Promise((resolve, reject) => {
     loadUserByName(username).then(user => {
       if (user && user.validPassword(password)) {
-        resolve({
-          error: false,
-          token: {
-            status: 'valid',
-            value: createJWT(user),
-          },
-          username: user.name, admin: user.admin });
-        return;
+        return resolve({
+          status: 'success',
+          token: createJWT(user),
+          username: user.name,
+          admin: user.admin,
+        });
       }
-      resolve({ error: true, message: 'Invalid username or password' });
+      return resolve({ status: 'error', message: 'Invalid username or password' });
     }).catch(err => {
       reject(err);
     });
@@ -148,12 +144,11 @@ export function authUserByActivateToken(activateToken) {
     User.findOne({ activateToken }).then(user => {
       if (user) {
         resolve({
-          error: false,
-          token: {
-            status: 'valid',
-            value: createJWT(user),
-          },
-          username: user.name, admin: user.admin });
+          status: 'success',
+          token: createJWT(user),
+          username: user.name,
+          admin: user.admin,
+        });
         return;
       }
       resolve({ error: true, message: 'Invalid username or password' });

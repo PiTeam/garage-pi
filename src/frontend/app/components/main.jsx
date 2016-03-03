@@ -16,24 +16,13 @@ export default class Main extends React.Component {
     this.leftbar.handleOpen();
   }
 
-  getStyles() {
-    return {
-      main: {
-        textAlign: 'center',
-        minHeight: '100%',
-        position: 'relative',
-      },
-    };
-  }
-
   _handleSetRefLeftBar(c) {
     this.leftbar = c;
   }
 
   render() {
-    const styles = this.getStyles();
     return (
-      <div style={styles.main}>
+      <div>
         <MainAppBar
           handleOpenLeftNav={this.onHandleOpenLeftNav}
         />

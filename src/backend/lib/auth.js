@@ -26,7 +26,7 @@ function ensureAdmin(req, res, next) {
     return res.status(401).send({ message: 'You must be admin to access this resource' });
   }
 
-  next();
+  return next();
 }
 
 function ensureDoorAuthorized(req, res, next) {
@@ -35,7 +35,7 @@ function ensureDoorAuthorized(req, res, next) {
     if (!req.user.admin && user.doors.indexOf(doorId) === -1) {
       return res.status(401).send({ message: 'You are not authorized to open this door' });
     }
-    next();
+    return next();
   });
 }
 

@@ -36,7 +36,7 @@ export default class Home extends React.Component {
     return (
       <div>
         <h1 style={styles.logo}>{'Logo needed here!'}</h1>
-        {!this.props.auth.error && this.props.auth.token.status === 'valid' &&
+        {this.props.auth.status === 'success' &&
           <div style={styles.bottomButtons}>
             <Link to="/door">
               <RaisedButton
@@ -69,11 +69,9 @@ export default connect(mapStateToProps)(Home);
 
 Home.propTypes = {
   auth: React.PropTypes.shape({
-    error: React.PropTypes.bool,
-    token: React.PropTypes.shape({
-      status: React.PropTypes.string,
-      value: React.PropTypes.string,
-    }),
+    status: React.PropTypes.string,
+    token: React.PropTypes.string,
+    username: React.PropTypes.string,
     admin: React.PropTypes.bool,
   }),
 };

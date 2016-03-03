@@ -19,20 +19,16 @@ import ManageDoorDetail from 'containers/door/admin/detail';
 import ManageUserDetail from 'containers/user/admin/detail';
 import PageNotFound from 'components/notfound';
 import ManageMenu from 'components/manage';
-import TokenAuth from 'containers/user/token-auth';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
-import { requireAuth } from 'components/auth';
-import { requireAdminAuth } from 'components/admin-auth';
-import { checkToken } from 'actions';
+import {
+  TokenAuth,
+  requireUserAuth,
+  requireAdminAuth,
+  checkAuth,
+} from 'containers/auth';
 
 export default class Routes extends React.Component {
   displayName: 'Root';
-
-  componentWillMount() {
-    this.props.checkToken();
-  }
 
   render() {
     return (
@@ -42,7 +38,7 @@ export default class Routes extends React.Component {
           path="logout"
         />
         <Route
-          component={Main}
+          component={checkAuth(Main)}
           path="/"
         >
           <IndexRoute component={Home} />
@@ -55,7 +51,7 @@ export default class Routes extends React.Component {
             path="login"
           />
           <Route
-            component={requireAuth(Door)}
+            component={requireUserAuth(Door)}
             path="door"
           />
           <Route
@@ -95,13 +91,3 @@ export default class Routes extends React.Component {
     );
   }
 }
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ checkToken }, dispatch);
-}
-
-export default connect(null, mapDispatchToProps)(Routes);
-
-Routes.propTypes = {
-  checkToken: React.PropTypes.func.isRequired,
-};

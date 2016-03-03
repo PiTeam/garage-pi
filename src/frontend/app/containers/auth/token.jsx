@@ -14,7 +14,7 @@ export default class TokenAuth extends Component {
   }
 
   state = {
-    trying: false,
+    isFetching: false,
   };
 
   componentWillMount() {
@@ -29,10 +29,10 @@ export default class TokenAuth extends Component {
     if (props.auth.token) {
       return browserHistory.push('/');
     }
-    if (!this.state.trying) {
+    if (!this.state.isFetching) {
       props.processActivateUser(props.params.token);
     }
-    return this.setState({ trying: true });
+    return this.setState({ isFetching: true });
   }
 
   render() {
@@ -63,10 +63,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(TokenAuth);
 
 TokenAuth.propTypes = {
   auth: React.PropTypes.shape({
-    token: React.PropTypes.shape({
-      status: React.PropTypes.string,
-      value: React.PropTypes.string,
-    }),
+    token: React.PropTypes.string,
     status: React.PropTypes.string,
   }),
 };

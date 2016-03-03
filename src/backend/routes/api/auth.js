@@ -1,6 +1,7 @@
 import { Router as router } from 'express';
 import * as userRepository from '../../repositories/user';
-import { doorAuthorizationNeeded, adminOnly } from '../../lib/auth';
+import { authNeeded, adminOnly } from '../../lib/auth';
+import { createJWT } from '../../lib/auth';
 
 const routes = router();
 
@@ -9,8 +10,15 @@ routes.post('/', (req, res) => {
     .then(result => res.send(result)).catch(err => res.status(401).send({ message: err }));
 });
 
-routes.get('/', doorAuthorizationNeeded, (req, res) => {
-  res.status(200).send('ok');
+routes.get('/', authNeeded, (req, res) => {
+  userRepository.loadUserById(req.user.userId).then(user => {
+    res.send({
+      status: 'success',
+      username: user.name,
+      token: createJWT(user),
+      admin: user.admin,
+    });
+  });
 });
 
 routes.get('/admin', adminOnly, (req, res) => {

@@ -14,7 +14,7 @@ export default class ActivateUser extends React.Component {
 
   constructor(props) {
     super(props);
-    this.props.fetchUsers(this.props.auth.token.value);
+    this.props.fetchUsers(this.props.auth.token);
   }
 
   state = {
@@ -24,17 +24,17 @@ export default class ActivateUser extends React.Component {
   };
 
   componentWillMount() {
-    if (this.props.users.status === 'done') {
+    if (this.props.users.status === 'success') {
       const user = this._getUser(this.props.params.userName, this.props.users.data);
       if (user) {
-        this.props.activateUser(user.id, this.props.auth.token.value);
+        this.props.activateUser(user.id, this.props.auth.token);
         this.setState({ trying: true });
       }
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.state.user && nextProps.users.status === 'done') {
+    if (!this.state.user && nextProps.users.status === 'success') {
       const user = this._getUser(nextProps.params.userName, nextProps.users.data);
       if (user) {
         if (user.activateToken) {
