@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { bindActionCreators } from 'redux';
 
-import { fetchUsers, fetchDoors } from 'actions';
+import { getAuthPropType } from 'proptypes';
 
 export function requireAdminAuth(Component) {
   class AdminAuthenticated extends React.Component {
@@ -16,7 +15,6 @@ export function requireAdminAuth(Component) {
 
     state = {
       ready: false,
-      isFetching: false,
     };
 
     componentWillMount() {
@@ -28,21 +26,12 @@ export function requireAdminAuth(Component) {
     }
 
     checkAuth(props) {
-      if (props.auth.status !== 'success') {
+      if (props.auth.get('status') !== 'success' || props.auth.get('admin') !== true) {
         const { location } = props;
         return browserHistory.push(`/login?next=${location.pathname}`);
       }
 
-      if (props.doors.status === 'success' && props.users.status === 'success') {
-        return this.setState({ ready: true });
-      }
-
-      if (!this.state.ready && !this.state.isFetching) {
-        props.fetchUsers(props.auth.token);
-        props.fetchDoors(props.auth.token);
-      }
-
-      return this.setState({ isFetching: true });
+      return this.setState({ ready: true });
     }
 
     render() {
@@ -57,38 +46,18 @@ export function requireAdminAuth(Component) {
     }
   }
 
-  function mapStateToProps({ auth, users, doors }) {
-    return { auth, users, doors };
-  }
-
-  function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ fetchUsers, fetchDoors }, dispatch);
+  function mapStateToProps({ auth }) {
+    return { auth };
   }
 
   AdminAuthenticated.propTypes = {
-    auth: React.PropTypes.shape({
-      token: React.PropTypes.string,
-      status: React.PropTypes.string,
-      username: React.PropTypes.string,
-      admin: React.PropTypes.bool,
-    }),
-    fetchDoors: React.PropTypes.func.isRequired,
-    fetchUsers: React.PropTypes.func.isRequired,
+    auth: getAuthPropType(),
     location: React.PropTypes.shape({
       state: React.PropTypes.shape({
         nextPathname: React.PropTypes.string,
       }),
     }),
-    users: React.PropTypes.shape({
-      status: React.PropTypes.string,
-      data: React.PropTypes.arrayOf(
-        React.PropTypes.shape({
-          id: React.PropTypes.string.isRequired,
-          name: React.PropTypes.string.isRequired,
-        })
-      ),
-    }),
   };
 
-  return connect(mapStateToProps, mapDispatchToProps)(AdminAuthenticated);
+  return connect(mapStateToProps)(AdminAuthenticated);
 }

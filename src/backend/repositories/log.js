@@ -6,7 +6,7 @@ export function addUser(log) {
       if (!savedLog) {
         return reject(new Error('Cannot save Log.'));
       }
-      resolve(savedLog);
+      return resolve(savedLog);
     }).catch(err => {
       reject(err);
     });

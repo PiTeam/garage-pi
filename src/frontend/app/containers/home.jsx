@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import RaisedButton from 'material-ui/lib/raised-button';
 import { connect } from 'react-redux';
 
+import { getAuthPropType } from 'proptypes';
+
 export default class Home extends React.Component {
   displayName: 'Home';
 
@@ -36,7 +38,7 @@ export default class Home extends React.Component {
     return (
       <div>
         <h1 style={styles.logo}>{'Logo needed here!'}</h1>
-        {this.props.auth.status === 'success' &&
+        {this.props.auth.get('status') === 'success' &&
           <div style={styles.bottomButtons}>
             <Link to="/door">
               <RaisedButton
@@ -45,7 +47,7 @@ export default class Home extends React.Component {
                 style={styles.left}
               />
             </Link>
-            {this.props.auth.admin &&
+            {this.props.auth.get('admin') &&
               <Link to="/manage">
                 <RaisedButton
                   label="Admin zone"
@@ -68,10 +70,5 @@ function mapStateToProps({ auth }) {
 export default connect(mapStateToProps)(Home);
 
 Home.propTypes = {
-  auth: React.PropTypes.shape({
-    status: React.PropTypes.string,
-    token: React.PropTypes.string,
-    username: React.PropTypes.string,
-    admin: React.PropTypes.bool,
-  }),
+  auth: getAuthPropType(),
 };

@@ -68,7 +68,7 @@ export function activateUserQRCode(userId, timestamp) {
       if (!savedUser) {
         return reject(new Error('Cannot save User.'));
       }
-      resolve(savedUser);
+      return resolve(savedUser);
     }).catch(err => {
       reject(err);
     });
@@ -89,11 +89,9 @@ export function activateUser(userId) {
   return new Promise((resolve, reject) => {
     User.findOne({ _id: userId }).then(user => {
       const activateToken = user.generateActivateToken();
-      User.findOneAndUpdate({ _id: userId }, { activateToken }).then(user => {
-        resolve(user);
-      }).catch(err => {
-        reject(err);
-      });
+      User.findOneAndUpdate({ _id: userId }, { activateToken })
+          .then(u => resolve(u))
+          .catch(err => reject(err));
     }).catch(err => {
       reject(err);
     });
@@ -114,7 +112,7 @@ export function resetQRCode(userId) {
       if (!savedUser) {
         return reject(new Error('Cannot save User.'));
       }
-      resolve(savedUser);
+      return resolve(savedUser);
     }).catch(err => {
       reject(err);
     });

@@ -11,6 +11,8 @@ import FloatingActionButton from 'material-ui/lib/floating-action-button';
 import ContentAdd from 'material-ui/lib/svg-icons/content/add';
 import RaisedButton from 'material-ui/lib/raised-button';
 
+import { getUserPropType } from 'proptypes';
+
 class UserList extends Component {
   displayName: 'UserList';
 
@@ -48,29 +50,24 @@ class UserList extends Component {
 
   render() {
     const styles = this.getStyles();
-
-    if (this.props.users.status === 'pending') {
-      return <div />;
-    }
-
     return (
       <div>
         <h1 style={styles.h1}>{'Manage users'}</h1>
         <Paper style={styles.paper}>
           <List>
-            {this.props.users.data.map((user, i) => (
+            {this.props.users.get('data').map((user, i) => (
               <div key={i}>
                 <Link
                   style={styles.link}
-                  to={`/manage/user/${user.id}`}
+                  to={`/manage/user/${user.get('id')}`}
                 >
                   <ListItem
-                    leftAvatar={<Avatar src={user.image} />}
-                    primaryText={user.name}
+                    leftAvatar={<Avatar src={user.get('image')} />}
+                    primaryText={user.get('name')}
                     rightIcon={<ActionSettings />}
                   />
                 </Link>
-                {i < this.props.users.data.length - 1 && <Divider />}
+                {i < this.props.users.get('data').size - 1 && <Divider />}
               </div>
               ))
             }
@@ -107,15 +104,5 @@ function mapStateToProps({ users }) {
 export default connect(mapStateToProps)(UserList);
 
 UserList.propTypes = {
-  users: React.PropTypes.shape({
-    status: React.PropTypes.string.isRequired,
-    data: React.PropTypes.arrayOf(
-      React.PropTypes.shape({
-        id: React.PropTypes.string.isRequired,
-        name: React.PropTypes.string.isRequired,
-        doors: React.PropTypes.arrayOf(React.PropTypes.string),
-      })
-    ),
-    doors: React.PropTypes.arrayOf(React.PropTypes.number),
-  }),
+  users: getUserPropType(),
 };

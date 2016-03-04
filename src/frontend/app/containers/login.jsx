@@ -10,6 +10,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 
 import Home from 'containers/home';
 import { authenticate } from 'actions';
+import { getAuthPropType } from 'proptypes';
 
 export default class LoginDialog extends React.Component {
   displayName: 'LoginDialog';
@@ -51,7 +52,7 @@ export default class LoginDialog extends React.Component {
   }
 
   checkProps(props) {
-    if (props.auth.status === 'success') {
+    if (props.auth.get('status') === 'success') {
       const { location } = props;
       this.setState({ open: false });
       if (location && location.query && location.query.next) {
@@ -131,10 +132,10 @@ export default class LoginDialog extends React.Component {
           <div
             style={styles.message}
           >
-            {this.props.auth.status === 'error' &&
-             this.props.auth.message && this.state.showErrors &&
+            {this.props.auth.get('status') === 'error' &&
+             this.props.auth.get('message') && this.state.showErrors &&
               <RaisedButton
-                label={this.props.auth.message}
+                label={this.props.auth.get('message')}
                 onTouchTap={this._handleCloseErrorMessage}
                 primary
               />
@@ -156,14 +157,9 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginDialog);
 
+
 LoginDialog.propTypes = {
-  auth: React.PropTypes.shape({
-    message: React.PropTypes.string,
-    username: React.PropTypes.string,
-    admin: React.PropTypes.bool,
-    token: React.PropTypes.string,
-    status: React.PropTypes.string,
-  }),
+  auth: getAuthPropType(),
   authenticate: React.PropTypes.func.isRequired,
   location: React.PropTypes.shape({
     state: React.PropTypes.shape({

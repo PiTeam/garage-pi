@@ -4,6 +4,8 @@ import FlatButton from 'material-ui/lib/flat-button';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
+import { getAuthPropType } from 'proptypes';
+
 export default class MainAppBar extends React.Component {
   displayName: 'MainAppBar';
 
@@ -13,7 +15,7 @@ export default class MainAppBar extends React.Component {
       marginTop: '5px',
     };
 
-    return this.props.auth.status === 'success' ?
+    return this.props.auth.get('status') === 'success' ?
       <Link to="/logout">
         <FlatButton
           label="Logout"
@@ -44,7 +46,8 @@ export default class MainAppBar extends React.Component {
       <AppBar
         iconElementRight={this.handleLeftIcon()}
         onLeftIconButtonTouchTap={this.props.handleOpenLeftNav}
-        showMenuIconButton={this.props.auth.status === 'success' && this.props.auth.admin}
+        showMenuIconButton={this.props.auth.get('status') === 'success' &&
+                            this.props.auth.get('admin')}
         style={styles.appbar}
         title={
           <Link style={styles.link}
@@ -62,11 +65,6 @@ function mapStateToProps({ auth }) {
 export default connect(mapStateToProps)(MainAppBar);
 
 MainAppBar.propTypes = {
-  auth: React.PropTypes.shape({
-    token: React.PropTypes.string,
-    status: React.PropTypes.string,
-    username: React.PropTypes.string,
-    admin: React.PropTypes.bool,
-  }),
+  auth: getAuthPropType(),
   handleOpenLeftNav: React.PropTypes.func.isRequired,
 };

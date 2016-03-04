@@ -2,10 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { checkAuthToken } from 'actions';
 import { bindActionCreators } from 'redux';
+import { getAuthPropType, getDoorPropType, getUserPropType } from 'proptypes';
+
+import { fetchUsers, fetchDoors, fetchUserDoors } from 'actions';
 
 export function checkAuth(Component) {
-  class Authenticated extends React.Component {
-    displayName: 'Authenticated';
+  class CheckAuthentication extends React.Component {
+    displayName: 'CheckAuthentication';
 
     constructor(props) {
       super(props);
@@ -14,6 +17,7 @@ export function checkAuth(Component) {
 
     state = {
       ready: false,
+      isAuthenticating: false,
       isFetching: false,
     };
 
@@ -36,15 +40,35 @@ export function checkAuth(Component) {
     }
 
     checkAuth(props) {
-      if (props.auth.status === 'success' || props.auth.status === 'error') {
+      if (props.auth.get('status') === 'success') {
+        if (!this.state.isFetching) {
+          if (props.auth.get('admin')) {
+            props.fetchUsers(props.auth.get('token'));
+            props.fetchDoors(props.auth.get('token'));
+          } else {
+            props.fetchUserDoors(props.auth.get('token'));
+          }
+          return this.setState({ isFetching: true });
+        }
+
+        if (props.auth.get('admin') &&
+            props.doors.get('status') === 'success' &&
+            props.users.get('status') === 'success') {
+          return this.setState({ ready: true });
+        }
+
+        if (!props.auth.get('admin') && props.doors.get('status') === 'success') {
+          return this.setState({ ready: true });
+        }
+      } else if (props.auth.get('status') === 'error') {
         return this.setState({ ready: true });
       }
 
-      if (!this.state.isFetching) {
+      if (!this.state.isAuthenticating) {
         this.props.checkAuthToken();
       }
 
-      return this.setState({ isFetching: true });
+      return this.setState({ isAuthenticating: true });
     }
 
     render() {
@@ -65,24 +89,15 @@ export function checkAuth(Component) {
   }
 
   function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ checkAuthToken }, dispatch);
+    return bindActionCreators({ checkAuthToken, fetchDoors, fetchUsers, fetchUserDoors }, dispatch);
   }
 
-  Authenticated.propTypes = {
-    auth: React.PropTypes.shape({
-      token: React.PropTypes.string,
-      status: React.PropTypes.string,
-      username: React.PropTypes.string,
-      message: React.PropTypes.string,
-      admin: React.PropTypes.bool,
-    }),
+  CheckAuthentication.propTypes = {
+    auth: getAuthPropType(),
     checkAuthToken: React.PropTypes.func,
-    location: React.PropTypes.shape({
-      state: React.PropTypes.shape({
-        nextPathname: React.PropTypes.string,
-      }),
-    }),
+    doors: getDoorPropType(),
+    users: getUserPropType(),
   };
 
-  return connect(mapStateToProps, mapDispatchToProps)(Authenticated);
+  return connect(mapStateToProps, mapDispatchToProps)(CheckAuthentication);
 }

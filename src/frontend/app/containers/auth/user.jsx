@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { bindActionCreators } from 'redux';
 
-import { fetchUserDoors } from 'actions';
+import { getAuthPropType } from 'proptypes';
 
 export function requireUserAuth(Component) {
   class Authenticated extends React.Component {
@@ -16,7 +15,6 @@ export function requireUserAuth(Component) {
 
     state = {
       ready: false,
-      isFetching: false,
     };
 
     componentWillMount() {
@@ -28,20 +26,16 @@ export function requireUserAuth(Component) {
     }
 
     checkAuth(props) {
-      if (props.auth.status !== 'success') {
+      if (props.auth.get('status') !== 'success') {
         const { location } = props;
         return browserHistory.push(`/login?next=${location.pathname}`);
       }
 
-      if (props.doors.status === 'success' && props.users.status === 'success') {
+      if (props.auth.get('status') === 'success') {
         return this.setState({ ready: true });
       }
 
-      if (!this.state.ready && !this.state.isFetching) {
-        props.fetchUserDoors(props.auth.token);
-      }
-
-      return this.setState({ isFetching: true });
+      return this.setState({ ready: false });
     }
 
     render() {
@@ -56,23 +50,12 @@ export function requireUserAuth(Component) {
     }
   }
 
-  function mapStateToProps({ auth, users, doors }) {
-    return { auth, users, doors };
-  }
-
-  function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ fetchUserDoors }, dispatch);
+  function mapStateToProps({ auth }) {
+    return { auth };
   }
 
   Authenticated.propTypes = {
-    auth: React.PropTypes.shape({
-      token: React.PropTypes.string,
-      status: React.PropTypes.string,
-      username: React.PropTypes.string,
-      message: React.PropTypes.string,
-      admin: React.PropTypes.bool,
-    }),
-    fetchUserDoors: React.PropTypes.func.isRequired,
+    auth: getAuthPropType(),
     location: React.PropTypes.shape({
       state: React.PropTypes.shape({
         nextPathname: React.PropTypes.string,
@@ -80,5 +63,5 @@ export function requireUserAuth(Component) {
     }),
   };
 
-  return connect(mapStateToProps, mapDispatchToProps)(Authenticated);
+  return connect(mapStateToProps)(Authenticated);
 }

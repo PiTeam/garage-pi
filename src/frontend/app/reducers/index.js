@@ -4,26 +4,21 @@ import _ from 'lodash';
 import immutable from 'immutable';
 
 const initialDoorState = immutable.fromJS({});
-const initialUserState = immutable.fromJS({});
-const initialAuthState = immutable.fromJS({});
+const initialUserState = immutable.fromJS({ data: [] });
+const initialAuthState = immutable.fromJS({ data: [] });
 
 const rootReducer = combineReducers({
   doors: handleActions({
     RESET_AUTH: () => initialDoorState,
-    FETCH_DOORS: (state, action) => action.payload,
-    DELETE_DOOR: (state, action) => ({
-      status: 'done',
-      data: state.data.filter(door => door.id !== action.payload),
-    }),
-    FETCH_USER_DOORS: (state, action) => action.payload,
+    FETCH_DOORS: (state, action) => immutable.fromJS(action.payload),
+    DELETE_DOOR: (state, action) => (
+      state.set('data',
+                state.data.filter(door => door.id !== action.payload))
+    ),
+    FETCH_USER_DOORS: (state, action) => immutable.fromJS(action.payload),
     UPDATE_DOOR: (state, action) => {
-      const index = _.findIndex(state.data, { id: action.payload.id });
-      const arr = state.data;
-      return { status: 'done', data: [
-        ...arr.slice(0, index),
-        action.payload,
-        ...arr.slice(index + 1),
-      ] };
+      const replace = state.get('data').find(el => el.id === action.payload.id);
+      state.updateIn(['data', replace], () => action.payload);
     },
     ADD_USER: (state, action) => {
       const user = action.payload;
@@ -71,7 +66,7 @@ const rootReducer = combineReducers({
   users: handleActions({
     RESET_AUTH: () => initialUserState,
     ADD_USER: (state, action) => action.payload,
-    FETCH_USERS: (state, action) => action.payload,
+    FETCH_USERS: (state, action) => immutable.fromJS(action.payload),
     DELETE_USER: (state, action) => {
       const index = _.findIndex(state.data, { id: action.payload });
       const arr = state.data.slice(0, index).concat(state.data.slice(index + 1));
@@ -80,11 +75,11 @@ const rootReducer = combineReducers({
     UPDATE_USER: (state, action) => {
       const index = _.findIndex(state.data, { id: action.payload.id });
       const arr = state.data;
-      return { status: 'done', data: [
+      return state.set('data', [
         ...arr.slice(0, index),
         action.payload,
         ...arr.slice(index + 1),
-      ] };
+      ]);
     },
     ACTIVATE_USER: (state, action) => {
       const index = _.findIndex(state.data, { id: action.payload.id });
@@ -139,7 +134,7 @@ const rootReducer = combineReducers({
     },
   }, initialUserState),
   auth: handleActions({
-    SET_AUTH: (state, action) => action.payload,
+    SET_AUTH: (state, action) => immutable.fromJS(action.payload),
     RESET_AUTH: () => initialAuthState,
   }, initialAuthState),
 });

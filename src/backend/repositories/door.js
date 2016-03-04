@@ -37,7 +37,7 @@ export function loadDoorsWithUsers(query) {
   return new Promise((resolve, reject) => {
     Door.find(query).then(doors => {
       const doorsWithUsers = [];
-      doors.map(door => {
+      doors.forEach(door => {
         doorsWithUsers.push(loadDoorWithUsers(door));
       });
 
@@ -56,7 +56,7 @@ export function loadDoorById(doorId) {
       if (!door) {
         return reject(new Error('Door not found.'));
       }
-      resolve(door);
+      return resolve(door);
     }).catch(err => {
       reject(err);
     });
@@ -69,7 +69,7 @@ export function addDoor(door) {
       if (!savedDoor) {
         return reject(new Error('Cannot save Door.'));
       }
-      resolve(savedDoor);
+      return resolve(savedDoor);
     }).catch(err => {
       reject(err);
     });

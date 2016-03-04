@@ -1,3 +1,5 @@
+/* eslint no-console: 0 */
+
 import manager from 'commander';
 import DB from '../backend/lib/db';
 import config from 'config';

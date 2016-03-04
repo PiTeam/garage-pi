@@ -14,7 +14,7 @@
     "dev:full": "nodemon --exec babel-node -- src/dev-server.js",
     "camo-fix": "sed -i '/babel-plugin-transform-es2015-classes/d' node_modules/babel-preset-es2015/index.js",
     "build": "mkdir -p dist/backend; babel src/server.js -o dist/server.js; babel src/backend --out-dir dist/backend; webpack --config config/webpack.production.js --progress --colors",
-    "eslint": "eslint --ext jsx src"
+    "eslint": "eslint --ext jsx --ext js src"
   },
   "babel": {
     "presets": [
@@ -67,12 +67,11 @@
     "babel-eslint": "^5.0.0",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-preset-stage-0": "^6.5.0",
     "babel-preset-es2015": "^6.6.0",
     "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
     "babel-runtime": "^6.6.0",
     "chai": "^3.4.1",
-    "immutable": "^3.7.6",
     "chai-immutable": "^1.5.3",
     "commander": "^2.9.0",
     "eslint": "^2.2.0",
@@ -82,6 +81,7 @@
     "faker": "^3.0.1",
     "history": "^2.0.1",
     "html-webpack-plugin": "^2.9.0",
+    "immutable": "^3.7.6",
     "jwt-decode": "^1.5.1",
     "material-ui": "^0.15.0-alpha.1",
     "mocha": "^2.4.3",
@@ -90,6 +90,7 @@
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "react-hot-loader": "^1.3.0",
+    "react-immutable-proptypes": "^1.7.0",
     "react-redux": "^4.4.0",
     "react-router": "^2.0.0-rc6",
     "react-tap-event-plugin": "^0.2.1",

@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
 
+import { getDoorPropType } from 'proptypes';
+
 export default class UserDoorList extends React.Component {
   displayName: 'UserDoorList';
 
@@ -55,15 +57,15 @@ export default class UserDoorList extends React.Component {
     const styles = this.getStyles();
     return (
       <div>
-        {this.props.doors.data.length === 0 &&
+        {this.props.doors.get('data').size === 0 &&
           <h1 style={styles.logo}>{'No authorized doors'}</h1>
         }
-        {this.props.doors.data.length > 0 &&
+        {this.props.doors.get('data').size > 0 &&
           <Tabs style={styles.tabs}>
-          {this.props.doors.data.map((door, i) => (
+          {this.props.doors.get('data').map((door, i) => (
             <Tab
               key={i}
-              label={door.name}
+              label={door.get('name')}
             >
               <Paper
                 key={i}
@@ -77,7 +79,7 @@ export default class UserDoorList extends React.Component {
                     <CardMedia
                       overlay={this.getCardTitle(door.name)}
                     >
-                      <img src={door.image} />
+                      <img src={door.get('image')} />
                     </CardMedia>
                   </Card>
                 </a>
@@ -106,13 +108,5 @@ function mapStateToProps({ doors }) {
 export default connect(mapStateToProps)(UserDoorList);
 
 UserDoorList.propTypes = {
-  doors: React.PropTypes.shape({
-    status: React.PropTypes.string,
-    data: React.PropTypes.arrayOf(
-      React.PropTypes.shape({
-        id: React.PropTypes.string.isRequired,
-        name: React.PropTypes.string.isRequired,
-      })
-    ),
-  }),
+  doors: getDoorPropType(),
 };

@@ -34,13 +34,13 @@ routes.put('/:id', adminOnly, (req, res) => {
       const actualUsersIds = actualDoorUsers.map(d => d._id);
 
       const promises = [];
-      actualUsersIds.map(actualUserId => {
+      actualUsersIds.forEach(actualUserId => {
         if (desiredUsersIds.indexOf(actualUserId) === -1) {
           promises.push(userRepository.removeDoorFromUser(actualUserId, door.id));
         }
       });
 
-      desiredUsersIds.map(desiredUserId => {
+      desiredUsersIds.forEach(desiredUserId => {
         if (actualUsersIds.indexOf(desiredUserId) === -1) {
           promises.push(userRepository.addDoorToUser(desiredUserId, door.id));
         }

@@ -9,6 +9,8 @@ import List from 'material-ui/lib/lists/list';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
 
+import { getDoorPropType } from 'proptypes';
+
 class DoorList extends Component {
   displayName: 'DoorList';
 
@@ -41,29 +43,24 @@ class DoorList extends Component {
 
   render() {
     const styles = this.getStyles();
-
-    if (this.props.doors.status === 'pending') {
-      return <div />;
-    }
-
     return (
       <div>
         <h1 style={styles.h1}>{'Manage doors'}</h1>
         <Paper style={styles.paper}>
           <List>
-            {this.props.doors.data.map((door, i) => (
+            {this.props.doors.get('data').map((door, i) => (
               <div key={i}>
                 <Link
                   style={styles.link}
-                  to={`/manage/door/${door.id}`}
+                  to={`/manage/door/${door.get('id')}`}
                 >
                   <ListItem
-                    leftAvatar={<Avatar src={door.image} />}
-                    primaryText={door.name}
+                    leftAvatar={<Avatar src={door.get('image')} />}
+                    primaryText={door.get('name')}
                     rightIcon={<ActionSettings />}
                   />
                 </Link>
-                {i < this.props.doors.data.length - 1 && <Divider />}
+                {i < this.props.doors.get('data').size - 1 && <Divider />}
               </div>
               ))
             }
@@ -91,14 +88,5 @@ function mapStateToProps({ doors }) {
 export default connect(mapStateToProps)(DoorList);
 
 DoorList.propTypes = {
-  doors: React.PropTypes.shape({
-    status: React.PropTypes.string,
-    data: React.PropTypes.arrayOf(
-      React.PropTypes.shape({
-        id: React.PropTypes.string.isRequired,
-        name: React.PropTypes.string.isRequired,
-        users: React.PropTypes.arrayOf(React.PropTypes.string),
-      })
-    ),
-  }),
+  doors: getDoorPropType(),
 };

@@ -58,7 +58,7 @@ export default class QRCode {
         if (!data) {
           return reject(false);
         }
-        resolve(data);
+        return resolve(data);
       });
     });
   }

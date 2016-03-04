@@ -1,3 +1,5 @@
+/* eslint no-console: 0 */
+
 import express from 'express';
 import morgan from 'morgan';
 import config from 'config';

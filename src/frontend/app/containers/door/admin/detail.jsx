@@ -11,6 +11,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 
 import CustomCheckbox from 'components/custom-checkbox';
 import { deleteDoor, updateDoor } from 'actions';
+import { getAuthPropType, getDoorPropType, getUserPropType } from 'proptypes';
 
 class DoorDetail extends Component {
   displayName: 'DoorDetail';
@@ -24,33 +25,22 @@ class DoorDetail extends Component {
     this._handleUpdate = this._handleUpdate.bind(this);
     this._handleDelete = this._handleDelete.bind(this);
     this._handleCheck = this._handleCheck.bind(this);
-    this._getDoor = this._getDoor.bind(this);
+    this._selectDoor = this._selectDoor.bind(this);
     this._handleTextFieldChange = this._handleTextFieldChange.bind(this);
   }
 
   state = {
     confirmDeletion: false,
     door: undefined,
+    doorUsers: undefined,
   };
 
   componentWillMount() {
-    if (!this.state.door &&
-         this.props.doors.status === 'success' &&
-         this.props.users.status === 'success') {
-      const door = this._getDoor(this.props.params.doorId,
-                                 this.props.doors.data, this.props.users.data);
-      this.setState({ door });
-    }
+    this._selectDoor(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.state.door &&
-         nextProps.doors.status === 'success' &&
-         nextProps.users.status === 'success') {
-      const door = this._getDoor(nextProps.params.doorId,
-                                 nextProps.doors.data, nextProps.users.data);
-      this.setState({ door });
-    }
+    this._selectDoor(nextProps);
   }
 
   getStyles() {
@@ -90,6 +80,15 @@ class DoorDetail extends Component {
     };
   }
 
+  _selectDoor(props) {
+    const door = props.doors.get('data').find(u => u.get('id') === props.params.doorId);
+    const doorUsers = props.users.get('data').filter(user => {
+      const doors = user.get('doors');
+      return doors.findIndex(id => props.params.doorId === id) !== -1;
+    });
+    this.setState({ door, doorUsers });
+  }
+
   _handleUpdate() {
     const users = Object.keys(this.state.door.users)
                     .filter(userId => this.state.door.users[userId]);
@@ -119,17 +118,6 @@ class DoorDetail extends Component {
 
   _handleSetRefDoorname(c) {
     this.doorname = c;
-  }
-
-  _getDoor(id, doors, users) {
-    const selected = doors.filter(door => door.id === id);
-    const doorUsers = {};
-    users.forEach(user => {
-      doorUsers[user.id] = selected[0].users instanceof Array &&
-                           selected[0].users.indexOf(user.id) !== -1;
-    });
-
-    return Object.assign({}, selected[0], { users: doorUsers });
   }
 
   handleCloseDeletionConfirmation() {
@@ -173,17 +161,17 @@ class DoorDetail extends Component {
           onChange={this._handleTextFieldChange}
           ref={this._handleSetRefDorrname}
           style={styles.name}
-          value={this.state.door.name}
+          value={this.state.door.get('name')}
         />
         <div style={styles.users}>
           <h3 style={styles.h3}>{'Allowed users'}</h3>
           <Paper style={styles.paper}>
-          {this.props.users.data.map(user => (
+          {this.props.users.get('data').map(user => (
             <CustomCheckbox
-              checked={this.state.door.users[user.id]}
-              key={user.id}
-              label={user.name}
-              name={user.key}
+              checked={this.state.doorUsers.findIndex(u => u === user.id) === -1}
+              key={user.get('id')}
+              label={user.get('name')}
+              name={user.get('key')}
               item={user}
               onCheck={this._handleCheck}
               style={styles.checkbox}
@@ -240,35 +228,12 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(DoorDetail);
 
 DoorDetail.propTypes = {
-  auth: React.PropTypes.shape({
-    token: React.PropTypes.string,
-    status: React.PropTypes.string,
-    username: React.PropTypes.string,
-    admin: React.PropTypes.bool,
-  }),
+  auth: getAuthPropType(),
   deleteDoor: React.PropTypes.func.isRequired,
-  doors: React.PropTypes.shape({
-    status: React.PropTypes.string,
-    data: React.PropTypes.arrayOf(
-      React.PropTypes.shape({
-        id: React.PropTypes.string.isRequired,
-        name: React.PropTypes.string.isRequired,
-        users: React.PropTypes.arrayOf(React.PropTypes.string),
-      })
-    ),
-  }),
+  doors: getDoorPropType(),
   params: React.PropTypes.shape({
     doorId: React.PropTypes.string.isRequired,
   }),
   updateDoor: React.PropTypes.func.isRequired,
-  users: React.PropTypes.shape({
-    status: React.PropTypes.string,
-    data: React.PropTypes.arrayOf(
-      React.PropTypes.shape({
-        id: React.PropTypes.string.isRequired,
-        name: React.PropTypes.string.isRequired,
-        doors: React.PropTypes.arrayOf(React.PropTypes.string),
-      })
-    ),
-  }),
+  users: getUserPropType(),
 };

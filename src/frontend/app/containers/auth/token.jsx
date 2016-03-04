@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 
 import { processActivateUser } from 'actions';
+import { getAuthPropType } from 'proptypes';
 
 export default class TokenAuth extends Component {
   displayName: 'TokenAuth';
@@ -26,7 +27,7 @@ export default class TokenAuth extends Component {
   }
 
   checkAuth(props) {
-    if (props.auth.token) {
+    if (props.auth.get('token')) {
       return browserHistory.push('/');
     }
     if (!this.state.isFetching) {
@@ -62,8 +63,5 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(TokenAuth);
 
 TokenAuth.propTypes = {
-  auth: React.PropTypes.shape({
-    token: React.PropTypes.string,
-    status: React.PropTypes.string,
-  }),
+  auth: getAuthPropType(),
 };
