@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Checkbox from 'material-ui/lib/checkbox';
+import { getGenericPropType } from 'proptypes';
 
 export default class CustomCheckbox extends React.Component {
   displayName: 'CustomCheckbox';
@@ -11,7 +12,7 @@ export default class CustomCheckbox extends React.Component {
   }
 
   _onCheck(e, value) {
-    this.props.onCheckFn(this.props.item.id, value);
+    this.props.onCheckFn(this.props.item.get('id'), value);
   }
 
   render() {
@@ -23,7 +24,5 @@ export default class CustomCheckbox extends React.Component {
 
 CustomCheckbox.propTypes = {
   onCheckFn: React.PropTypes.func,
-  item: React.PropTypes.shape({
-    id: React.PropTypes.int,
-  }),
+  item: getGenericPropType(),
 };

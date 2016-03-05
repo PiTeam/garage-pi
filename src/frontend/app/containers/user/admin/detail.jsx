@@ -31,6 +31,7 @@ class UserDetail extends Component {
   state = {
     confirmDeletion: false,
     user: undefined,
+    userDoors: undefined,
   };
 
   componentWillMount() {
@@ -86,34 +87,30 @@ class UserDetail extends Component {
 
   _selectUser(props) {
     const user = props.users.get('data').find(u => u.get('id') === props.params.userId);
-    this.setState({ user });
+    const userDoors = props.doors.get('data').map(door => (
+      door.set('checked', user.get('doors').indexOf(door.id) !== -1)
+    ));
+    this.setState({ user, userDoors });
   }
 
   _handleUpdate() {
-    const doors = Object.keys(this.state.user.doors).filter(
-                                doorId => this.state.user.doors[doorId]);
-
-    const user = Object.assign({}, this.state.user, { doors });
-    this.props.updateUser(user, this.props.auth.get('token'));
+    this.props.updateUser(this.state.user, this.props.auth.get('token'));
     browserHistory.push('/manage/user');
   }
 
   _handleTextFieldChange(e) {
-    const user = Object.assign({}, this.state.user, { name: e.target.value });
-    this.setState({ user });
+    this.setState({ user: this.state.user.set('name', e.target.value) });
   }
 
   handleDelete() {
-    this.props.deleteUser(this.state.user.id, this.props.auth.get('token'));
+    this.props.deleteUser(this.state.user.get('id'), this.props.auth.get('token'));
     browserHistory.push('/manage/user');
   }
 
   _handleCheck(id, value) {
-    const doors = Object.assign({}, this.state.user.doors);
-    doors[id] = value;
-
-    const user = Object.assign({}, this.state.user, { doors });
-    this.setState({ user });
+    const index = this.state.userDoors.findIndex(door => door.get('id') === id);
+    const userDoors = this.state.userDoors.update(index, door => door.set('checked', value));
+    this.setState({ userDoors });
   }
 
   handleCloseDeletionConfirmation() {
@@ -161,10 +158,9 @@ class UserDetail extends Component {
         <div style={styles.doors}>
           <h3 style={styles.h3}>{'Allowed doors'}</h3>
           <Paper style={styles.paper}>
-          {this.props.doors.get('data').map((door, i) => (
+          {this.state.userDoors.map((door, i) => (
             <CustomCheckbox
-              checked={this.state.user.get('doors').findIndex(d => d === door.id) === -1}
-              checkedFn={this._handleChecked}
+              checked={door.get('checked')}
               key={i}
               label={door.get('name')}
               name={door.get('key')}

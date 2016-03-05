@@ -32,3 +32,10 @@ export function getUserPropType() {
     }),
   });
 }
+
+export function getGenericPropType() {
+  return ImmutablePropTypes.mapContains({
+    id: React.PropTypes.string,
+    name: React.PropTypes.string,
+  });
+}

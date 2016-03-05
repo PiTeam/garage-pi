@@ -82,10 +82,9 @@ class DoorDetail extends Component {
 
   _selectDoor(props) {
     const door = props.doors.get('data').find(u => u.get('id') === props.params.doorId);
-    const doorUsers = props.users.get('data').filter(user => {
-      const doors = user.get('doors');
-      return doors.findIndex(id => props.params.doorId === id) !== -1;
-    });
+    const doorUsers = props.users.get('data').filter(user => (
+      user.set('checked', door.get('users').indexOf(user.id) !== -1)
+    ));
     this.setState({ door, doorUsers });
   }
 
@@ -109,11 +108,9 @@ class DoorDetail extends Component {
   }
 
   _handleCheck(id, value) {
-    const users = Object.assign({}, this.state.door.users);
-    users[id] = value;
-
-    const door = Object.assign({}, this.state.door, { users });
-    this.setState({ door });
+    const index = this.state.doorUsers.findIndex(user => user.get('id') === id);
+    const doorUsers = this.state.doorUsers.update(index, user => user.set('checked', value));
+    this.setState({ doorUsers });
   }
 
   _handleSetRefDoorname(c) {
@@ -166,9 +163,9 @@ class DoorDetail extends Component {
         <div style={styles.users}>
           <h3 style={styles.h3}>{'Allowed users'}</h3>
           <Paper style={styles.paper}>
-          {this.props.users.get('data').map(user => (
+          {this.state.doorUsers.map(user => (
             <CustomCheckbox
-              checked={this.state.doorUsers.findIndex(u => u === user.id) === -1}
+              checked={user.get('checked')}
               key={user.get('id')}
               label={user.get('name')}
               name={user.get('key')}
