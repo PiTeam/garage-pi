@@ -88,13 +88,17 @@ class UserDetail extends Component {
   _selectUser(props) {
     const user = props.users.get('data').find(u => u.get('id') === props.params.userId);
     const userDoors = props.doors.get('data').map(door => (
-      door.set('checked', user.get('doors').indexOf(door.id) !== -1)
+      door.set('checked', user.get('doors').indexOf(door.get('id')) !== -1)
     ));
     this.setState({ user, userDoors });
   }
 
   _handleUpdate() {
-    this.props.updateUser(this.state.user, this.props.auth.get('token'));
+    const doors = this.state.userDoors
+                    .filter(door => door.get('checked'))
+                    .map(door => door.get('id'));
+
+    this.props.updateUser(this.state.user.set('doors', doors), this.props.auth.get('token'));
     browserHistory.push('/manage/user');
   }
 
@@ -182,7 +186,7 @@ class UserDetail extends Component {
           </Dialog>
 
           <div style={styles.activateButton}>
-            <Link to={`/manage/user/${this.state.user.name}/activate`}>
+            <Link to={`/manage/user/${this.state.user.get('name')}/activate`}>
               <RaisedButton
                 label="Activate user by QRCode"
                 secondary

@@ -1,6 +1,7 @@
 import { createAction } from 'redux-actions';
 import * as rest from 'lib/rest';
 import { resetAuth } from 'actions/auth';
+import immutable from 'immutable';
 
 const endpoints = require('endpoints');
 
@@ -9,7 +10,6 @@ export const DELETE_USER = 'DELETE_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 export const ADD_USER = 'ADD_USER';
 export const FETCH_USER_DOORS = 'FETCH_USER_DOORS';
-export const ACTIVATE_USER = 'ACTIVATE_USER';
 
 export function fetchUsers(token) {
   return dispatch => {
@@ -35,12 +35,12 @@ export function fetchUserDoors(token) {
   };
 }
 
-export function activateUser(id) {
+export function activateUser(user) {
   return dispatch => {
-    const action = createAction('ACTIVATE_USER');
-    const url = `${endpoints.base}${endpoints.update.activateUser}/${id}`;
+    const action = createAction('UPDATE_USER');
+    const url = `${endpoints.base}${endpoints.update.activateUser}/${user.get('id')}`;
     rest.update(url).then(data => {
-      dispatch(action(data));
+      dispatch(action(immutable.fromJS(data.user)));
     });
   };
 }
@@ -58,8 +58,8 @@ export function addUser(user, token) {
 export function updateUser(user, token) {
   return dispatch => {
     const action = createAction('UPDATE_USER');
-    const url = `${endpoints.base}${endpoints.update.user}/${user.id}`;
-    rest.update(url, { user }, token).then(() => {
+    const url = `${endpoints.base}${endpoints.update.user}/${user.get('id')}`;
+    rest.update(url, { user: user.toJS() }, token).then(() => {
       dispatch(action(user));
     });
   };

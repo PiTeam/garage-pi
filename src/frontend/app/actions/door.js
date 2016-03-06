@@ -21,8 +21,8 @@ export function deleteDoor(id, token) {
 export function updateDoor(door, token) {
   return dispatch => {
     const action = createAction('UPDATE_DOOR');
-    const url = `${endpoints.base}${endpoints.update.door}/${door.id}`;
-    rest.update(url, { door }, token).then(() => {
+    const url = `${endpoints.base}${endpoints.update.door}/${door.get('id')}`;
+    rest.update(url, { door: door.toJS() }, token).then(() => {
       dispatch(action(door));
     });
   };

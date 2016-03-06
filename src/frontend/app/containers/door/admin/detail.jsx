@@ -36,11 +36,17 @@ class DoorDetail extends Component {
   };
 
   componentWillMount() {
-    this._selectDoor(this.props);
+    if (this.props.doors.get('status') === 'success' &&
+        this.props.users.get('status') === 'success') {
+      this._selectDoor(this.props);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    this._selectDoor(nextProps);
+    if (this.props.doors.get('status') === 'success' &&
+        this.props.users.get('status') === 'success') {
+      this._selectDoor(nextProps);
+    }
   }
 
   getStyles() {
@@ -82,29 +88,28 @@ class DoorDetail extends Component {
 
   _selectDoor(props) {
     const door = props.doors.get('data').find(u => u.get('id') === props.params.doorId);
-    const doorUsers = props.users.get('data').filter(user => (
-      user.set('checked', door.get('users').indexOf(user.id) !== -1)
+    const doorUsers = props.users.get('data').map(user => (
+      user.set('checked', user.get('doors').indexOf(door.get('id')) !== -1)
     ));
     this.setState({ door, doorUsers });
   }
 
   _handleUpdate() {
-    const users = Object.keys(this.state.door.users)
-                    .filter(userId => this.state.door.users[userId]);
+    const users = this.state.doorUsers
+                    .filter(user => user.get('checked'))
+                    .map(user => user.get('id'));
 
-    const door = Object.assign({}, this.state.door, { users });
-    this.props.updateDoor(door, this.props.auth.token);
+    this.props.updateDoor(this.state.door.set('users', users), this.props.auth.get('token'));
     browserHistory.push('/manage/door');
   }
 
   _handleDelete() {
-    this.props.deleteDoor(this.state.door.id, this.props.auth.token);
+    this.props.deleteDoor(this.state.door.get('id'), this.props.auth.get('token'));
     browserHistory.push('/manage/door');
   }
 
   _handleTextFieldChange(e) {
-    const door = Object.assign({}, this.state.door, { name: e.target.value });
-    this.setState({ door });
+    this.setState({ door: this.state.door.set('name', e.target.value) });
   }
 
   _handleCheck(id, value) {

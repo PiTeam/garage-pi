@@ -6,34 +6,35 @@ import Paper from 'material-ui/lib/paper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
+import { Map as createMap, List as createList } from 'immutable';
 
 import CustomCheckbox from 'components/custom-checkbox';
 import { addUser } from 'actions';
+import { getAuthPropType, getDoorPropType, getUserPropType } from 'proptypes';
 
 export default class AddUser extends React.Component {
   displayName: 'AddUser';
 
   constructor(props) {
     super(props);
+    this._initUser = this._initUser.bind(this);
     this._handleAdd = this._handleAdd.bind(this);
     this._handleTextFieldChange = this._handleTextFieldChange.bind(this);
     this._handleCheck = this._handleCheck.bind(this);
   }
 
   state = {
-    user: { name: '', doors: {} },
+    user: createMap(),
+    userDoors: createList(),
     invalid: true,
   };
 
-  componentWillReceiveProps() {
-    const doors = {};
-    if (this.props.doors.data.length > 0) {
-      this.props.doors.data.forEach(door => {
-        doors[door.id] = false;
-      });
+  componentWillMount() {
+    this._initUser(this.props);
+  }
 
-      this.setState({ user: { doors } });
-    }
+  componentWillReceiveProps(nextProps) {
+    this._initUser(nextProps);
   }
 
   getStyles() {
@@ -87,26 +88,34 @@ export default class AddUser extends React.Component {
     };
   }
 
-  _handleAdd() {
-    const doors = Object.keys(this.state.user.doors)
-                    .filter(doorId => this.state.user.doors[doorId]);
+  _initUser(props) {
+    const userDoors = props.doors.get('data').map(door => door.set('checked', false));
+    this.setState({ userDoors });
+  }
 
-    const user = Object.assign({}, this.state.user, { doors });
-    this.props.addUser(user, this.props.auth.token);
+  _handleAdd() {
+    const doors = this.state.userDoors
+                    .filter(door => door.get('checked'))
+                    .map(door => door.get('id'));
+
+    this.props.addUser(this.state.user.set('doors', doors), this.props.auth.get('token'));
     browserHistory.push(`/manage/user/${this.state.user.name}/activate`);
   }
 
   _handleTextFieldChange(e) {
-    const user = Object.assign({}, this.state.user, { name: e.target.value });
-    this.setState({ user, invalid: false });
+    const invalid = e.target.value === '';
+    this.setState({ user: this.state.user.set('name', e.target.value), invalid });
   }
 
   _handleCheck(id, value) {
-    const doors = Object.assign({}, this.state.user.doors);
-    doors[id] = value;
+    const userDoors = this.state.userDoors.map(door => {
+      if (door.get('id') === id) {
+        return door.set('checked', value);
+      }
+      return door;
+    });
 
-    const user = Object.assign({}, this.state.user, { doors });
-    this.setState({ user });
+    this.setState({ userDoors });
   }
 
   render() {
@@ -118,19 +127,19 @@ export default class AddUser extends React.Component {
           floatingLabelText="Desired username"
           hintText="Desired username"
           onChange={this._handleTextFieldChange}
-          value={this.state.user.name}
+          value={this.state.user.get('name')}
         />
         <div style={styles.doors}>
           <h3 style={styles.h3}>{'Allowed doors'}</h3>
           <Paper style={styles.paper}>
-          {this.props.doors.data.map((door, i) => (
+          {this.state.userDoors.map((door, i) => (
             <CustomCheckbox
-              checked={this.state.user.doors[door.id]}
+              checked={door.get('checked')}
               key={i}
-              label={door.name}
-              name={door._id}
+              label={door.get('name')}
+              name={door.get('key')}
               item={door}
-              onCheck={this._handleCheck}
+              onCheckFn={this._handleCheck}
               style={styles.checkbox}
             />
           ))}
@@ -175,31 +184,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(AddUser);
 
 AddUser.propTypes = {
   addUser: React.PropTypes.func.isRequired,
-  auth: React.PropTypes.shape({
-    token: React.PropTypes.shape({
-      status: React.PropTypes.string,
-      value: React.PropTypes.string,
-    }),
-    status: React.PropTypes.string,
-  }),
-  doors: React.PropTypes.shape({
-    status: React.PropTypes.string,
-    data: React.PropTypes.arrayOf(
-      React.PropTypes.shape({
-        id: React.PropTypes.string,
-        name: React.PropTypes.string,
-        users: React.PropTypes.arrayOf(React.PropTypes.string),
-      })
-    ),
-  }),
-  users: React.PropTypes.shape({
-    status: React.PropTypes.string,
-    data: React.PropTypes.arrayOf(
-      React.PropTypes.shape({
-        id: React.PropTypes.string,
-        name: React.PropTypes.string,
-        doors: React.PropTypes.arrayOf(React.PropTypes.string),
-      })
-    ),
-  }),
+  auth: getAuthPropType(),
+  doors: getDoorPropType(),
+  users: getUserPropType(),
 };

@@ -8,50 +8,28 @@ import qr from 'qr-image';
 import base64 from 'base-64';
 
 import { fetchUsers, activateUser } from 'actions';
+import { getAuthPropType, getUserPropType } from 'proptypes';
 
 export default class ActivateUser extends React.Component {
   displayName: 'ActivateUser';
 
   constructor(props) {
     super(props);
-    this.props.fetchUsers(this.props.auth.token);
+    this.props.fetchUsers(this.props.auth.get('token'));
   }
 
   state = {
     user: undefined,
-    trying: false,
+    isFetching: false,
     svg: undefined,
   };
 
   componentWillMount() {
-    if (this.props.users.status === 'success') {
-      const user = this._getUser(this.props.params.userName, this.props.users.data);
-      if (user) {
-        this.props.activateUser(user.id, this.props.auth.token);
-        this.setState({ trying: true });
-      }
-    }
+    this._selectUser(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.state.user && nextProps.users.status === 'success') {
-      const user = this._getUser(nextProps.params.userName, nextProps.users.data);
-      if (user) {
-        if (user.activateToken) {
-          const url = this._getFullActivationURL(user.activateToken);
-          const qrcode = qr.imageSync(url, { type: 'svg' });
-          this.setState({
-            user,
-            svg: base64.encode(qrcode),
-          });
-        }
-
-        if (!this.state.trying) {
-          this.props.activateUser(user.id);
-          this.setState({ trying: true });
-        }
-      }
-    }
+    this._selectUser(nextProps);
   }
 
   getStyles() {
@@ -90,6 +68,25 @@ export default class ActivateUser extends React.Component {
     };
   }
 
+  _selectUser(props) {
+    const user = props.users.get('data').find(u => u.get('name') === this.props.params.userName);
+    if (user) {
+      if (user.get('activateToken')) {
+        const url = this._getFullActivationURL(user.get('activateToken'));
+        const qrcode = qr.imageSync(url, { type: 'svg' });
+        this.setState({
+          user,
+          svg: base64.encode(qrcode),
+        });
+      }
+
+      if (!this.state.isFetching) {
+        this.props.activateUser(user);
+        this.setState({ isFetching: true });
+      }
+    }
+  }
+
   _getFullActivationURL(token) {
     const parser = document.createElement('a');
     parser.href = window.location.href;
@@ -105,15 +102,15 @@ export default class ActivateUser extends React.Component {
   render() {
     const styles = this.getStyles();
 
-    if (!this.state.user || !this.state.user.id) {
+    if (!this.state.user || !this.state.user.get('id')) {
       return <div />;
     }
 
     return (
       <div>
-        <h1 style={styles.h1}>{`Activate user ${this.state.user.name}`}</h1>
+        <h1 style={styles.h1}>{`Activate user ${this.state.user.get('name')}`}</h1>
         <Paper style={styles.paper}>
-          {this.state.user.activateToken &&
+          {this.state.user.get('activateToken') &&
             <div>
               <img
                 src={`data:image/svg+xml;base64,${this.state.svg}`}
@@ -164,13 +161,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(ActivateUser);
 
 ActivateUser.propTypes = {
   activateUser: React.PropTypes.func.isRequired,
-  auth: React.PropTypes.shape({
-    token: React.PropTypes.shape({
-      status: React.PropTypes.string,
-      value: React.PropTypes.string,
-    }),
-    status: React.PropTypes.string,
-  }),
+  auth: getAuthPropType(),
   fetchUsers: React.PropTypes.func.isRequired,
   params: React.PropTypes.shape({
     userName: React.PropTypes.string.isRequired,
@@ -179,15 +170,5 @@ ActivateUser.propTypes = {
     svg: React.PropTypes.string,
     text: React.PropTypes.string,
   }),
-  users: React.PropTypes.shape({
-    status: React.PropTypes.string,
-    data: React.PropTypes.arrayOf(
-      React.PropTypes.shape({
-        id: React.PropTypes.string.isRequired,
-        name: React.PropTypes.string.isRequired,
-        activateToken: React.PropTypes.string,
-        doors: React.PropTypes.arrayOf(React.PropTypes.string),
-      })
-    ),
-  }),
+  users: getUserPropType(),
 };

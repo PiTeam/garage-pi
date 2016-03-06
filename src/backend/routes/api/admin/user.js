@@ -22,7 +22,7 @@ routes.get('/', adminOnly, (req, res) => {
 
 routes.put('/activate/:userId', (req, res) =>
   userRepository.activateUser(req.params.userId).then(user => {
-    res.send({
+    const u = {
       id: user._id,
       name: user.name,
       admin: user.admin,
@@ -30,7 +30,8 @@ routes.put('/activate/:userId', (req, res) =>
       password: user.password,
       doors: user.doors,
       activateToken: user.activateToken,
-    });
+    };
+    res.status(200).send({ status: 'success', user: u });
   }).catch(err => res.status(500).send(err.message))
 );
 
@@ -57,8 +58,8 @@ routes.put('/:id', adminOnly, (req, res) => {
     doors: req.body.user.doors,
   };
 
-  userRepository.updateUser(user).then(() => {
-    res.status(200).send({ status: 'ok' });
+  userRepository.updateUser(user).then(u => {
+    res.status(200).send({ status: 'success', user: u });
   }).catch(err => {
     res.status(500).send(err.message);
   });
