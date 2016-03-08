@@ -27,67 +27,61 @@ import {
   checkAuth,
 } from 'containers/auth';
 
-export default class Routes extends React.Component {
-  displayName: 'Root';
-
-  render() {
-    return (
-      <Router history={browserHistory}>
-        <Route
-          component={Logout}
-          path="logout"
-        />
-        <Route
-          component={checkAuth(Main)}
-          path="/"
-        >
-          <IndexRoute component={Home} />
-          <Route
-            component={TokenAuth}
-            path="activate/user/:token"
-          />
-          <Route
-            component={Login}
-            path="login"
-          />
-          <Route
-            component={requireUserAuth(Door)}
-            path="door"
-          />
-          <Route
-            component={requireAdminAuth(ManageMenu)}
-            path="manage"
-          />
-          <Route
-            component={requireAdminAuth(ListUsers)}
-            path="manage/user"
-          />
-          <Route
-            component={requireAdminAuth(AddUser)}
-            path="manage/user/add"
-          />
-          <Route
-            component={requireAdminAuth(ActivateUser)}
-            path="manage/user/:userName/activate"
-          />
-          <Route
-            component={requireAdminAuth(ManageUserDetail)}
-            path="manage/user/:userId"
-          />
-          <Route
-            component={requireAdminAuth(ListDoors)}
-            path="manage/door"
-          />
-          <Route
-            component={requireAdminAuth(ManageDoorDetail)}
-            path="manage/door/:doorId"
-          />
-          <Route
-            component={PageNotFound}
-            path="*"
-          />
-        </Route>
-      </Router>
-    );
-  }
-}
+export const Routes = () => (
+  <Router history={browserHistory}>
+    <Route
+      component={Logout}
+      path="logout"
+    />
+    <Route
+      component={checkAuth(Main)}
+      path="/"
+    >
+      <IndexRoute component={Home} />
+      <Route
+        component={TokenAuth}
+        path="activate/user/:token"
+      />
+      <Route
+        component={Login}
+        path="login"
+      />
+      <Route
+        component={requireUserAuth(Door)}
+        path="door"
+      />
+      <Route
+        component={requireAdminAuth(ManageMenu)}
+        path="manage"
+      />
+      <Route
+        component={requireAdminAuth(ListUsers)}
+        path="manage/user"
+      />
+      <Route
+        component={requireAdminAuth(AddUser)}
+        path="manage/user/add"
+      />
+      <Route
+        component={requireAdminAuth(ActivateUser)}
+        path="manage/user/:userName/activate"
+      />
+      <Route
+        component={requireAdminAuth(ManageUserDetail)}
+        path="manage/user/:userId"
+      />
+      <Route
+        component={requireAdminAuth(ListDoors)}
+        path="manage/door"
+      />
+      <Route
+        component={requireAdminAuth(ManageDoorDetail)}
+        path="manage/door/:doorId"
+      />
+      <Route
+        component={PageNotFound}
+        path="*"
+      />
+    </Route>
+  </Router>
+);
