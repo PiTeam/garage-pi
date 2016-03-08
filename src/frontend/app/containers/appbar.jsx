@@ -6,16 +6,14 @@ import { connect } from 'react-redux';
 
 import { getAuthPropType } from 'proptypes';
 
-export default class MainAppBar extends React.Component {
-  displayName: 'MainAppBar';
-
-  handleLeftIcon() {
+export const MainAppBar = ({ handleOpenLeftNav, auth }) => {
+  const handleLeftIcon = () => {
     const styles = {
       color: 'white',
       marginTop: '5px',
     };
 
-    return this.props.auth.get('status') === 'success' ?
+    return auth.get('status') === 'success' ?
       <Link to="/logout">
         <FlatButton
           label="Logout"
@@ -28,35 +26,33 @@ export default class MainAppBar extends React.Component {
           style={styles}
         />
       </Link>;
-  }
+  };
 
-  render() {
-    const styles = {
-      appbar: {
-        marginBottom: '.5em',
-        textAlign: 'left',
-      },
-      link: {
-        color: 'white',
-        textDecoration: 'none',
-      },
-    };
+  const styles = {
+    appbar: {
+      marginBottom: '.5em',
+      textAlign: 'left',
+    },
+    link: {
+      color: 'white',
+      textDecoration: 'none',
+    },
+  };
 
-    return (
-      <AppBar
-        iconElementRight={this.handleLeftIcon()}
-        onLeftIconButtonTouchTap={this.props.handleOpenLeftNav}
-        showMenuIconButton={this.props.auth.get('status') === 'success' &&
-                            this.props.auth.get('admin')}
-        style={styles.appbar}
-        title={
-          <Link style={styles.link}
-            to="/"
-          >{'GaragePi'}</Link>}
-      />
-    );
-  }
-}
+  return (
+    <AppBar
+      iconElementRight={handleLeftIcon()}
+      onLeftIconButtonTouchTap={handleOpenLeftNav}
+      showMenuIconButton={auth.get('status') === 'success' &&
+                          auth.get('admin')}
+      style={styles.appbar}
+      title={
+        <Link style={styles.link}
+          to="/"
+        >{'GaragePi'}</Link>}
+    />
+  );
+};
 
 function mapStateToProps({ auth }) {
   return { auth };

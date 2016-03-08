@@ -11,95 +11,80 @@ import Tab from 'material-ui/lib/tabs/tab';
 
 import { getDoorPropType } from 'proptypes';
 
-export default class UserDoorList extends React.Component {
-  displayName: 'UserDoorList';
+const UserDoorList = ({ doors }) => {
+  const getStyles = () => ({
+    paper: {
+      width: '100%',
+      textAlign: 'center',
+      display: 'inline-block',
+    },
+    doors: {
+      marginBottom: '4em',
+    },
+    backButton: {
+      float: 'left',
+    },
+    logo: {
+      marginTop: '50%',
+    },
+    bottomButtons: {
+      bottom: '1em',
+      left: '1em',
+      right: '1em',
+      position: 'absolute',
+    },
+    tabs: {
+      marginBottom: '4em',
+    },
+  });
 
-  getStyles() {
-    const styles = {
-      paper: {
-        width: '100%',
-        textAlign: 'center',
-        display: 'inline-block',
-      },
-      doors: {
-        marginBottom: '4em',
-      },
-      backButton: {
-        float: 'left',
-      },
-      logo: {
-        marginTop: '50%',
-      },
-      bottomButtons: {
-        bottom: '1em',
-        left: '1em',
-        right: '1em',
-        position: 'absolute',
-      },
-      tabs: {
-        marginBottom: '4em',
-      },
-    };
+  const getCardTitle = (name) => (
+    <CardTitle
+      subtitle="Click to open door"
+      title={name}
+    />
+  );
 
-    return styles;
-  }
-
-  getCardTitle(name) {
-    return (
-      <CardTitle
-        subtitle="Click to open door"
-        title={name}
-      />
-    );
-  }
-
-  render() {
-    const styles = this.getStyles();
-    return (
-      <div>
-        {this.props.doors.get('data').size === 0 &&
-          <h1 style={styles.logo}>{'No authorized doors'}</h1>
-        }
-        {this.props.doors.get('data').size > 0 &&
-          <Tabs style={styles.tabs}>
-          {this.props.doors.get('data').map((door, i) => (
-            <Tab
+  const styles = getStyles();
+  return (
+    <div>
+      {doors.get('data').size === 0 &&
+        <h1 style={styles.logo}>{'No authorized doors'}</h1>
+      }
+      {doors.get('data').size > 0 &&
+        <Tabs style={styles.tabs}>
+        {doors.get('data').map((door, i) => (
+          <Tab
+            key={i}
+            label={door.get('name')}
+          >
+            <Paper
               key={i}
-              label={door.get('name')}
+              style={styles.paper}
             >
-              <Paper
-                key={i}
-                style={styles.paper}
-              >
-                <a
-                  href="#"
-                  onClick={this.handleClick}
+              <Card>
+                <CardMedia
+                  overlay={getCardTitle(door.name)}
                 >
-                  <Card>
-                    <CardMedia
-                      overlay={this.getCardTitle(door.name)}
-                    >
-                      <img src={door.get('image')} />
-                    </CardMedia>
-                  </Card>
-                </a>
-              </Paper>
-            </Tab>
-          ))}
-          </Tabs>
-        }
-        <div style={styles.bottomButtons}>
-          <Link to="/">
-            <RaisedButton
-              label="Back"
-              style={styles.backButton}
-            />
-          </Link>
-        </div>
+                  <img src={door.get('image')} />
+                </CardMedia>
+              </Card>
+            </Paper>
+          </Tab>
+        ))}
+        </Tabs>
+      }
+      <div style={styles.bottomButtons}>
+        <Link to="/">
+          <RaisedButton
+            label="Back"
+            style={styles.backButton}
+          />
+        </Link>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 function mapStateToProps({ doors }) {
   return { doors };
