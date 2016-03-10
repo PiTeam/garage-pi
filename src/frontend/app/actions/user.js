@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions';
 import * as rest from 'lib/rest';
 import { resetAuth } from 'actions/auth';
-import immutable from 'immutable';
+import fromJS from 'lib/immutable';
 
 const endpoints = require('endpoints');
 
@@ -40,7 +40,7 @@ export function activateUser(user) {
     const action = createAction('UPDATE_USER');
     const url = `${endpoints.base}${endpoints.update.activateUser}/${user.get('id')}`;
     rest.update(url).then(data => {
-      dispatch(action(immutable.fromJS(data.user)));
+      dispatch(action(fromJS(data.user)));
     });
   };
 }

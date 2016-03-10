@@ -1,12 +1,12 @@
 import { handleActions } from 'redux-actions';
-import immutable from 'immutable';
+import fromJS from 'lib/immutable';
 
-const initialUserState = immutable.fromJS({});
+const initialUserState = fromJS({});
 
 const userReducers = handleActions({
   RESET_AUTH: () => initialUserState,
   ADD_USER: (state, action) => action.payload,
-  FETCH_USERS: (state, action) => immutable.fromJS(action.payload),
+  FETCH_USERS: (state, action) => fromJS(action.payload),
   DELETE_USER: (state, action) => {
     state.set('data', state.get('data').filter(user => user.id !== action.payload));
   },

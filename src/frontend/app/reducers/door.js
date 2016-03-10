@@ -1,15 +1,15 @@
 import { handleActions } from 'redux-actions';
-import immutable from 'immutable';
+import fromJS from 'lib/immutable';
 
-const initialDoorState = immutable.fromJS({});
+const initialDoorState = fromJS({});
 
 const doorReducers = handleActions({
   RESET_AUTH: () => initialDoorState,
-  FETCH_DOORS: (state, action) => immutable.fromJS(action.payload),
+  FETCH_DOORS: (state, action) => fromJS(action.payload),
   DELETE_DOOR: (state, action) => (
     state.set('data', state.get('data').filter(door => door.id !== action.payload))
   ),
-  FETCH_USER_DOORS: (state, action) => immutable.fromJS(action.payload),
+  FETCH_USER_DOORS: (state, action) => fromJS(action.payload),
   UPDATE_DOOR: (state, action) => (
     state.set('data', state.get('data').map(door => {
       if (door.get('id') === action.payload.get('id')) {
