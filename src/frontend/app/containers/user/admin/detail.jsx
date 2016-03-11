@@ -88,7 +88,7 @@ class UserDetail extends Component {
   _selectUser(props) {
     const user = props.users.get('data').find(u => u.get('id') === props.params.userId);
     const userDoors = props.doors.get('data').map(door => (
-      door.set('checked', user.get('doors').indexOf(door.get('id')) !== -1)
+      door.set('checked', user.get('doors').asList().indexOf(door.get('id')) !== -1)
     ));
     this.setState({ user, userDoors });
   }

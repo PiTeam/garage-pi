@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions';
 import * as rest from 'lib/rest';
 import { resetAuth } from 'actions/auth';
-import fromJS from 'lib/immutable';
+import fromJS from 'lib/struct';
 
 const endpoints = require('endpoints');
 

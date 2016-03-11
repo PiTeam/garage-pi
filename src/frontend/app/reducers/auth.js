@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import fromJS from 'lib/immutable';
+import fromJS from 'lib/struct';
 
 const initialAuthState = fromJS({});
 

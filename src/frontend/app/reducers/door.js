@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import fromJS from 'lib/immutable';
+import fromJS from 'lib/struct';
 
 const initialDoorState = fromJS({});
 
@@ -20,23 +20,20 @@ const doorReducers = handleActions({
   ),
   ADD_USER: (state, action) => {
     const user = action.payload;
-    const data = state.get('data').map(door => {
-      if (user.get('users').indexOf(door.get('id')) !== -1) {
-        return door.set('users', door.get('users').push(user.get('id')));
-      }
-      return door;
-    });
+    const data = state.get('data').map(door => (
+      door.set('users', door.get('users').push(user.get('id')))
+    ));
     return state.set('data', data);
   },
   UPDATE_USER: (state, action) => {
     const user = action.payload;
     const data = state.get('data').map(door => {
-      const index = door.get('users').indexOf(user.get('id'));
-      if (user.get('doors').indexOf(door.get('id')) === -1 && index !== -1) {
-        return door.set('users', door.get('users').delete(index));
-      } else if (user.get('doors').indexOf(door.get('id')) !== -1 && index === -1) {
+      if (user.get('doors').indexOf(door.get('id')) === -1) {
+        return door.set('users', door.get('users').delete(door.get('id')));
+      } else if (user.get('doors').indexOf(door.get('id')) !== -1) {
         return door.set('users', door.get('users').push(user.get('id')));
       }
+      console.log(door.get('users'));
       return door;
     });
     return state.set('data', data);
