@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "sh entrypoint.sh",
+    "clean": "rm -rf dist/*",
     "init-db": "npm run manage add user data/initial-admin-user.json; npm run manage add door data/initial-door.json",
     "server": "npm run eslint && babel-node src/backend",
     "manage": "babel-node src/tools/manage",

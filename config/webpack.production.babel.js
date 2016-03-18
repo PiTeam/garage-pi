@@ -1,11 +1,26 @@
+import webpack from 'webpack';
 import path from 'path';
 import config from 'config';
 const endpoints = config.get('api');
 
 module.exports = {
-  entry: [
-    path.join(__dirname, '../src/frontend/app/main.js'),
-  ],
+  entry: {
+    main: path.join(__dirname, '../src/frontend/app/main.js'),
+    vendor: [
+      'react',
+      'redux',
+      'react-redux',
+      'react-dom',
+      'react-tap-event-plugin',
+      'material-ui',
+      'react-router',
+      'redux-thunk',
+      'redux-actions',
+      'redux-logger',
+      'history',
+      'immutable',
+    ],
+  },
   resolve: {
     root: path.join(__dirname, '../src/frontend/app'),
   },
@@ -27,4 +42,7 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin('vendor', '../dist/fromtend/vendor.js'),
+  ],
 };
