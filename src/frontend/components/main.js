@@ -1,5 +1,3 @@
-import React from 'react';
-
 import MainAppBar from 'containers/appbar';
 import MainLeftBar from 'containers/leftnav';
 

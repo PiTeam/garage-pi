@@ -43,6 +43,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendor', '../dist/frontend/vendor.js'),
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
   ],
 };

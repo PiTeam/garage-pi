@@ -6,9 +6,7 @@ import { browserHistory } from 'react-router';
 import { processActivateUser } from 'actions';
 import { getAuthPropType } from 'proptypes';
 
-export default class TokenAuth extends Component {
-  displayName: 'TokenAuth';
-
+class TokenAuth extends Component {
   constructor(props) {
     super(props);
     this.checkAuth = this.checkAuth.bind(this);

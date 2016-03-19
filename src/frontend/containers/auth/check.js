@@ -8,8 +8,6 @@ import { fetchUsers, fetchDoors, fetchUserDoors } from 'actions';
 
 export function checkAuth(Component) {
   class CheckAuthentication extends React.Component {
-    displayName: 'CheckAuthentication';
-
     constructor(props) {
       super(props);
       this.checkAuth = this.checkAuth.bind(this);
