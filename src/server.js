@@ -12,8 +12,7 @@ const PORT = config.get('express.port') || 3000;
 import apiRoutes from './backend/routes/api';
 
 const app = express();
-app.use('/assets', express.static(`${__dirname}/frontend/assets`));
-app.use('/app.js', express.static(`${__dirname}/frontend/app.js`));
+app.use('/static', express.static(`${__dirname}/frontend/static`));
 
 if (config.get('express.cors')) {
   app.use(cors());

@@ -10,14 +10,14 @@ import webpack from 'webpack';
 import proxy from 'proxy-middleware';
 import url from 'url';
 import WebpackDevServer from 'webpack-dev-server';
-import configWebpackDevServer from '../config/webpack-dev-server';
+import configWebpackDevServer from '../webpack/webpack.dev.babel';
 
 const PORT = config.get('express.port') || 3000;
 
 import apiRoutes from './backend/routes/api';
 
 const app = express();
-app.use('/assets', express.static(`${__dirname}/frontend/www/assets`));
+app.use('/static', express.static(`${__dirname}/static`));
 
 if (config.get('express.cors')) {
   app.use(cors());
@@ -30,9 +30,9 @@ app.use(bodyParser.urlencoded({
 app.use('/api', apiRoutes);
 
 const server = new WebpackDevServer(webpack(configWebpackDevServer), {
-  contentBase: `${__dirname}/www`,
+  contentBase: `${__dirname}/static`,
   headers: { 'Access-Control-Allow-Origin': '*' },
-  publicPath: '/assets/',
+  publicPath: '/static/',
   historyApiFallback: true,
   devtool: 'eval',
   hot: true,
@@ -41,9 +41,8 @@ const server = new WebpackDevServer(webpack(configWebpackDevServer), {
   port: 8081,
 });
 
-app.use('/assets', proxy(url.parse('http://localhost:8081/assets')));
-app.use('/app.js', proxy(url.parse('http://localhost:8081/assets/app.js')));
-app.get('/*', (req, res) => res.sendFile(`${__dirname}/frontend/www/index.html`));
+app.use('/static', proxy(url.parse('http://localhost:8081/static/')));
+app.get('/*', (req, res) => res.sendFile(`${__dirname}/static/index.html`));
 server.listen(8081, 'localhost');
 
 const db = new DB(config.get('nedb'));

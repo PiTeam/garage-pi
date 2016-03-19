@@ -1,32 +1,28 @@
 import webpack from 'webpack';
 import path from 'path';
-import TransferWebpackPlugin from 'transfer-webpack-plugin';
 import config from 'config';
 
 const endpoints = config.get('api');
-export default {
+
+module.exports = {
   entry: [
     'babel-polyfill',
-    path.join(__dirname, '../src/frontend/app/app.jsx'),
+    path.join(__dirname, '../src/frontend/main.js'),
     'webpack/hot/dev-server',
     'webpack/hot/only-dev-server',
     'webpack-dev-server/client?http://localhost:8081',
   ],
   resolve: {
-    root: path.join(__dirname, '../src/frontend/app'),
-    extensions: ['', '.js', '.jsx', '.es6'],
+    root: path.join(__dirname, '../src/frontend'),
   },
   output: {
-    path: path.resolve(__dirname, '../src/frontend/www/assets'),
-    publicPath: 'http://localhost:8081',
+    path: path.resolve(__dirname, '../src/static/js'),
+    publicPath: 'http://localhost:8081/static/js',
     filename: 'app.js',
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new TransferWebpackPlugin([
-      { from: 'www' },
-    ], path.resolve(__dirname, "../src/frontend")),
   ],
   externals: [
     {
@@ -36,21 +32,18 @@ export default {
   module: {
     preLoaders: [
       {
-        test: /\.(js|jsx|es6)$/,
+        test: /\.js$/,
         loader: 'eslint-loader',
-        include: [path.resolve(__dirname, "../src/frontend/app")],
+        include: [path.resolve(__dirname, '../src/frontend')],
         exclude: [path.resolve(__dirname, '../node_modules')],
       },
     ],
     loaders: [
       {
-        test: /\.(js|jsx|es6)$/,
+        test: /\.js$/,
         loaders: ['react-hot', 'babel'],
         exclude: [path.resolve(__dirname, '../node_modules')],
       },
     ],
-  },
-  eslint: {
-    configFile: '.eslintrc',
   },
 };

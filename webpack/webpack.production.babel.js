@@ -5,7 +5,7 @@ const endpoints = config.get('api');
 
 module.exports = {
   entry: {
-    main: path.join(__dirname, '../src/frontend/app/main.js'),
+    main: path.join(__dirname, '../src/frontend/main.js'),
     vendor: [
       'react',
       'redux',
@@ -22,7 +22,7 @@ module.exports = {
     ],
   },
   resolve: {
-    root: path.join(__dirname, '../src/frontend/app'),
+    root: path.join(__dirname, '../src/frontend'),
   },
   output: {
     path: path.resolve(__dirname, '../dist/frontend'),
@@ -43,6 +43,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendor', '../dist/fromtend/vendor.js'),
+    new webpack.optimize.CommonsChunkPlugin('vendor', '../dist/frontend/vendor.js'),
   ],
 };

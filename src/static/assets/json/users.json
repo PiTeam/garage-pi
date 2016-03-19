@@ -1,0 +1,5 @@
+[
+  {"name":"Admin User","password":"afa0f0a09d8858c80c2f4609da3d19b9b8ebb293","admin":true,"qrcode":null,"doors":[],"_id":"Q9qSJkzIlXT4qe0W", "doors": []},
+  {"name":"Jaime Witting","password":"F44MvMDNygYS9n7","admin":false,"qrcode":null,"doors":[],"_id":"fvcVvUeYvFFgXEIM", "doors": []},
+  {"name":"Zoila Monahan","password":"hvnfSG_ZUJYupPw","admin":false,"qrcode":null,"doors":[],"_id":"Xdku3YjbDV6033BD", "doors": []}
+]
