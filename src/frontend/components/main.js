@@ -1,8 +1,6 @@
-import MainAppBar from 'containers/appbar';
-import MainLeftBar from 'containers/leftnav';
+import React from 'react';
 
 export default class Main extends React.Component {
-  displayName: 'Main';
 
   constructor(props) {
     super(props);

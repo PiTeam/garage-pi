@@ -6,18 +6,17 @@ import { getAuthPropType, getDoorPropType, getUserPropType } from 'proptypes';
 
 import { fetchUsers, fetchDoors, fetchUserDoors } from 'actions';
 
-export function checkAuth(Component) {
+export function checkAuth() {
   class CheckAuthentication extends React.Component {
     constructor(props) {
       super(props);
       this.checkAuth = this.checkAuth.bind(this);
+      this.state = {
+        ready: false,
+        isAuthenticating: false,
+        isFetching: false,
+      };
     }
-
-    state = {
-      ready: false,
-      isAuthenticating: false,
-      isFetching: false,
-    };
 
     componentWillMount() {
       this.checkAuth(this.props);

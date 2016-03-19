@@ -1,30 +1,15 @@
 import React from 'react';
-import LeftNav from 'material-ui/lib/left-nav';
-import List from 'material-ui/lib/lists/list';
-import ListItem from 'material-ui/lib/lists/list-item';
-import IconButton from 'material-ui/lib/icon-button';
-import Divider from 'material-ui/lib/divider';
-import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
-import LockOpen from 'material-ui/lib/svg-icons/action/lock-open';
-import Home from 'material-ui/lib/svg-icons/action/home';
-import AddCircleOutline from 'material-ui/lib/svg-icons/content/add-circle-outline';
-import AccountBalance from 'material-ui/lib/svg-icons/action/account-balance';
-import ActionFace from 'material-ui/lib/svg-icons/action/face';
-import { Link } from 'react-router';
 
 export default class MainAppBar extends React.Component {
-  displayName: 'MainAppBar';
-
   constructor(props) {
     super(props);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleRequestChange = this.handleRequestChange.bind(this);
+    this.state = {
+      open: false,
+    };
   }
-
-  state = {
-    open: false,
-  };
 
   getStyles() {
     const styles = {

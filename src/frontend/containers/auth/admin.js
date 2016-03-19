@@ -4,18 +4,15 @@ import { browserHistory } from 'react-router';
 
 import { getAuthPropType } from 'proptypes';
 
-export function requireAdminAuth(Component) {
+export function requireAdminAuth() {
   class AdminAuthenticated extends React.Component {
-    displayName: 'AdminAuthenticated';
-
     constructor(props) {
       super(props);
       this.checkAuth = this.checkAuth.bind(this);
+      this.state = {
+        ready: false,
+      };
     }
-
-    state = {
-      ready: false,
-    };
 
     componentWillMount() {
       this.checkAuth(this.props);

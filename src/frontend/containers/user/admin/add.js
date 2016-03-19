@@ -1,33 +1,25 @@
 import React from 'react';
-import TextField from 'material-ui/lib/text-field';
-import { Link } from 'react-router';
-import RaisedButton from 'material-ui/lib/raised-button';
-import Paper from 'material-ui/lib/paper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import { Map as createMap, List as createList } from 'immutable';
 
-import CustomCheckbox from 'components/custom-checkbox';
 import { addUser } from 'actions';
 import { getAuthPropType, getDoorPropType, getUserPropType } from 'proptypes';
 
-export default class AddUser extends React.Component {
-  displayName: 'AddUser';
-
+class AddUser extends React.Component {
   constructor(props) {
     super(props);
     this._initUser = this._initUser.bind(this);
     this._handleAdd = this._handleAdd.bind(this);
     this._handleTextFieldChange = this._handleTextFieldChange.bind(this);
     this._handleCheck = this._handleCheck.bind(this);
+    this.state = {
+      user: createMap(),
+      userDoors: createList(),
+      invalid: true,
+    };
   }
-
-  state = {
-    user: createMap(),
-    userDoors: createList(),
-    invalid: true,
-  };
 
   componentWillMount() {
     this._initUser(this.props);

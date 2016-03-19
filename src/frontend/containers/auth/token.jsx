@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
@@ -10,11 +10,10 @@ class TokenAuth extends Component {
   constructor(props) {
     super(props);
     this.checkAuth = this.checkAuth.bind(this);
+    this.state = {
+      isFetching: false,
+    };
   }
-
-  state = {
-    isFetching: false,
-  };
 
   componentWillMount() {
     this.checkAuth(this.props);

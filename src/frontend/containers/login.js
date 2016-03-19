@@ -1,20 +1,12 @@
 import React from 'react';
-import Dialog from 'material-ui/lib/dialog';
-import TextField from 'material-ui/lib/text-field';
-import FlatButton from 'material-ui/lib/flat-button';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { Link } from 'react-router';
-import RaisedButton from 'material-ui/lib/raised-button';
 
-import Home from 'containers/home';
 import { authenticate } from 'actions';
 import { getAuthPropType } from 'proptypes';
 
-export default class LoginDialog extends React.Component {
-  displayName: 'LoginDialog';
-
+class LoginDialog extends React.Component {
   constructor(props) {
     super(props);
     this._handleSubmit = this._handleSubmit.bind(this);
@@ -22,12 +14,11 @@ export default class LoginDialog extends React.Component {
     this._handleCloseErrorMessage = this._handleCloseErrorMessage.bind(this);
     this._handleSetRefUsername = this._handleSetRefUsername.bind(this);
     this._handleSetRefPassword = this._handleSetRefPassword.bind(this);
+    this.state = {
+      open: true,
+      showErrors: false,
+    };
   }
-
-  state = {
-    open: true,
-    showErrors: false,
-  };
 
   componentWillMount() {
     this.checkProps(this.props);

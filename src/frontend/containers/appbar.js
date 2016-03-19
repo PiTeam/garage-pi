@@ -1,7 +1,4 @@
 import React from 'react';
-import AppBar from 'material-ui/lib/app-bar';
-import FlatButton from 'material-ui/lib/flat-button';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
 import { getAuthPropType } from 'proptypes';

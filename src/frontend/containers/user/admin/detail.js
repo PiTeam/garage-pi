@@ -1,20 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import TextField from 'material-ui/lib/text-field';
-import Paper from 'material-ui/lib/paper';
-import Dialog from 'material-ui/lib/dialog';
 import { browserHistory } from 'react-router';
-import FlatButton from 'material-ui/lib/flat-button';
-import { Link } from 'react-router';
-import RaisedButton from 'material-ui/lib/raised-button';
-
-import CustomCheckbox from 'components/custom-checkbox';
 import { deleteUser, updateUser } from 'actions';
 import { getAuthPropType, getDoorPropType, getUserPropType } from 'proptypes';
 
 class UserDetail extends Component {
-  displayName: 'UserDetail';
 
   constructor(props) {
     super(props);
@@ -26,13 +17,12 @@ class UserDetail extends Component {
     this._handleCheck = this._handleCheck.bind(this);
     this._handleTextFieldChange = this._handleTextFieldChange.bind(this);
     this._selectUser = this._selectUser.bind(this);
+    this.state = {
+      confirmDeletion: false,
+      user: undefined,
+      userDoors: undefined,
+    };
   }
-
-  state = {
-    confirmDeletion: false,
-    user: undefined,
-    userDoors: undefined,
-  };
 
   componentWillMount() {
     this._selectUser(this.props);

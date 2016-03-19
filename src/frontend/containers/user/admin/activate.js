@@ -1,7 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
-import RaisedButton from 'material-ui/lib/raised-button';
-import Paper from 'material-ui/lib/paper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import qr from 'qr-image';
@@ -10,19 +7,16 @@ import base64 from 'base-64';
 import { fetchUsers, activateUser } from 'actions';
 import { getAuthPropType, getUserPropType } from 'proptypes';
 
-export default class ActivateUser extends React.Component {
-  displayName: 'ActivateUser';
-
+class ActivateUser extends React.Component {
   constructor(props) {
     super(props);
     this.props.fetchUsers(this.props.auth.get('token'));
+    this.state = {
+      user: undefined,
+      isFetching: false,
+      svg: undefined,
+    };
   }
-
-  state = {
-    user: undefined,
-    isFetching: false,
-    svg: undefined,
-  };
 
   componentWillMount() {
     this._selectUser(this.props);

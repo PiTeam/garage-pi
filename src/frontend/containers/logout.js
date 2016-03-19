@@ -5,9 +5,7 @@ import { browserHistory } from 'react-router';
 
 import { resetAuth } from 'actions';
 
-export default class Logout extends React.Component {
-  displayName: 'Logout';
-
+class Logout extends React.Component {
   componentWillMount() {
     this.props.resetAuth();
     browserHistory.push('/');

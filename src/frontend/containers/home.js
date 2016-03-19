@@ -1,6 +1,3 @@
-import React from 'react';
-import { Link } from 'react-router';
-import RaisedButton from 'material-ui/lib/raised-button';
 import { connect } from 'react-redux';
 
 import { getAuthPropType } from 'proptypes';

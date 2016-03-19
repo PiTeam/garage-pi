@@ -4,18 +4,15 @@ import { browserHistory } from 'react-router';
 
 import { getAuthPropType } from 'proptypes';
 
-export function requireUserAuth(Component) {
+export function requireUserAuth() {
   class Authenticated extends React.Component {
-    displayName: 'Authenticated';
-
     constructor(props) {
       super(props);
       this.checkAuth = this.checkAuth.bind(this);
+      this.state = {
+        ready: false,
+      };
     }
-
-    state = {
-      ready: false,
-    };
 
     componentWillMount() {
       this.checkAuth(this.props);

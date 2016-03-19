@@ -1,14 +1,4 @@
-import React from 'react';
 import { connect } from 'react-redux';
-import ListItem from 'material-ui/lib/lists/list-item';
-import { Link } from 'react-router';
-import Avatar from 'material-ui/lib/avatar';
-import ActionSettings from 'material-ui/lib/svg-icons/action/settings';
-import Divider from 'material-ui/lib/divider';
-import List from 'material-ui/lib/lists/list';
-import RaisedButton from 'material-ui/lib/raised-button';
-import Paper from 'material-ui/lib/paper';
-
 import { getDoorPropType } from 'proptypes';
 
 const DoorList = ({ doors }) => {
