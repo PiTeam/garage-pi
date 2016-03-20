@@ -1,16 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router';
+import RaisedButton from 'material-ui/lib/raised-button';
+import Paper from 'material-ui/lib/paper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import qr from 'qr-image';
 import base64 from 'base-64';
 
-import { fetchUsers, activateUser } from 'actions';
+import { activateUser } from 'actions';
 import { getAuthPropType, getUserPropType } from 'proptypes';
 
 class ActivateUser extends React.Component {
   constructor(props) {
     super(props);
-    this.props.fetchUsers(this.props.auth.get('token'));
     this.state = {
       user: undefined,
       isFetching: false,
@@ -96,7 +98,7 @@ class ActivateUser extends React.Component {
   render() {
     const styles = this.getStyles();
 
-    if (!this.state.user || !this.state.user.get('id')) {
+    if (!this.state.user) {
       return <div />;
     }
 
@@ -143,12 +145,11 @@ function mapStateToProps(state) {
   return {
     users: state.users,
     doors: state.doors,
-    qrcode: state.qrcode,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchUsers, activateUser }, dispatch);
+  return bindActionCreators({ activateUser }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActivateUser);
@@ -156,13 +157,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(ActivateUser);
 ActivateUser.propTypes = {
   activateUser: React.PropTypes.func.isRequired,
   auth: getAuthPropType(),
-  fetchUsers: React.PropTypes.func.isRequired,
   params: React.PropTypes.shape({
     userName: React.PropTypes.string.isRequired,
-  }),
-  qrcode: React.PropTypes.shape({
-    svg: React.PropTypes.string,
-    text: React.PropTypes.string,
   }),
   users: getUserPropType(),
 };

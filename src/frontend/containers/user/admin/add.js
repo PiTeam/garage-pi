@@ -1,9 +1,14 @@
 import React from 'react';
+import TextField from 'material-ui/lib/text-field';
+import { Link } from 'react-router';
+import RaisedButton from 'material-ui/lib/raised-button';
+import Paper from 'material-ui/lib/paper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import { Map as createMap, List as createList } from 'immutable';
 
+import CustomCheckbox from 'components/custom-checkbox';
 import { addUser } from 'actions';
 import { getAuthPropType, getDoorPropType, getUserPropType } from 'proptypes';
 
@@ -91,7 +96,7 @@ class AddUser extends React.Component {
                     .map(door => door.get('id'));
 
     this.props.addUser(this.state.user.set('doors', doors), this.props.auth.get('token'));
-    browserHistory.push(`/manage/user/${this.state.user.name}/activate`);
+    browserHistory.push(`/manage/user/${this.state.user.get('name')}/activate`);
   }
 
   _handleTextFieldChange(e) {

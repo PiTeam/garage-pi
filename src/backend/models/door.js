@@ -10,7 +10,7 @@ export default class Door extends Document {
       statusGpioPin: Number,
       image: {
         type: String,
-        default: '/assets/img/garage.jpg',
+        default: '/static/img/garage.jpg',
       },
     });
   }

@@ -16,8 +16,8 @@ module.exports = {
     root: path.join(__dirname, '../src/frontend'),
   },
   output: {
-    path: path.resolve(__dirname, '../src/static/js'),
-    publicPath: 'http://localhost:8081/static/js',
+    path: path.resolve(__dirname, '../src/static'),
+    publicPath: '/static',
     filename: 'app.js',
   },
   plugins: [

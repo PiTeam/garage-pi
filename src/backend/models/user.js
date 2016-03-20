@@ -20,7 +20,7 @@ export default class User extends Document {
       },
       image: {
         type: String,
-        default: '/assets/img/profile.jpg',
+        default: '/static/img/profile.jpg',
       },
       activateToken: {
         type: String,

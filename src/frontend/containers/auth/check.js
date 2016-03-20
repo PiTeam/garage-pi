@@ -6,7 +6,7 @@ import { getAuthPropType, getDoorPropType, getUserPropType } from 'proptypes';
 
 import { fetchUsers, fetchDoors, fetchUserDoors } from 'actions';
 
-export function checkAuth() {
+export function checkAuth(Component) {
   class CheckAuthentication extends React.Component {
     constructor(props) {
       super(props);

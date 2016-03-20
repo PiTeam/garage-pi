@@ -37,7 +37,17 @@ routes.put('/activate/:userId', (req, res) =>
 
 routes.post('/', adminOnly, (req, res) => {
   userRepository.addUser(req.body.user).then(user => {
-    res.status(200).send(user);
+    const u = {
+      id: user._id,
+      name: user.name,
+      admin: user.admin,
+      image: user.image,
+      password: user.password,
+      doors: user.doors,
+      activateToken: user.activateToken,
+    };
+
+    res.status(200).send({ status: 'success', user: u });
   }).catch(err => {
     res.status(500).send(err.message);
   });

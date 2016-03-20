@@ -21,7 +21,7 @@ const doorReducers = handleActions({
   ADD_USER: (state, action) => {
     const user = action.payload;
     const data = state.get('data').map(door => {
-      if (user.get('users').indexOf(door.get('id')) !== -1) {
+      if (user.get('doors').indexOf(door.get('id')) !== -1) {
         return door.set('users', door.get('users').push(user.get('id')));
       }
       return door;

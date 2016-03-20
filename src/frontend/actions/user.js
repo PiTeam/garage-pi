@@ -49,8 +49,8 @@ export function addUser(user, token) {
   return dispatch => {
     const action = createAction('ADD_USER');
     const url = `${endpoints.base}${endpoints.post.user}`;
-    rest.post(url, { user }, token).then(() => {
-      dispatch(action(user));
+    rest.post(url, { user }, token).then(result => {
+      dispatch(action(immutable.fromJS(result.user)));
     });
   };
 }
@@ -65,12 +65,12 @@ export function updateUser(user, token) {
   };
 }
 
-export function deleteUser(id, token) {
+export function deleteUser(user, token) {
   return dispatch => {
     const action = createAction('DELETE_USER');
-    const url = `${endpoints.base}${endpoints.delete.user}/${id}`;
+    const url = `${endpoints.base}${endpoints.delete.user}/${user.get('id')}`;
     rest.del(url, token).then(() => {
-      dispatch(action(id));
+      dispatch(action(user));
     });
   };
 }

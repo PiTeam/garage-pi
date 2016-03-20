@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 
 import { getAuthPropType } from 'proptypes';
 
-export function requireUserAuth() {
+export function requireUserAuth(Component) {
   class Authenticated extends React.Component {
     constructor(props) {
       super(props);

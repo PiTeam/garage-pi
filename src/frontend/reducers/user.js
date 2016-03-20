@@ -5,11 +5,13 @@ const initialUserState = immutable.fromJS({});
 
 const userReducers = handleActions({
   RESET_AUTH: () => initialUserState,
-  ADD_USER: (state, action) => action.payload,
+  ADD_USER: (state, action) => (
+    state.set('data', state.get('data').push(action.payload))
+  ),
   FETCH_USERS: (state, action) => immutable.fromJS(action.payload),
-  DELETE_USER: (state, action) => {
-    state.set('data', state.get('data').filter(user => user.id !== action.payload));
-  },
+  DELETE_USER: (state, action) => (
+    state.set('data', state.get('data').filter(user => user.get('id') !== action.payload.get('id')))
+  ),
   UPDATE_USER: (state, action) => (
     state.set('data', state.get('data').map(user => {
       if (user.get('id') === action.payload.get('id')) {

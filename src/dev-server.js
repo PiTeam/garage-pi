@@ -30,9 +30,9 @@ app.use(bodyParser.urlencoded({
 app.use('/api', apiRoutes);
 
 const server = new WebpackDevServer(webpack(configWebpackDevServer), {
-  contentBase: `${__dirname}/static`,
+  contentBase: `${__dirname}`,
   headers: { 'Access-Control-Allow-Origin': '*' },
-  publicPath: '/static/',
+  publicPath: '/static',
   historyApiFallback: true,
   devtool: 'eval',
   hot: true,

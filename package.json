@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "sh entrypoint.sh",
-    "clean": "rm -rf dist/*",
+    "clean": "rm -rf dist/*; rm -f data/*.db",
     "init-db": "npm run manage add user data/initial-admin-user.json; npm run manage add door data/initial-door.json",
     "server": "npm run eslint && babel-node src/backend",
     "manage": "babel-node src/tools/manage",
@@ -15,7 +15,7 @@
     "dev:full": "nodemon --exec babel-node -- src/dev-server.js",
     "camo-fix": "sed -i '/babel-plugin-transform-es2015-classes/d' node_modules/babel-preset-es2015/index.js",
     "build": "mkdir -p dist/backend; NODE_ENV=production babel src/server.js -o dist/server.js; NODE_ENV=production babel src/backend --out-dir dist/backend; NODE_ENV=production webpack --config webpack/webpack.production.babel.js --progress --colors",
-    "eslint": "eslint --ext js src"
+    "eslint": "eslint src"
   },
   "babel": {
     "presets": [

@@ -1,4 +1,13 @@
+import React from 'react';
+import Card from 'material-ui/lib/card/card';
+import CardMedia from 'material-ui/lib/card/card-media';
+import CardTitle from 'material-ui/lib/card/card-title';
+import Paper from 'material-ui/lib/paper';
+import { Link } from 'react-router';
+import RaisedButton from 'material-ui/lib/raised-button';
 import { connect } from 'react-redux';
+import Tabs from 'material-ui/lib/tabs/tabs';
+import Tab from 'material-ui/lib/tabs/tab';
 
 import { getDoorPropType } from 'proptypes';
 

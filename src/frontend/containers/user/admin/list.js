@@ -1,4 +1,16 @@
+import React from 'react';
 import { connect } from 'react-redux';
+import ListItem from 'material-ui/lib/lists/list-item';
+import { Link } from 'react-router';
+import Avatar from 'material-ui/lib/avatar';
+import ActionSettings from 'material-ui/lib/svg-icons/action/settings';
+import Divider from 'material-ui/lib/divider';
+import List from 'material-ui/lib/lists/list';
+import Paper from 'material-ui/lib/paper';
+import FloatingActionButton from 'material-ui/lib/floating-action-button';
+import ContentAdd from 'material-ui/lib/svg-icons/content/add';
+import RaisedButton from 'material-ui/lib/raised-button';
+
 import { getUserPropType } from 'proptypes';
 
 const UserList = ({ users }) => {

@@ -1,8 +1,14 @@
 import React from 'react';
+import Dialog from 'material-ui/lib/dialog';
+import TextField from 'material-ui/lib/text-field';
+import FlatButton from 'material-ui/lib/flat-button';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
+import { Link } from 'react-router';
+import RaisedButton from 'material-ui/lib/raised-button';
 
+import Home from 'containers/home';
 import { authenticate } from 'actions';
 import { getAuthPropType } from 'proptypes';
 
