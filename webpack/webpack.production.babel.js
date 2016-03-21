@@ -9,6 +9,10 @@ module.exports = {
     vendor: [
       'material-ui/lib/app-bar',
       'material-ui/lib/avatar',
+      'material-ui/lib/card/card',
+      'material-ui/lib/card/card-media',
+      'material-ui/lib/card/card-title',
+      'material-ui/lib/checkbox',
       'material-ui/lib/dialog',
       'material-ui/lib/divider',
       'material-ui/lib/flat-button',
@@ -27,11 +31,13 @@ module.exports = {
       'material-ui/lib/svg-icons/content/add',
       'material-ui/lib/svg-icons/content/add-circle-outline',
       'material-ui/lib/svg-icons/navigation/close',
+      'material-ui/lib/tabs',
       'material-ui/lib/text-field',
       'react',
       'redux',
       'react-redux',
       'react-dom',
+      'react-immutable-proptypes',
       'react-tap-event-plugin',
       'react-router',
       'redux-thunk',
@@ -66,5 +72,10 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+      },
+    }),
   ],
 };
