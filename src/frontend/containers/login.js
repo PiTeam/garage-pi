@@ -20,6 +20,7 @@ class LoginDialog extends React.Component {
     this._handleCloseErrorMessage = this._handleCloseErrorMessage.bind(this);
     this._handleSetRefUsername = this._handleSetRefUsername.bind(this);
     this._handleSetRefPassword = this._handleSetRefPassword.bind(this);
+    this._handleKeyDown = this._handleKeyDown.bind(this);
     this.state = {
       open: true,
       showErrors: false,
@@ -65,12 +66,16 @@ class LoginDialog extends React.Component {
     browserHistory.push('/');
   }
 
+  _handleKeyDown(event) {
+    if (event.keyCode === 13) {
+      this._handleSubmit(event);
+    }
+  }
+
   _handleSubmit(event) {
     event.preventDefault();
-
     const username = this.username.getValue();
     const password = this.password.getValue();
-
     this.setState({ showErrors: true });
     this.props.authenticate({ username, password });
   }
@@ -117,12 +122,14 @@ class LoginDialog extends React.Component {
             focus
             fullWidth
             hintText="Username"
+            onKeyDown={this._handleKeyDown}
             ref={this._handleSetRefUsername}
           />
           <TextField
             floatingLabelText="Password"
             fullWidth
             hintText="Password"
+            onKeyDown={this._handleKeyDown}
             ref={this._handleSetRefPassword}
             type="password"
           />
@@ -134,7 +141,7 @@ class LoginDialog extends React.Component {
               <RaisedButton
                 label={this.props.auth.get('message')}
                 onTouchTap={this._handleCloseErrorMessage}
-                primary
+                secondary
               />
             }
           </div>
