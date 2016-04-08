@@ -1,6 +1,8 @@
 import webpack from 'webpack';
 import path from 'path';
 import config from 'config';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+
 const endpoints = config.get('api');
 
 module.exports = {
@@ -54,7 +56,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, '../dist/frontend'),
-    filename: 'app.js',
+    filename: './static/js/[name].js',
   },
   externals: [
     {
@@ -71,11 +73,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-      },
-    }),
+    new HtmlWebpackPlugin({ template: 'src/static/index.ejs' }),
+    new webpack.optimize.CommonsChunkPlugin('vendor', './static/js/vendor.js'),
   ],
 };

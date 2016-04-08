@@ -1,0 +1,48 @@
+@font-face {
+	font-family: 'Roboto Condensed';
+	font-style: normal;
+	font-weight: 300;
+	src:
+		local('Roboto Condensed Light'),
+		local('RobotoCondensed-Light'),
+		/* from http://fonts.gstatic.com/s/robotocondensed/v13/b9QBgL0iMZfDSpmcXcE8nF5Ic2pbIeRvtzfKaVn9_Jw.eot */
+		url('Roboto_Condensed_300.eot?#iefix') format('embedded-opentype'),
+		/* from http://fonts.gstatic.com/s/robotocondensed/v13/b9QBgL0iMZfDSpmcXcE8nLPEscXNAKql_uUMCT0QN0w.woff */
+		url('Roboto_Condensed_300.woff') format('woff'),
+		/* from http://fonts.gstatic.com/s/robotocondensed/v13/b9QBgL0iMZfDSpmcXcE8nDKukfFUMVBFFNZwhJcH_DM.ttf */
+		url('Roboto_Condensed_300.ttf') format('truetype'),
+		/* from http://fonts.gstatic.com/l/font?kit=b9QBgL0iMZfDSpmcXcE8nIBgVeNohSrnkPpOyVpZS9c&skey=d87779efc0c688ec#RobotoCondensed */
+		url('Roboto_Condensed_300.svg#RobotoCondensed') format('svg');
+}
+@font-face {
+	font-family: 'Roboto Condensed';
+	font-style: normal;
+	font-weight: 400;
+	src:
+		local('Roboto Condensed'),
+		local('RobotoCondensed-Regular'),
+		/* from http://fonts.gstatic.com/s/robotocondensed/v13/Zd2E9abXLFGSr9G3YK2MsJZo-EPYVCOmnIX7hech-eg.eot */
+		url('Roboto_Condensed_400.eot?#iefix') format('embedded-opentype'),
+		/* from http://fonts.gstatic.com/s/robotocondensed/v13/Zd2E9abXLFGSr9G3YK2MsJvu5_vEQL4mPoJWLV_tPlA.woff */
+		url('Roboto_Condensed_400.woff') format('woff'),
+		/* from http://fonts.gstatic.com/s/robotocondensed/v13/Zd2E9abXLFGSr9G3YK2MsKfvprK36wpXEfm94AczNJI.ttf */
+		url('Roboto_Condensed_400.ttf') format('truetype'),
+		/* from http://fonts.gstatic.com/l/font?kit=Zd2E9abXLFGSr9G3YK2MsJ9qPnIAGop6zwUBegm9tAY&skey=9986ecffddb755ab#RobotoCondensed */
+		url('Roboto_Condensed_400.svg#RobotoCondensed') format('svg');
+}
+@font-face {
+	font-family: 'Roboto Condensed';
+	font-style: normal;
+	font-weight: 700;
+	src:
+		local('Roboto Condensed Bold'),
+		local('RobotoCondensed-Bold'),
+		/* from http://fonts.gstatic.com/s/robotocondensed/v13/b9QBgL0iMZfDSpmcXcE8nDMpvNDO8sYN0TWnlpdqkBc.eot */
+		url('Roboto_Condensed_700.eot?#iefix') format('embedded-opentype'),
+		/* from http://fonts.gstatic.com/s/robotocondensed/v13/b9QBgL0iMZfDSpmcXcE8nL1wwKO3vW--OZS4mXOddqM.woff */
+		url('Roboto_Condensed_700.woff') format('woff'),
+		/* from http://fonts.gstatic.com/s/robotocondensed/v13/b9QBgL0iMZfDSpmcXcE8nMIfjXMPunIboPFh0CptymA.ttf */
+		url('Roboto_Condensed_700.ttf') format('truetype'),
+		/* from http://fonts.gstatic.com/l/font?kit=b9QBgL0iMZfDSpmcXcE8nOknnzJBiOJ9j5cEftNAUBg&skey=b54a1a8c4612f15a#RobotoCondensed */
+		url('Roboto_Condensed_700.svg#RobotoCondensed') format('svg');
+}
