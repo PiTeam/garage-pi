@@ -16,21 +16,15 @@ export const MainAppBar = ({ handleOpenLeftNav, auth }) => {
     return auth.get('status') === 'success' ?
       <Link to="/logout">
         <FlatButton
-          label="Logout"
+          label="Back"
           style={styles}
         />
-      </Link> :
-      <Link to="/login">
-        <FlatButton
-          label="Login"
-          style={styles}
-        />
-      </Link>;
+      </Link> : null;
   };
 
   const styles = {
     appbar: {
-      marginBottom: '.5em',
+      marginBottom: '3em',
       textAlign: 'left',
     },
     link: {

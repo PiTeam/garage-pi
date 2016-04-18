@@ -1,11 +1,10 @@
 import React from 'react';
 import TextField from 'material-ui/lib/text-field';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory } from 'react-router';
 import { Map as createMap, List as createList } from 'immutable';
 
 import CustomCheckbox from 'components/custom-checkbox';

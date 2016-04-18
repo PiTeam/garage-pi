@@ -1,7 +1,6 @@
 import { Router as router } from 'express';
 import * as userRepository from '../../repositories/user';
-import { authNeeded, adminOnly } from '../../lib/auth';
-import { createJWT } from '../../lib/auth';
+import { authNeeded, adminOnly, createJWT } from '../../lib/auth';
 
 const routes = router();
 

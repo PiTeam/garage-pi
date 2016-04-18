@@ -4,9 +4,8 @@ import { bindActionCreators } from 'redux';
 import TextField from 'material-ui/lib/text-field';
 import Paper from 'material-ui/lib/paper';
 import Dialog from 'material-ui/lib/dialog';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import FlatButton from 'material-ui/lib/flat-button';
-import { Link } from 'react-router';
 import RaisedButton from 'material-ui/lib/raised-button';
 
 import CustomCheckbox from 'components/custom-checkbox';

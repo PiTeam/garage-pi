@@ -1,10 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { checkAuthToken } from 'actions';
 import { bindActionCreators } from 'redux';
 import { getAuthPropType, getDoorPropType, getUserPropType } from 'proptypes';
-
-import { fetchUsers, fetchDoors, fetchUserDoors } from 'actions';
+import { fetchUsers, fetchDoors, fetchUserDoors, checkAuthToken } from 'actions';
 
 export function checkAuth(Component) {
   class CheckAuthentication extends React.Component {
@@ -75,6 +73,7 @@ export function checkAuth(Component) {
           {this.state.ready
             ? <Component {...this.props} />
             : null
+
           }
         </div>
       );

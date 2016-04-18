@@ -13,4 +13,4 @@ ReactDOM.render((
   <Provider store={store}>
     <Routes />
   </Provider>
-), document.body);
+), document.getElementById('app'));

@@ -109,6 +109,7 @@ class ActivateUser extends React.Component {
           {this.state.user.get('activateToken') &&
             <div>
               <img
+                alt={this.state.user.get('name')}
                 src={`data:image/svg+xml;base64,${this.state.svg}`}
               />
             </div>

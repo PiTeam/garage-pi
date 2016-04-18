@@ -66,7 +66,7 @@ const UserDoorList = ({ doors }) => {
                 <CardMedia
                   overlay={getCardTitle(door.name)}
                 >
-                  <img src={door.get('image')} />
+                  <img alt={door.get('name')} src={door.get('image')} />
                 </CardMedia>
               </Card>
             </Paper>

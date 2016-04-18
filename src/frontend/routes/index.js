@@ -10,7 +10,6 @@ import Main from 'components/main';
 import Login from 'containers/login';
 import Logout from 'containers/logout';
 import Door from 'containers/door/list';
-import Home from 'containers/home';
 import AddUser from 'containers/user/admin/add';
 import ActivateUser from 'containers/user/admin/activate';
 import ListUsers from 'containers/user/admin/list';
@@ -37,7 +36,7 @@ export const Routes = () => (
       component={checkAuth(Main)}
       path="/"
     >
-      <IndexRoute component={Home} />
+      <IndexRoute component={requireUserAuth(Door)} />
       <Route
         component={TokenAuth}
         path="activate/user/:token"
